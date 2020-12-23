@@ -6,6 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TylerMart.Storage.Models {
 	[Table("Orders")]
 	public class Order : Model {
+		[Key]
+		public int ID { get; set; }
 		[Required]
 		public Customer Customer { get; set; }
 		[Required]
@@ -15,5 +17,6 @@ namespace TylerMart.Storage.Models {
 		[Required]
 		[MaxLength(30)]
 		public List<Product> Products { get; set; }
+		public override int GetID() => ID;
 	}
 }
