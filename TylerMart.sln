@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TylerMart.Storage", "TylerM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TylerMart.Testing", "TylerMart.Testing\TylerMart.Testing.csproj", "{CD092691-AE3B-4F0F-A6E7-D976C43360F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TylerMart.Local", "TylerMart.Local\TylerMart.Local.csproj", "{C830358A-BB9A-4C37-9C21-85D4FF0916D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TylerMart.Client", "TylerMart.Client\TylerMart.Client.csproj", "{C830358A-BB9A-4C37-9C21-85D4FF0916D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
