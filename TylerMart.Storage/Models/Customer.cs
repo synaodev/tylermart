@@ -5,7 +5,7 @@ namespace TylerMart.Storage.Models {
 	[Table("Customers")]
 	public class Customer : Model {
 		[Key]
-		public int ID { get; set; }
+		public int CustomerID { get; set; }
 		[Required]
 		[MinLength(2)]
 		public string FirstName { get; set; }
@@ -19,6 +19,6 @@ namespace TylerMart.Storage.Models {
 		[MinLength(8)]
 		[DataType(DataType.Password)]
 		public string Password { get; set; }
-		public override int GetID() => ID;
+		public override int GetID() => CustomerID;
 	}
 }

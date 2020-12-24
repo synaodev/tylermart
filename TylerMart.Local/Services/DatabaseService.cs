@@ -23,7 +23,6 @@ namespace TylerMart.Local.Services {
 		public CustomerRepository Customers;
 		public OrderRepository Orders;
 		public LocationRepository Locations;
-		public InventoryRepository Inventories;
 		public ProductRepository Products;
 		public DatabaseService() {
 			Factory = new DatabaseFactory();
@@ -31,7 +30,6 @@ namespace TylerMart.Local.Services {
 			Customers = new CustomerRepository(Context);
 			Orders = new OrderRepository(Context);
 			Locations = new LocationRepository(Context);
-			Inventories = new InventoryRepository(Context);
 			Products = new ProductRepository(Context);
 		}
 	}
