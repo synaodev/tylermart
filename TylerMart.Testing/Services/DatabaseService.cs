@@ -21,7 +21,10 @@ namespace TylerMart.Testing.Services {
 		private DatabaseFactory Factory;
 		public DatabaseService() {
 			Factory = new DatabaseFactory();
-			base.Initialize(Factory.CreateDbContext());
+			base.Initialize(
+				db: Factory.CreateDbContext(),
+				ensured: true
+			);
 		}
 	}
 }

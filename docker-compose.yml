@@ -1,0 +1,24 @@
+version: '3.7'
+
+networks:
+  tmt-net:
+
+volumes:
+  tmt-data:
+
+services:
+  tylermart-database:
+    container_name: tylermart-database
+    image: mcr.microsoft.com/mssql/server:latest
+    restart: always
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'Password12345'
+    expose:
+      - 1433
+    ports:
+      - 1433:1433
+    networks:
+      - tmt-net
+    volumes:
+      - tmt-data:/var/opt/mssql
