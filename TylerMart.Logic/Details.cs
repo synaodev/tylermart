@@ -5,8 +5,14 @@ using TylerMart.Storage.Repositories;
 
 namespace TylerMart.Logic {
 	public static class Details {
+		/// <summary>
+		/// Generates details for a particular order in the database
+		/// </summary>
+		/// <returns>
+		/// Returns string with order's details
+		/// </returns>
 		public static string OrderDetail(int orderID, RepositoryCollection rc) {
-			Order order = rc.Orders.Get(orderID);
+			Order order = rc.Orders.GetWithDetails(orderID);
 			if (order == null) {
 				return "";
 			}

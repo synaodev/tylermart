@@ -16,6 +16,13 @@ namespace TylerMart.Storage.Models {
 		[DataType(DataType.Password)]
 		public string Password { get; set; }
 		public override int GetID() => CustomerID;
+		/// <summary>
+		/// Generates customer array for seeding database
+		/// Only to be used in DbContext.OnModelCreating()
+		/// </summary>
+		/// <returns>
+		/// Returns array of customers
+		/// </returns>
 		public static Customer[] GenerateSeededData() {
 			Customer[] customers = new Customer[] {
 				new Customer() {

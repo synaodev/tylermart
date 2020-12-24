@@ -11,6 +11,13 @@ namespace TylerMart.Storage.Models {
 		public string Name { get; set; }
 		public virtual List<LocationProduct> LocationProducts { get; set; }
 		public override int GetID() => LocationID;
+		/// <summary>
+		/// Generates location array for seeding database
+		/// Only to be used in DbContext.OnModelCreating()
+		/// </summary>
+		/// <returns>
+		/// Returns array of locations
+		/// </returns>
 		public static Location[] GenerateSeededData() {
 			Location[] locations = new Location[] {
 				new Location() {

@@ -7,6 +7,9 @@ namespace TylerMart.Storage.Repositories {
 		public ProductRepository Products;
 		public LocationRepository Locations;
 		public OrderRepository Orders;
+		/// <summary>
+		/// Abstract class for data-access services
+		/// </summary>
 		public void Initialize(DbContext db, bool ensured = false) {
 			Db = db;
 			if (ensured) {

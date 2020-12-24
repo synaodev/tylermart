@@ -6,6 +6,12 @@ using TylerMart.Storage.Repositories;
 
 namespace TylerMart.Local.Services {
 	internal class DatabaseFactory : IDesignTimeDbContextFactory<DatabaseContext> {
+		/// <summary>
+		/// Creates database context configured to use SQL Server
+		/// </summary>
+		/// <returns>
+		/// Returns database context
+		/// </returns>
 		public DatabaseContext CreateDbContext(string[] args) {
 			var options = new DbContextOptionsBuilder<DatabaseContext>()
 				.UseSqlServer(@"server=localhost,1433;database=TylerMart;user id=sa;password=Password12345;")

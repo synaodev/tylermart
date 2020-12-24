@@ -6,6 +6,12 @@ using TylerMart.Storage.Repositories;
 
 namespace TylerMart.Testing.Services {
 	internal class DatabaseFactory : IDesignTimeDbContextFactory<DatabaseContext> {
+		/// <summary>
+		/// Creates database context configured to use a transient in-memory database
+		/// </summary>
+		/// <returns>
+		/// Returns database context
+		/// </returns>
 		public DatabaseContext CreateDbContext(string[] args) {
 			var options = new DbContextOptionsBuilder<DatabaseContext>()
 				.UseInMemoryDatabase("InMemoryDB")

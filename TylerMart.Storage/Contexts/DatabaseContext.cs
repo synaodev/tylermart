@@ -39,6 +39,12 @@ namespace TylerMart.Storage.Contexts {
 			builder.Entity<LocationProduct>().HasData(LocationProduct.GenerateSeededData());
 			builder.Entity<OrderProduct>().HasData(OrderProduct.GenerateSeededData());
 		}
+		/// <summary>
+		/// Sets timestamp to Order when first committed to the database
+		/// </summary>
+		/// <returns>
+		/// Returns number of saved changes to the database
+		/// </returns>
 		public override int SaveChanges() {
 			var entries = ChangeTracker.Entries()
 				.Where(e => e.Entity is Order && e.State == EntityState.Added);
