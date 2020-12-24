@@ -7,6 +7,16 @@ using TylerMart.Storage.Models;
 namespace TylerMart.Storage.Repositories {
 	public class OrderRepository : Repository<Order> {
 		public OrderRepository(DbContext db) : base(db) {}
+		public Order GetWithDetails(int ID) {
+			if (!this.Exists(ID)) {
+				return null;
+			}
+			return Db.Set<Order>()
+				.Where(o => o.OrderID == ID)
+				.Include(o => o.Customer)
+				.Include(o => o.Location)
+				.Single();
+		}
 		public List<Order> FindByIncomplete() {
 			return Db.Set<Order>()
 				.Where(o => !o.Completed)
