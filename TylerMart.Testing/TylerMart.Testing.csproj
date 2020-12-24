@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TylerMart.Storage\TylerMart.Storage.csproj" />
+    <ProjectReference Include="..\TylerMart.Logic\TylerMart.Logic.csproj" />
   </ItemGroup>
 
 </Project>
