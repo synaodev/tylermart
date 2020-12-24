@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 using TylerMart.Storage.Models;
@@ -12,6 +14,14 @@ namespace TylerMart.Storage.Contexts {
 		public DatabaseContext() {}
 		protected override void OnModelCreating(ModelBuilder builder) {
 
+		}
+		public override int SaveChanges() {
+			var entries = ChangeTracker.Entries()
+				.Where(e => e.Entity is Order && e.State == EntityState.Added);
+			foreach (var e in entries) {
+				((Order)e.Entity).PlacedAt = DateTime.Now;
+			}
+			return base.SaveChanges();
 		}
 	}
 }
