@@ -17,20 +17,11 @@ namespace TylerMart.Testing.Services {
 			return this.CreateDbContext(args);
 		}
 	}
-	public class DatabaseService {
+	public class DatabaseService : RepositoryCollection {
 		private DatabaseFactory Factory;
-		private DatabaseContext Context;
-		public CustomerRepository Customers;
-		public OrderRepository Orders;
-		public LocationRepository Locations;
-		public ProductRepository Products;
 		public DatabaseService() {
 			Factory = new DatabaseFactory();
-			Context = Factory.CreateDbContext();
-			Customers = new CustomerRepository(Context);
-			Orders = new OrderRepository(Context);
-			Locations = new LocationRepository(Context);
-			Products = new ProductRepository(Context);
+			base.Initialize(Factory.CreateDbContext());
 		}
 	}
 }
