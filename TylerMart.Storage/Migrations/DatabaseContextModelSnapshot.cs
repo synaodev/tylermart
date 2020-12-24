@@ -27,7 +27,7 @@ namespace TylerMart.Storage.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("EmailAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
@@ -39,6 +39,10 @@ namespace TylerMart.Storage.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CustomerID");
+
+                    b.HasIndex("EmailAddress")
+                        .IsUnique()
+                        .HasFilter("[EmailAddress] IS NOT NULL");
 
                     b.ToTable("Customers");
 
@@ -69,9 +73,13 @@ namespace TylerMart.Storage.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("LocationID");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("Locations");
 
@@ -167,6 +175,9 @@ namespace TylerMart.Storage.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<bool>("Completed")
+                        .HasColumnType("bit");
+
                     b.Property<int>("CustomerID")
                         .HasColumnType("int");
 
@@ -188,16 +199,18 @@ namespace TylerMart.Storage.Migrations
                         new
                         {
                             OrderID = 1,
+                            Completed = false,
                             CustomerID = 1,
                             LocationID = 1,
-                            PlacedAt = new DateTime(2020, 12, 23, 19, 10, 35, 274, DateTimeKind.Local).AddTicks(9182)
+                            PlacedAt = new DateTime(2020, 12, 23, 20, 14, 10, 15, DateTimeKind.Local).AddTicks(3107)
                         },
                         new
                         {
                             OrderID = 2,
+                            Completed = false,
                             CustomerID = 2,
                             LocationID = 2,
-                            PlacedAt = new DateTime(2020, 12, 23, 19, 10, 35, 279, DateTimeKind.Local).AddTicks(5242)
+                            PlacedAt = new DateTime(2020, 12, 23, 20, 14, 10, 19, DateTimeKind.Local).AddTicks(8238)
                         });
                 });
 

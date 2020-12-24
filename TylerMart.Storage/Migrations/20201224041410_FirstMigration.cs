@@ -15,7 +15,7 @@ namespace TylerMart.Storage.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailAddress = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -29,7 +29,7 @@ namespace TylerMart.Storage.Migrations
                 {
                     LocationID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -58,6 +58,7 @@ namespace TylerMart.Storage.Migrations
                     OrderID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PlacedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Completed = table.Column<bool>(type: "bit", nullable: false),
                     CustomerID = table.Column<int>(type: "int", nullable: false),
                     LocationID = table.Column<int>(type: "int", nullable: false)
                 },
@@ -174,11 +175,11 @@ namespace TylerMart.Storage.Migrations
 
             migrationBuilder.InsertData(
                 table: "Orders",
-                columns: new[] { "OrderID", "CustomerID", "LocationID", "PlacedAt" },
+                columns: new[] { "OrderID", "Completed", "CustomerID", "LocationID", "PlacedAt" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, new DateTime(2020, 12, 23, 19, 10, 35, 274, DateTimeKind.Local).AddTicks(9182) },
-                    { 2, 2, 2, new DateTime(2020, 12, 23, 19, 10, 35, 279, DateTimeKind.Local).AddTicks(5242) }
+                    { 1, false, 1, 1, new DateTime(2020, 12, 23, 20, 14, 10, 15, DateTimeKind.Local).AddTicks(3107) },
+                    { 2, false, 2, 2, new DateTime(2020, 12, 23, 20, 14, 10, 19, DateTimeKind.Local).AddTicks(8238) }
                 });
 
             migrationBuilder.InsertData(
@@ -193,6 +194,13 @@ namespace TylerMart.Storage.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Customers_EmailAddress",
+                table: "Customers",
+                column: "EmailAddress",
+                unique: true,
+                filter: "[EmailAddress] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LocationProducts_LocationID",
                 table: "LocationProducts",
                 column: "LocationID");
@@ -201,6 +209,13 @@ namespace TylerMart.Storage.Migrations
                 name: "IX_LocationProducts_ProductID",
                 table: "LocationProducts",
                 column: "ProductID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Locations_Name",
+                table: "Locations",
+                column: "Name",
+                unique: true,
+                filter: "[Name] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderProducts_OrderID",

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +13,11 @@ namespace TylerMart.Storage.Contexts {
 		public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) {}
 		public DatabaseContext() {}
 		protected override void OnModelCreating(ModelBuilder builder) {
+			// Field Properties
+			builder.Entity<Customer>().HasIndex(c => c.EmailAddress)
+				.IsUnique();
+			builder.Entity<Location>().HasIndex(l => l.Name)
+				.IsUnique();
 			// Clarify Relationships
 			builder.Entity<LocationProduct>().HasOne(lp => lp.Location)
 				.WithMany(l => l.LocationProducts)
