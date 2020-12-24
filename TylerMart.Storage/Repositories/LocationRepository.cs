@@ -18,5 +18,45 @@ namespace TylerMart.Storage.Repositories {
 				.Select(lp => lp.Location)
 				.ToList();
 		}
+		public bool AddProduct(Location location, Product product) {
+			LocationProduct lp = new LocationProduct() {
+				LocationID = location.LocationID,
+				ProductID = product.ProductID
+			};
+			Db.Set<LocationProduct>().Add(lp);
+			return Db.SaveChanges() >= 1;
+		}
+		public bool RemoveProduct(Location location, Product product) {
+			LocationProduct q = Db.Set<LocationProduct>()
+				.LastOrDefault(lp => lp.LocationID == location.LocationID && lp.ProductID == product.ProductID);
+			if (q != null) {
+				Db.Set<LocationProduct>().Remove(q);
+				return Db.SaveChanges() >= 1;
+			}
+			return false;
+		}
+		public bool AddProducts(Location location, List<Product> products) {
+			List<LocationProduct> lps = products.ConvertAll<LocationProduct>(p =>
+				new LocationProduct() {
+					LocationID = location.LocationID,
+					ProductID = p.ProductID
+				}
+			);
+			Db.Set<LocationProduct>().AddRange(lps);
+			return Db.SaveChanges() >= 1;
+		}
+		public bool RemoveProducts(Location location, List<Product> products) {
+			List<LocationProduct> range = new List<LocationProduct>();
+			foreach (var p in products) {
+				var lps = Db.Set<LocationProduct>()
+					.Where(lp => lp.LocationID == location.LocationID && lp.ProductID == p.ProductID);
+				range.AddRange(lps);
+			}
+			if (range.Count > 0) {
+				Db.Set<LocationProduct>().RemoveRange(range);
+				return Db.SaveChanges() >= 1;
+			}
+			return false;
+		}
 	}
 }

@@ -39,5 +39,45 @@ namespace TylerMart.Storage.Repositories {
 				.Select(op => op.Order)
 				.ToList();
 		}
+		public bool AddProduct(Order order, Product product) {
+			OrderProduct op = new OrderProduct() {
+				OrderID = order.OrderID,
+				ProductID = product.ProductID
+			};
+			Db.Set<OrderProduct>().Add(op);
+			return Db.SaveChanges() >= 1;
+		}
+		public bool RemoveProduct(Order order, Product product) {
+			OrderProduct q = Db.Set<OrderProduct>()
+				.LastOrDefault(op => op.OrderID == order.OrderID && op.ProductID == product.ProductID);
+			if (q != null) {
+				Db.Set<OrderProduct>().Remove(q);
+				return Db.SaveChanges() >= 1;
+			}
+			return false;
+		}
+		public bool AddProducts(Order order, List<Product> products) {
+			List<OrderProduct> range = products.ConvertAll<OrderProduct>(p =>
+				new OrderProduct() {
+					OrderID = order.OrderID,
+					ProductID = p.ProductID
+				}
+			);
+			Db.Set<OrderProduct>().AddRange(range);
+			return Db.SaveChanges() >= 1;
+		}
+		public bool RemoveProducts(Order order, List<Product> products) {
+			List<OrderProduct> range = new List<OrderProduct>();
+			foreach (var p in products) {
+				var ops = Db.Set<OrderProduct>()
+					.Where(op => op.OrderID == order.OrderID && op.ProductID == p.ProductID);
+				range.AddRange(ops);
+			}
+			if (range.Count > 0) {
+				Db.Set<OrderProduct>().RemoveRange(range);
+				return Db.SaveChanges() >= 1;
+			}
+			return false;
+		}
 	}
 }
