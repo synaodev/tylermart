@@ -8,15 +8,35 @@ namespace TylerMart.Storage.Models {
 	public class Order : Model {
 		[Key]
 		public int OrderID { get; set; }
-		[Required]
-		public Customer Customer { get; set; }
-		[Required]
-		public Location Location { get; set; }
-		[Required]
 		public DateTime PlacedAt { get; set; }
-		[Required]
+		[ForeignKey("Customer")]
+		public int CustomerID { get; set; }
+		public virtual Customer Customer { get; set; }
+		[ForeignKey("Location")]
+		public int LocationID { get; set; }
+		public virtual Location Location { get; set; }
+		[MinLength(1)]
 		[MaxLength(30)]
-		public List<Product> Products { get; set; }
+		public virtual List<OrderProduct> OrderProducts { get; set; }
 		public override int GetID() => OrderID;
+		public static Order[] GenerateSeededData() {
+			Customer[] customers = Customer.GenerateSeededData();
+			Location[] locations = Location.GenerateSeededData();
+			Order[] orders = new Order[] {
+				new Order() {
+					OrderID = 1,
+					PlacedAt = DateTime.Now,
+					CustomerID = customers[0].CustomerID,
+					LocationID = locations[0].LocationID
+				},
+				new Order() {
+					OrderID = 2,
+					PlacedAt = DateTime.Now,
+					CustomerID = customers[1].CustomerID,
+					LocationID = locations[1].LocationID
+				}
+			};
+			return orders;
+		}
 	}
 }
