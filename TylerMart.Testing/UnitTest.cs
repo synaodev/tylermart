@@ -1,4 +1,8 @@
+using System.Collections.Generic;
 using Xunit;
+
+using TylerMart.Domain.Models;
+using TylerMart.Testing.Services;
 
 namespace TylerMart.Testing {
 	/// <summary>
@@ -9,8 +13,10 @@ namespace TylerMart.Testing {
 		/// A Test
 		/// </summary>
 		[Fact]
-		public void Test() {
-
+		public void TestSeededCustomers() {
+			DatabaseService Db = new DatabaseService();
+			List<Customer> customers = Db.Customers.All();
+			Assert.Equal(2, customers.Count);
 		}
 	}
 }

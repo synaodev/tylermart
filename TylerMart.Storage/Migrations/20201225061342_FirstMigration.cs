@@ -1,4 +1,6 @@
-﻿using System;
+﻿#pragma warning disable 1591
+
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TylerMart.Storage.Migrations
@@ -260,3 +262,5 @@ namespace TylerMart.Storage.Migrations
         }
     }
 }
+
+#pragma warning restore 1591
