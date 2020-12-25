@@ -7,10 +7,11 @@ using TylerMart.Storage.Repositories;
 namespace TylerMart.Testing.Services {
 	internal class DatabaseFactory : IDesignTimeDbContextFactory<DatabaseContext> {
 		/// <summary>
-		/// Creates database context configured to use a transient in-memory database
+		/// Creates database context configured to use transient in-memory database
 		/// </summary>
+		/// <param name="args">Argument list</param>
 		/// <returns>
-		/// Returns database context
+		/// Database context
 		/// </returns>
 		public DatabaseContext CreateDbContext(string[] args) {
 			var options = new DbContextOptionsBuilder<DatabaseContext>()
@@ -18,11 +19,20 @@ namespace TylerMart.Testing.Services {
 				.Options;
 			return new DatabaseContext(options);
 		}
+		/// <summary>
+		/// Creates database context configured to use transient in-memory database
+		/// </summary>
+		/// <returns>
+		/// Database context
+		/// </returns>
 		public DatabaseContext CreateDbContext() {
 			string[] args = new string[] {};
 			return this.CreateDbContext(args);
 		}
 	}
+	/// <summary>
+	/// Service that allows for easy database access
+	/// </summary>
 	public class DatabaseService : RepositoryCollection {
 		private DatabaseFactory Factory;
 		public DatabaseService() {
