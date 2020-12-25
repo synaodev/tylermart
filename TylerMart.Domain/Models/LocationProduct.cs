@@ -2,6 +2,13 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TylerMart.Domain.Models {
+	/// <summary>
+	/// Location-Product Pair contains:
+	/// <list>
+	/// <item>- The <see cref="TylerMart.Domain.Models.Location"/></item>
+	/// <item>- The <see cref="TylerMart.Domain.Models.Product"/></item>
+	/// </list>
+	/// </summary>
 	[Table("LocationProducts")]
 	public class LocationProduct : Model {
 		[Key]
@@ -12,11 +19,13 @@ namespace TylerMart.Domain.Models {
 		public virtual Product Product { get; set; }
 		public override int GetID() => LocationProductID;
 		/// <summary>
-		/// Generates location's inventory for seeding database
-		/// Only to be used in DbContext.OnModelCreating()
+		/// Generates Location-Product Pair array for seeding database
 		/// </summary>
+		/// <remarks>
+		/// Only to be used in <c>DbContext.OnModelCreating()</c>
+		/// </remarks>
 		/// <returns>
-		/// Returns array of location to product links
+		/// Array of Location-Product Pairs
 		/// </returns>
 		public static LocationProduct[] GenerateSeededData() {
 			Location[] locations = Location.GenerateSeededData();

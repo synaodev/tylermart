@@ -5,23 +5,28 @@ using Microsoft.EntityFrameworkCore;
 using TylerMart.Domain.Models;
 
 namespace TylerMart.Storage.Repositories {
+	/// <summary>
+	/// <see cref="TylerMart.Domain.Models.Location"/> Repository
+	/// </summary>
 	public class LocationRepository : Repository<Location> {
 		public LocationRepository(DbContext db) : base(db) {}
 		/// <summary>
-		/// Gets location from name
+		/// Gets Location from name
 		/// </summary>
+		/// <param name="name">Name</param>
 		/// <returns>
-		/// Returns single location or null
+		/// Single Location or null
 		/// </returns>
 		public Location GetByName(string name) {
 			return Db.Set<Location>()
 				.SingleOrDefault(l => l.Name == name);
 		}
 		/// <summary>
-		/// Get list of locations where product is stocked
+		/// Finds Locations where a Product is in stock
 		/// </summary>
+		/// <param name="product">The Product</param>
 		/// <returns>
-		/// Returns list of locations
+		/// List of Locations
 		/// </returns>
 		public List<Location> FindFromProduct(Product product) {
 			return Db.Set<LocationProduct>()
@@ -31,10 +36,12 @@ namespace TylerMart.Storage.Repositories {
 				.ToList();
 		}
 		/// <summary>
-		/// Adds product to location's inventory
+		/// Adds a Product to a Location's inventory
 		/// </summary>
+		/// <param name="location">The Location</param>
+		/// <param name="product">The Product</param>
 		/// <returns>
-		/// Returns 'true' if successfully inserted into database
+		/// 'true' if successfully inserted into database
 		/// </returns>
 		public bool AddProduct(Location location, Product product) {
 			LocationProduct lp = new LocationProduct() {
@@ -45,10 +52,12 @@ namespace TylerMart.Storage.Repositories {
 			return Db.SaveChanges() >= 1;
 		}
 		/// <summary>
-		/// Removes product from location's inventory
+		/// Removes a Product from a Location's inventory
 		/// </summary>
+		/// <param name="location">The Location</param>
+		/// <param name="product">The Product</param>
 		/// <returns>
-		/// Returns 'true' if successfully removed from database
+		/// 'true' if successfully removed from database
 		/// </returns>
 		public bool RemoveProduct(Location location, Product product) {
 			LocationProduct q = Db.Set<LocationProduct>()
@@ -60,10 +69,12 @@ namespace TylerMart.Storage.Repositories {
 			return false;
 		}
 		/// <summary>
-		/// Adds list of products to location's inventory
+		/// Adds a range of Products to a Location's inventory
 		/// </summary>
+		/// <param name="location">The Location</param>
+		/// <param name="products">List of Products</param>
 		/// <returns>
-		/// Returns 'true' if successfully inserted into database
+		/// 'true' if successfully inserted into database
 		/// </returns>
 		public bool AddProducts(Location location, List<Product> products) {
 			List<LocationProduct> lps = products.ConvertAll<LocationProduct>(p =>
@@ -76,10 +87,12 @@ namespace TylerMart.Storage.Repositories {
 			return Db.SaveChanges() >= 1;
 		}
 		/// <summary>
-		/// Removes list of products from location's inventory
+		/// Removes a range of Products from a Location's inventory
 		/// </summary>
+		/// <param name="location">The Location</param>
+		/// <param name="products">List of Products</param>
 		/// <returns>
-		/// Returns 'true' if successfully removed from database
+		/// 'true' if successfully removed from database
 		/// </returns>
 		public bool RemoveProducts(Location location, List<Product> products) {
 			List<LocationProduct> range = new List<LocationProduct>();

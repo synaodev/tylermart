@@ -5,23 +5,28 @@ using Microsoft.EntityFrameworkCore;
 using TylerMart.Domain.Models;
 
 namespace TylerMart.Storage.Repositories {
+	/// <summary>
+	/// <see cref="TylerMart.Domain.Models.Customer"/> Repository
+	/// </summary>
 	public class CustomerRepository : Repository<Customer> {
 		public CustomerRepository(DbContext db) : base(db) {}
 		/// <summary>
-		/// Gets customer from email address
+		/// Gets Customer from email address
 		/// </summary>
+		/// <param name="emailAddress">Email Address</param>
 		/// <returns>
-		/// Returns single row or null
+		/// Single Customer or null
 		/// </returns>
 		public Customer GetByEmailAddress(string emailAddress) {
 			return Db.Set<Customer>()
 				.SingleOrDefault(c => c.EmailAddress == emailAddress);
 		}
 		/// <summary>
-		/// Finds customers with first name
+		/// Finds Customers with first name
 		/// </summary>
+		/// <param name="name">First name</param>
 		/// <returns>
-		/// Returns single row or null
+		/// List of Customers
 		/// </returns>
 		public List<Customer> FindByFirstName(string name) {
 			return Db.Set<Customer>()
@@ -29,10 +34,11 @@ namespace TylerMart.Storage.Repositories {
 				.ToList();
 		}
 		/// <summary>
-		/// Finds customers with last name
+		/// Finds Customers with last name
 		/// </summary>
+		/// <param name="name">Last name</param>
 		/// <returns>
-		/// Returns single row or null
+		/// List of Customers
 		/// </returns>
 		public List<Customer> FindByLastName(string name) {
 			return Db.Set<Customer>()
@@ -40,10 +46,12 @@ namespace TylerMart.Storage.Repositories {
 				.ToList();
 		}
 		/// <summary>
-		/// Finds customers with both first and last names
+		/// Finds Customers with both first and last names
 		/// </summary>
+		/// <param name="firstName">First name</param>
+		/// <param name="lastName">Last name</param>
 		/// <returns>
-		/// Returns single row or null
+		/// List of Customers
 		/// </returns>
 		public List<Customer> FindByWholeName(string firstName, string lastName) {
 			return Db.Set<Customer>()

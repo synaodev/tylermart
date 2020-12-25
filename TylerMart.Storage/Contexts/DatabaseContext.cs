@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using TylerMart.Domain.Models;
 
 namespace TylerMart.Storage.Contexts {
+	/// <summary>
+	/// Main database context used for testing and client
+	/// </summary>
 	public class DatabaseContext : DbContext {
 		private DbSet<Customer> Customers;
 		private DbSet<Product> Products;
@@ -12,6 +15,15 @@ namespace TylerMart.Storage.Contexts {
 		private DbSet<Order> Orders;
 		public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) {}
 		public DatabaseContext() {}
+		/// <summary>
+		/// Uses the Fluent API for:
+		/// <list>
+		/// <item>- Specifying model field properties</item>
+		/// <item>- Clarifying model many-to-many relationships</item>
+		/// <item>- Seeding the database</item>
+		/// </list>
+		/// </summary>
+		/// <param name="builder">Model builder</param>
 		protected override void OnModelCreating(ModelBuilder builder) {
 			// Field Properties
 			builder.Entity<Customer>().HasIndex(c => c.EmailAddress)
@@ -43,7 +55,7 @@ namespace TylerMart.Storage.Contexts {
 		/// Sets timestamp to Order when first committed to the database
 		/// </summary>
 		/// <returns>
-		/// Returns number of saved changes to the database
+		/// Number of saved changes to the database
 		/// </returns>
 		public override int SaveChanges() {
 			var entries = ChangeTracker.Entries()

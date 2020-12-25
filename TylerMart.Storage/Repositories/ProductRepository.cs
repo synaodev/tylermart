@@ -6,12 +6,16 @@ using TylerMart.Domain.Models;
 
 namespace TylerMart.Storage.Repositories {
 	public class ProductRepository : Repository<Product> {
+		/// <summary>
+		/// <see cref="TylerMart.Domain.Models.Product"/> Repository
+		/// </summary>
 		public ProductRepository(DbContext db) : base(db) {}
 		/// <summary>
-		/// Gets list of products in an order
+		/// Finds Products contained in an Order
 		/// </summary>
+		/// <param name="order">The Order</param>
 		/// <returns>
-		/// Returns list of products
+		/// List of Products
 		/// </returns>
 		public List<Product> FindFromOrder(Order order) {
 			return Db.Set<OrderProduct>()
@@ -21,10 +25,11 @@ namespace TylerMart.Storage.Repositories {
 				.ToList();
 		}
 		/// <summary>
-		/// Gets list of products in a location's inventory
+		/// Finds Products in stock at a Location
 		/// </summary>
+		/// <param name="location">The Location</param>
 		/// <returns>
-		/// Returns list of products
+		/// List of Products
 		/// </returns>
 		public List<Product> FindFromLocation(Location location) {
 			return Db.Set<LocationProduct>()

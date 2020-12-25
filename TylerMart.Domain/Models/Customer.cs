@@ -2,6 +2,16 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TylerMart.Domain.Models {
+	/// <summary>
+	/// Customer Model contains:
+	/// <list>
+	/// <item>- Customer ID</item>
+	/// <item>- First Name</item>
+	/// <item>- Last Name</item>
+	/// <item>- Email Address</item>
+	/// <item>- Password</item>
+	/// </list>
+	/// </summary>
 	[Table("Customers")]
 	public class Customer : Model {
 		[Key]
@@ -17,11 +27,13 @@ namespace TylerMart.Domain.Models {
 		public string Password { get; set; }
 		public override int GetID() => CustomerID;
 		/// <summary>
-		/// Generates customer array for seeding database
-		/// Only to be used in DbContext.OnModelCreating()
+		/// Generates Customer array for seeding database
 		/// </summary>
+		/// <remarks>
+		/// Only to be used in <c>DbContext.OnModelCreating()</c>
+		/// </remarks>
 		/// <returns>
-		/// Returns array of customers
+		/// Array of Customers
 		/// </returns>
 		public static Customer[] GenerateSeededData() {
 			Customer[] customers = new Customer[] {

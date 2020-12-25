@@ -3,6 +3,14 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TylerMart.Domain.Models {
+	/// <summary>
+	/// Location Model contains:
+	/// <list>
+	/// <item>- Location ID</item>
+	/// <item>- Name</item>
+	/// <item>- List of <see cref="TylerMart.Domain.Models.LocationProduct"/> Pairs</item>
+	/// </list>
+	/// </summary>
 	[Table("Locations")]
 	public class Location : Model {
 		[Key]
@@ -12,11 +20,13 @@ namespace TylerMart.Domain.Models {
 		public virtual List<LocationProduct> LocationProducts { get; set; }
 		public override int GetID() => LocationID;
 		/// <summary>
-		/// Generates location array for seeding database
-		/// Only to be used in DbContext.OnModelCreating()
+		/// Generates Location array for seeding database
 		/// </summary>
+		/// <remarks>
+		/// Only to be used in <c>DbContext.OnModelCreating()</c>
+		/// </remarks>
 		/// <returns>
-		/// Returns array of locations
+		/// Array of Locations
 		/// </returns>
 		public static Location[] GenerateSeededData() {
 			Location[] locations = new Location[] {

@@ -3,6 +3,17 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TylerMart.Domain.Models {
+	/// <summary>
+	/// Product Model contains:
+	/// <list>
+	/// <item>- Product ID</item>
+	/// <item>- Name</item>
+	/// <item>- Description</item>
+	/// <item>- Price</item>
+	/// <item>- List of <see cref="TylerMart.Domain.Models.LocationProduct"/> Pairs</item>
+	/// <item>- List of <see cref="TylerMart.Domain.Models.OrderProduct"/> Pairs</item>
+	/// </list>
+	/// </summary>
 	[Table("Products")]
 	public class Product : Model {
 		[Key]
@@ -17,11 +28,13 @@ namespace TylerMart.Domain.Models {
 		public virtual List<OrderProduct> OrderProducts { get; set; }
 		public override int GetID() => ProductID;
 		/// <summary>
-		/// Generates product array for seeding database
-		/// Only to be used in DbContext.OnModelCreating()
+		/// Generates Product array for seeding database
 		/// </summary>
+		/// <remarks>
+		/// Only to be used in <c>DbContext.OnModelCreating()</c>
+		/// </remarks>
 		/// <returns>
-		/// Returns array of products
+		/// Array of Products
 		/// </returns>
 		public static Product[] GenerateSeededData() {
 			Product[] products = new Product[] {

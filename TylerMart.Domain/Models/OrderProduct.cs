@@ -2,6 +2,13 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TylerMart.Domain.Models {
+	/// <summary>
+	/// Order-Product Pair contains:
+	/// <list>
+	/// <item>- The <see cref="TylerMart.Domain.Models.Order"/></item>
+	/// <item>- The <see cref="TylerMart.Domain.Models.Product"/></item>
+	/// </list>
+	/// </summary>
 	[Table("OrderProducts")]
 	public class OrderProduct : Model {
 		[Key]
@@ -12,11 +19,13 @@ namespace TylerMart.Domain.Models {
 		public virtual Product Product { get; set; }
 		public override int GetID() => OrderProductID;
 		/// <summary>
-		/// Generates order's product list for seeding database
-		/// Only to be used in DbContext.OnModelCreating()
+		/// Generates Order-Product Pair array for seeding database
 		/// </summary>
+		/// <remarks>
+		/// Only to be used in <c>DbContext.OnModelCreating()</c>
+		/// </remarks>
 		/// <returns>
-		/// Returns array of order to product links
+		/// Array of Order-Product Pairs
 		/// </returns>
 		public static OrderProduct[] GenerateSeededData() {
 			Order[] orders = Order.GenerateSeededData();

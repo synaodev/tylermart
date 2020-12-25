@@ -5,13 +5,20 @@ using Microsoft.EntityFrameworkCore;
 using TylerMart.Domain.Models;
 
 namespace TylerMart.Storage.Repositories {
+	/// <summary>
+	/// <see cref="TylerMart.Domain.Models.Order"/> Repository
+	/// </summary>
 	public class OrderRepository : Repository<Order> {
 		public OrderRepository(DbContext db) : base(db) {}
 		/// <summary>
-		/// Get one order using key, eagerly load customer + location
+		/// Get Order from primary key
 		/// </summary>
+		/// <remarks>
+		/// Eagerly loads the Customer and Location
+		/// </remarks>
+		/// <param name="ID">Primary Key</param>
 		/// <returns>
-		/// Returns single row or null
+		/// Single Order or null
 		/// </returns>
 		public Order GetWithDetails(int ID) {
 			if (!this.Exists(ID)) {
@@ -24,10 +31,10 @@ namespace TylerMart.Storage.Repositories {
 				.Single();
 		}
 		/// <summary>
-		/// Get list of incomplete orders
+		/// Find Orders that are incomplete
 		/// </summary>
 		/// <returns>
-		/// Returns list of orders
+		/// List of Orders
 		/// </returns>
 		public List<Order> FindByIncomplete() {
 			return Db.Set<Order>()
@@ -35,10 +42,11 @@ namespace TylerMart.Storage.Repositories {
 				.ToList();
 		}
 		/// <summary>
-		/// Get list of orders made by customer
+		/// Find Orders made by a Customer
 		/// </summary>
+		/// <param name="customer">The Customer</param>
 		/// <returns>
-		/// Returns list of orders
+		/// List of Orders
 		/// </returns>
 		public List<Order> FindFromCustomer(Customer customer) {
 			return Db.Set<Order>()
@@ -46,10 +54,11 @@ namespace TylerMart.Storage.Repositories {
 				.ToList();
 		}
 		/// <summary>
-		/// Get list of orders made to location
+		/// Finds Orders made to a Location
 		/// </summary>
+		/// <param name="location">The Location</param>
 		/// <returns>
-		/// Returns list of orders
+		/// List of Orders
 		/// </returns>
 		public List<Order> FindFromLocation(Location location) {
 			return Db.Set<Order>()
@@ -57,10 +66,11 @@ namespace TylerMart.Storage.Repositories {
 				.ToList();
 		}
 		/// <summary>
-		/// Get list of orders that have a particular product
+		/// Finds Orders containing a particular Product
 		/// </summary>
+		/// <param name="product">The Product</param>
 		/// <returns>
-		/// Returns list of orders
+		/// List of Orders
 		/// </returns>
 		public List<Order> FindFromProduct(Product product) {
 			return Db.Set<OrderProduct>()
@@ -70,10 +80,12 @@ namespace TylerMart.Storage.Repositories {
 				.ToList();
 		}
 		/// <summary>
-		/// Adds product to order
+		/// Adds a Product to an Order
 		/// </summary>
+		/// <param name="order">The Order</param>
+		/// <param name="product">The Product</param>
 		/// <returns>
-		/// Returns 'true' if successfully inserted into database
+		/// 'true' if successfully inserted into database
 		/// </returns>
 		public bool AddProduct(Order order, Product product) {
 			OrderProduct op = new OrderProduct() {
@@ -84,10 +96,12 @@ namespace TylerMart.Storage.Repositories {
 			return Db.SaveChanges() >= 1;
 		}
 		/// <summary>
-		/// Removes product from order
+		/// Remove a Product from an Order
 		/// </summary>
+		/// <param name="order">The Order</param>
+		/// <param name="product">The Product</param>
 		/// <returns>
-		/// Returns 'true' if successfully removed from database
+		/// 'true' if successfully removed from database
 		/// </returns>
 		public bool RemoveProduct(Order order, Product product) {
 			OrderProduct q = Db.Set<OrderProduct>()
@@ -99,10 +113,12 @@ namespace TylerMart.Storage.Repositories {
 			return false;
 		}
 		/// <summary>
-		/// Adds list of products to order
+		/// Adds a range of Products to an Order
 		/// </summary>
+		/// <param name="order">The Order</param>
+		/// <param name="products">List of Products</param>
 		/// <returns>
-		/// Returns 'true' if successfully inserted into database
+		/// 'true' if successfully inserted into database
 		/// </returns>
 		public bool AddProducts(Order order, List<Product> products) {
 			List<OrderProduct> range = products.ConvertAll<OrderProduct>(p =>
@@ -115,10 +131,12 @@ namespace TylerMart.Storage.Repositories {
 			return Db.SaveChanges() >= 1;
 		}
 		/// <summary>
-		/// Removes list of products from order
+		/// Removes a range of Products from an Order
 		/// </summary>
+		/// <param name="order">The Order</param>
+		/// <param name="products">List of Products</param>
 		/// <returns>
-		/// Returns 'true' if successfully removed from database
+		/// 'true' if successfully removed from database
 		/// </returns>
 		public bool RemoveProducts(Order order, List<Product> products) {
 			List<OrderProduct> range = new List<OrderProduct>();

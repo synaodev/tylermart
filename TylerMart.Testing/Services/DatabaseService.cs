@@ -39,7 +39,7 @@ namespace TylerMart.Testing.Services {
 			Factory = new DatabaseFactory();
 			base.Initialize(
 				db: Factory.CreateDbContext(),
-				ensured: true
+				transient: true
 			);
 		}
 	}
