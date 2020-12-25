@@ -1,5 +1,5 @@
 
-namespace TylerMart.Storage.Models {
+namespace TylerMart.Domain.Models {
 	public interface IModel {
 		int GetID();
 	}

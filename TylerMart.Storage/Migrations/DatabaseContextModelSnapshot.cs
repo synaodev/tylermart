@@ -19,7 +19,7 @@ namespace TylerMart.Storage.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.1");
 
-            modelBuilder.Entity("TylerMart.Storage.Models.Customer", b =>
+            modelBuilder.Entity("TylerMart.Domain.Models.Customer", b =>
                 {
                     b.Property<int>("CustomerID")
                         .ValueGeneratedOnAdd()
@@ -65,7 +65,7 @@ namespace TylerMart.Storage.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TylerMart.Storage.Models.Location", b =>
+            modelBuilder.Entity("TylerMart.Domain.Models.Location", b =>
                 {
                     b.Property<int>("LocationID")
                         .ValueGeneratedOnAdd()
@@ -96,7 +96,7 @@ namespace TylerMart.Storage.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TylerMart.Storage.Models.LocationProduct", b =>
+            modelBuilder.Entity("TylerMart.Domain.Models.LocationProduct", b =>
                 {
                     b.Property<int>("LocationProductID")
                         .ValueGeneratedOnAdd()
@@ -168,7 +168,7 @@ namespace TylerMart.Storage.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TylerMart.Storage.Models.Order", b =>
+            modelBuilder.Entity("TylerMart.Domain.Models.Order", b =>
                 {
                     b.Property<int>("OrderID")
                         .ValueGeneratedOnAdd()
@@ -202,7 +202,7 @@ namespace TylerMart.Storage.Migrations
                             Completed = false,
                             CustomerID = 1,
                             LocationID = 1,
-                            PlacedAt = new DateTime(2020, 12, 23, 20, 14, 10, 15, DateTimeKind.Local).AddTicks(3107)
+                            PlacedAt = new DateTime(2020, 12, 24, 19, 42, 0, 670, DateTimeKind.Local).AddTicks(8128)
                         },
                         new
                         {
@@ -210,11 +210,11 @@ namespace TylerMart.Storage.Migrations
                             Completed = false,
                             CustomerID = 2,
                             LocationID = 2,
-                            PlacedAt = new DateTime(2020, 12, 23, 20, 14, 10, 19, DateTimeKind.Local).AddTicks(8238)
+                            PlacedAt = new DateTime(2020, 12, 24, 19, 42, 0, 675, DateTimeKind.Local).AddTicks(5218)
                         });
                 });
 
-            modelBuilder.Entity("TylerMart.Storage.Models.OrderProduct", b =>
+            modelBuilder.Entity("TylerMart.Domain.Models.OrderProduct", b =>
                 {
                     b.Property<int>("OrderProductID")
                         .ValueGeneratedOnAdd()
@@ -262,7 +262,7 @@ namespace TylerMart.Storage.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TylerMart.Storage.Models.Product", b =>
+            modelBuilder.Entity("TylerMart.Domain.Models.Product", b =>
                 {
                     b.Property<int>("ProductID")
                         .ValueGeneratedOnAdd()
@@ -299,15 +299,15 @@ namespace TylerMart.Storage.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TylerMart.Storage.Models.LocationProduct", b =>
+            modelBuilder.Entity("TylerMart.Domain.Models.LocationProduct", b =>
                 {
-                    b.HasOne("TylerMart.Storage.Models.Location", "Location")
+                    b.HasOne("TylerMart.Domain.Models.Location", "Location")
                         .WithMany("LocationProducts")
                         .HasForeignKey("LocationID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TylerMart.Storage.Models.Product", "Product")
+                    b.HasOne("TylerMart.Domain.Models.Product", "Product")
                         .WithMany("LocationProducts")
                         .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -318,15 +318,15 @@ namespace TylerMart.Storage.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("TylerMart.Storage.Models.Order", b =>
+            modelBuilder.Entity("TylerMart.Domain.Models.Order", b =>
                 {
-                    b.HasOne("TylerMart.Storage.Models.Customer", "Customer")
+                    b.HasOne("TylerMart.Domain.Models.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TylerMart.Storage.Models.Location", "Location")
+                    b.HasOne("TylerMart.Domain.Models.Location", "Location")
                         .WithMany()
                         .HasForeignKey("LocationID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -337,15 +337,15 @@ namespace TylerMart.Storage.Migrations
                     b.Navigation("Location");
                 });
 
-            modelBuilder.Entity("TylerMart.Storage.Models.OrderProduct", b =>
+            modelBuilder.Entity("TylerMart.Domain.Models.OrderProduct", b =>
                 {
-                    b.HasOne("TylerMart.Storage.Models.Order", "Order")
+                    b.HasOne("TylerMart.Domain.Models.Order", "Order")
                         .WithMany("OrderProducts")
                         .HasForeignKey("OrderID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TylerMart.Storage.Models.Product", "Product")
+                    b.HasOne("TylerMart.Domain.Models.Product", "Product")
                         .WithMany("OrderProducts")
                         .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -356,17 +356,17 @@ namespace TylerMart.Storage.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("TylerMart.Storage.Models.Location", b =>
+            modelBuilder.Entity("TylerMart.Domain.Models.Location", b =>
                 {
                     b.Navigation("LocationProducts");
                 });
 
-            modelBuilder.Entity("TylerMart.Storage.Models.Order", b =>
+            modelBuilder.Entity("TylerMart.Domain.Models.Order", b =>
                 {
                     b.Navigation("OrderProducts");
                 });
 
-            modelBuilder.Entity("TylerMart.Storage.Models.Product", b =>
+            modelBuilder.Entity("TylerMart.Domain.Models.Product", b =>
                 {
                     b.Navigation("LocationProducts");
 

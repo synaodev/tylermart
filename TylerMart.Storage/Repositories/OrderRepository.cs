@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-using TylerMart.Storage.Models;
+using TylerMart.Domain.Models;
 
 namespace TylerMart.Storage.Repositories {
 	public class OrderRepository : Repository<Order> {

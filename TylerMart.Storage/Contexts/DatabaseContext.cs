@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-using TylerMart.Storage.Models;
+using TylerMart.Domain.Models;
 
 namespace TylerMart.Storage.Contexts {
 	public class DatabaseContext : DbContext {

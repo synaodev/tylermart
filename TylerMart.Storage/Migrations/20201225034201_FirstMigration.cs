@@ -178,8 +178,8 @@ namespace TylerMart.Storage.Migrations
                 columns: new[] { "OrderID", "Completed", "CustomerID", "LocationID", "PlacedAt" },
                 values: new object[,]
                 {
-                    { 1, false, 1, 1, new DateTime(2020, 12, 23, 20, 14, 10, 15, DateTimeKind.Local).AddTicks(3107) },
-                    { 2, false, 2, 2, new DateTime(2020, 12, 23, 20, 14, 10, 19, DateTimeKind.Local).AddTicks(8238) }
+                    { 1, false, 1, 1, new DateTime(2020, 12, 24, 19, 42, 0, 670, DateTimeKind.Local).AddTicks(8128) },
+                    { 2, false, 2, 2, new DateTime(2020, 12, 24, 19, 42, 0, 675, DateTimeKind.Local).AddTicks(5218) }
                 });
 
             migrationBuilder.InsertData(

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TylerMart.Storage.Models {
+namespace TylerMart.Domain.Models {
 	[Table("LocationProducts")]
 	public class LocationProduct : Model {
 		[Key]
