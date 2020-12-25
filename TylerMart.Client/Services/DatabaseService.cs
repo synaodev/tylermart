@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using TylerMart.Storage.Contexts;
 using TylerMart.Storage.Repositories;
 
-namespace TylerMart.Local.Services {
+namespace TylerMart.Client.Services {
 	internal class DatabaseFactory : IDesignTimeDbContextFactory<DatabaseContext> {
 		/// <summary>
 		/// Creates database context configured to use SQL Server
