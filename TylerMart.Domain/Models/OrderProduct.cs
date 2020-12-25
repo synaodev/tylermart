@@ -3,20 +3,37 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TylerMart.Domain.Models {
 	/// <summary>
-	/// Order-Product Pair contains:
-	/// <list>
-	/// <item>- The <see cref="TylerMart.Domain.Models.Order"/></item>
-	/// <item>- The <see cref="TylerMart.Domain.Models.Product"/></item>
-	/// </list>
+	/// Order-Product Pair Model
 	/// </summary>
 	[Table("OrderProducts")]
 	public class OrderProduct : Model {
+		/// <summary>
+		/// Primary key
+		/// </summary>
 		[Key]
 		public int OrderProductID { get; set; }
+		/// <summary>
+		/// <see cref="TylerMart.Domain.Models.Order"/> primary key
+		/// </summary>
 		public int OrderID { get; set; }
+		/// <summary>
+		/// <see cref="TylerMart.Domain.Models.Order"/> navigation field
+		/// </summary>
 		public virtual Order Order { get; set; }
+		/// <summary>
+		/// <see cref="TylerMart.Domain.Models.Product"/> primary key
+		/// </summary>
 		public int ProductID { get; set; }
+		/// <summary>
+		/// <see cref="TylerMart.Domain.Models.Product"/> navigation field
+		/// </summary>
 		public virtual Product Product { get; set; }
+		/// <summary>
+		/// Get Order-Product Pairs's primary key
+		/// </summary>
+		/// <returns>
+		/// 32-bit integer
+		/// </returns>
 		public override int GetID() => OrderProductID;
 		/// <summary>
 		/// Generates Order-Product Pair array for seeding database

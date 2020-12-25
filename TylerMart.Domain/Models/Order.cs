@@ -5,29 +5,51 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TylerMart.Domain.Models {
 	/// <summary>
-	/// Order Model contains:
-	/// <list>
-	/// <item>- Order ID</item>
-	/// <item>- Placement Date</item>
-	/// <item>- Completed</item>
-	/// <item>- The <see cref="TylerMart.Domain.Models.Customer"/></item>
-	/// <item>- The <see cref="TylerMart.Domain.Models.Location"/></item>
-	/// <item>- List of <see cref="TylerMart.Domain.Models.OrderProduct"/> Pairs</item>
-	/// </list>
+	/// Order Model
 	/// </summary>
 	[Table("Orders")]
 	public class Order : Model {
+		/// <summary>
+		/// Primary key
+		/// </summary>
 		[Key]
 		public int OrderID { get; set; }
+		/// <summary>
+		/// Placement Date
+		/// </summary>
 		public DateTime PlacedAt { get; set; }
+		/// <summary>
+		/// Completed
+		/// </summary>
 		public bool Completed { get; set; }
+		/// <summary>
+		/// <see cref="TylerMart.Domain.Models.Customer"/> primary key
+		/// </summary>
 		[ForeignKey("Customer")]
 		public int CustomerID { get; set; }
+		/// <summary>
+		/// <see cref="TylerMart.Domain.Models.Customer"/> navigation field
+		/// </summary>
 		public virtual Customer Customer { get; set; }
+		/// <summary>
+		/// <see cref="TylerMart.Domain.Models.Location"/> primary key
+		/// </summary>
 		[ForeignKey("Location")]
 		public int LocationID { get; set; }
+		/// <summary>
+		/// <see cref="TylerMart.Domain.Models.Location"/> navigation field
+		/// </summary>
 		public virtual Location Location { get; set; }
+		/// <summary>
+		/// Navigation list of <see cref="TylerMart.Domain.Models.OrderProduct"/> Pairs
+		/// </summary>
 		public virtual List<OrderProduct> OrderProducts { get; set; }
+		/// <summary>
+		/// Get Order's primary key
+		/// </summary>
+		/// <returns>
+		/// 32-bit integer
+		/// </returns>
 		public override int GetID() => OrderID;
 		/// <summary>
 		/// Generates Order array for seeding database

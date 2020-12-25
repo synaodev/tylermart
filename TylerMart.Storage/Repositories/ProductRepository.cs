@@ -5,10 +5,14 @@ using Microsoft.EntityFrameworkCore;
 using TylerMart.Domain.Models;
 
 namespace TylerMart.Storage.Repositories {
+	/// <summary>
+	/// <see cref="TylerMart.Domain.Models.Product"/> Repository
+	/// </summary>
 	public class ProductRepository : Repository<Product> {
 		/// <summary>
-		/// <see cref="TylerMart.Domain.Models.Product"/> Repository
+		/// Constructor that takes an instance of DbContext
 		/// </summary>
+		/// <param name="db">Instance of DbContext</param>
 		public ProductRepository(DbContext db) : base(db) {}
 		/// <summary>
 		/// Finds Products contained in an Order

@@ -4,20 +4,31 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TylerMart.Domain.Models {
 	/// <summary>
-	/// Location Model contains:
-	/// <list>
-	/// <item>- Location ID</item>
-	/// <item>- Name</item>
-	/// <item>- List of <see cref="TylerMart.Domain.Models.LocationProduct"/> Pairs</item>
-	/// </list>
+	/// Location Model
 	/// </summary>
 	[Table("Locations")]
 	public class Location : Model {
+		/// <summary>
+		/// Primary key
+		/// </summary>
 		[Key]
 		public int LocationID { get; set; }
-		[MinLength(3)]
+		/// <summary>
+		/// Name
+		/// </summary>
+		[MinLength(2, ErrorMessage = "Name must be at least two letters long!")]
+		[RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Name must only contain letters!")]
 		public string Name { get; set; }
+		/// <summary>
+		/// Navigation list of <see cref="TylerMart.Domain.Models.LocationProduct"/> Pairs
+		/// </summary>
 		public virtual List<LocationProduct> LocationProducts { get; set; }
+		/// <summary>
+		/// Get Location's primary key
+		/// </summary>
+		/// <returns>
+		/// 32-bit integer
+		/// </returns>
 		public override int GetID() => LocationID;
 		/// <summary>
 		/// Generates Location array for seeding database

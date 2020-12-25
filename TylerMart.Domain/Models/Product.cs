@@ -4,28 +4,43 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TylerMart.Domain.Models {
 	/// <summary>
-	/// Product Model contains:
-	/// <list>
-	/// <item>- Product ID</item>
-	/// <item>- Name</item>
-	/// <item>- Description</item>
-	/// <item>- Price</item>
-	/// <item>- List of <see cref="TylerMart.Domain.Models.LocationProduct"/> Pairs</item>
-	/// <item>- List of <see cref="TylerMart.Domain.Models.OrderProduct"/> Pairs</item>
-	/// </list>
+	/// Product Model
 	/// </summary>
 	[Table("Products")]
 	public class Product : Model {
+		/// <summary>
+		/// Primary key
+		/// </summary>
 		[Key]
 		public int ProductID { get; set; }
-		[MinLength(3)]
+		/// <summary>
+		/// Name
+		/// </summary>
+		[MinLength(2, ErrorMessage = "Name must be at least two letters long!")]
 		public string Name { get; set; }
-		[MinLength(5)]
+		/// <summary>
+		/// Description
+		/// </summary>
+		[MinLength(3, ErrorMessage = "Description must be at least three letters long!")]
 		public string Description { get; set; }
-		[Required]
+		/// <summary>
+		/// Price
+		/// </summary>
 		public decimal Price { get; set; }
+		/// <summary>
+		/// Navigation list of <see cref="TylerMart.Domain.Models.LocationProduct"/> Pairs
+		/// </summary>
 		public virtual List<LocationProduct> LocationProducts { get; set; }
+		/// <summary>
+		/// Navigation list of <see cref="TylerMart.Domain.Models.OrderProduct"/> Pairs
+		/// </summary>
 		public virtual List<OrderProduct> OrderProducts { get; set; }
+		/// <summary>
+		/// Get Product's primary key
+		/// </summary>
+		/// <returns>
+		/// 32-bit integer
+		/// </returns>
 		public override int GetID() => ProductID;
 		/// <summary>
 		/// Generates Product array for seeding database

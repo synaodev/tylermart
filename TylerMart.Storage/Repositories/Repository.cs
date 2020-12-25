@@ -61,7 +61,14 @@ namespace TylerMart.Storage.Repositories {
 	/// Generic repository interface for <see cref="TylerMart.Domain.Models.Model"/>
 	/// </summary>
 	public abstract class Repository<T> : IRepository<T> where T : Model {
+		/// <summary>
+		/// Instance of DbContext used for database access
+		/// </summary>
 		protected DbContext Db;
+		/// <summary>
+		/// Constructor that takes an instance of DbContext
+		/// </summary>
+		/// <param name="db">Instance of DbContext</param>
 		public Repository(DbContext db) {
 			Db = db;
 		}

@@ -6,9 +6,21 @@ namespace TylerMart.Storage.Repositories {
 	/// </summary>
 	public abstract class RepositoryCollection {
 		private DbContext Db;
+		/// <summary>
+		/// The <see cref="TylerMart.Storage.Repositories.CustomerRepository"/>
+		/// </summary>
 		public CustomerRepository Customers;
+		/// <summary>
+		/// The <see cref="TylerMart.Storage.Repositories.ProductRepository"/>
+		/// </summary>
 		public ProductRepository Products;
+		/// <summary>
+		/// The <see cref="TylerMart.Storage.Repositories.LocationRepository"/>
+		/// </summary>
 		public LocationRepository Locations;
+		/// <summary>
+		/// The <see cref="TylerMart.Storage.Repositories.OrderRepository"/>
+		/// </summary>
 		public OrderRepository Orders;
 		/// <summary>
 		/// Initialize database connection and all repositories

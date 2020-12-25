@@ -9,6 +9,10 @@ namespace TylerMart.Storage.Repositories {
 	/// <see cref="TylerMart.Domain.Models.Order"/> Repository
 	/// </summary>
 	public class OrderRepository : Repository<Order> {
+		/// <summary>
+		/// Constructor that takes an instance of DbContext
+		/// </summary>
+		/// <param name="db">Instance of DbContext</param>
 		public OrderRepository(DbContext db) : base(db) {}
 		/// <summary>
 		/// Get Order from primary key

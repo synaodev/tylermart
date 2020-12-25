@@ -35,6 +35,9 @@ namespace TylerMart.Testing.Services {
 	/// </summary>
 	public class DatabaseService : RepositoryCollection {
 		private DatabaseFactory Factory;
+		/// <summary>
+		/// Default constructor
+		/// </summary>
 		public DatabaseService() {
 			Factory = new DatabaseFactory();
 			base.Initialize(

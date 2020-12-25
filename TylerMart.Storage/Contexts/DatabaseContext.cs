@@ -13,7 +13,14 @@ namespace TylerMart.Storage.Contexts {
 		private DbSet<Product> Products;
 		private DbSet<Location> Locations;
 		private DbSet<Order> Orders;
+		/// <summary>
+		/// Constructor that takes options
+		/// </summary>
+		/// <param name="options">Context options</param>
 		public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) {}
+		/// <summary>
+		/// Default constructor
+		/// </summary>
 		public DatabaseContext() {}
 		/// <summary>
 		/// Uses the Fluent API for:

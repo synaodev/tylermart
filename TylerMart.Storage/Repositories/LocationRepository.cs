@@ -9,6 +9,10 @@ namespace TylerMart.Storage.Repositories {
 	/// <see cref="TylerMart.Domain.Models.Location"/> Repository
 	/// </summary>
 	public class LocationRepository : Repository<Location> {
+		/// <summary>
+		/// Constructor that takes an instance of DbContext
+		/// </summary>
+		/// <param name="db">Instance of DbContext</param>
 		public LocationRepository(DbContext db) : base(db) {}
 		/// <summary>
 		/// Gets Location from name

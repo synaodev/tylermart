@@ -9,6 +9,10 @@ namespace TylerMart.Storage.Repositories {
 	/// <see cref="TylerMart.Domain.Models.Customer"/> Repository
 	/// </summary>
 	public class CustomerRepository : Repository<Customer> {
+		/// <summary>
+		/// Constructor that takes an instance of DbContext
+		/// </summary>
+		/// <param name="db">Instance of DbContext</param>
 		public CustomerRepository(DbContext db) : base(db) {}
 		/// <summary>
 		/// Gets Customer from email address
