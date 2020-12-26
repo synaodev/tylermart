@@ -13,7 +13,7 @@ using TylerMart.Storage.Contexts;
 namespace TylerMart.Storage.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20201225061342_FirstMigration")]
+    [Migration("20201226204953_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,22 +32,25 @@ namespace TylerMart.Storage.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("EmailAddress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CustomerID");
 
                     b.HasIndex("EmailAddress")
-                        .IsUnique()
-                        .HasFilter("[EmailAddress] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Customers");
 
@@ -58,7 +61,7 @@ namespace TylerMart.Storage.Migrations
                             EmailAddress = "tyler.cadena@revature.net",
                             FirstName = "Tyler",
                             LastName = "Cadena",
-                            Password = "synaodev"
+                            Password = "tylercadena"
                         },
                         new
                         {
@@ -66,7 +69,7 @@ namespace TylerMart.Storage.Migrations
                             EmailAddress = "george.bumble@revature.net",
                             FirstName = "George",
                             LastName = "Bumble",
-                            Password = "onionbutt"
+                            Password = "georgebumble"
                         });
                 });
 
@@ -78,13 +81,13 @@ namespace TylerMart.Storage.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("LocationID");
 
                     b.HasIndex("Name")
-                        .IsUnique()
-                        .HasFilter("[Name] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Locations");
 
@@ -180,17 +183,17 @@ namespace TylerMart.Storage.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<bool>("Completed")
+                    b.Property<bool>("Complete")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("CustomerID")
                         .HasColumnType("int");
 
                     b.Property<int>("LocationID")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("PlacedAt")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("OrderID");
 
@@ -204,18 +207,18 @@ namespace TylerMart.Storage.Migrations
                         new
                         {
                             OrderID = 1,
-                            Completed = false,
+                            Complete = true,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerID = 1,
-                            LocationID = 1,
-                            PlacedAt = new DateTime(2020, 12, 24, 22, 13, 41, 896, DateTimeKind.Local).AddTicks(246)
+                            LocationID = 1
                         },
                         new
                         {
                             OrderID = 2,
-                            Completed = false,
+                            Complete = true,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerID = 2,
-                            LocationID = 2,
-                            PlacedAt = new DateTime(2020, 12, 24, 22, 13, 41, 900, DateTimeKind.Local).AddTicks(6555)
+                            LocationID = 2
                         });
                 });
 
@@ -275,9 +278,11 @@ namespace TylerMart.Storage.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,7 +7,7 @@ namespace TylerMart.Domain.Models {
 	/// Location-Product Pair Model
 	/// </summary>
 	[Table("LocationProducts")]
-	public class LocationProduct : Model {
+	public class LocationProduct : Model, IValidatableObject {
 		/// <summary>
 		/// Primary key
 		/// </summary>
@@ -19,7 +20,12 @@ namespace TylerMart.Domain.Models {
 		/// <summary>
 		/// <see cref="TylerMart.Domain.Models.Location"/> navigation field
 		/// </summary>
-		public virtual Location Location { get; set; }
+		/// <remarks>
+		/// This field only exists for using DbContext's Fluent API
+		/// and it will generally be null when accessed via repository,
+		/// so do not attempt to use this field for any reason.
+		/// </remarks>
+		public virtual Location Location { get; private set; }
 		/// <summary>
 		/// <see cref="TylerMart.Domain.Models.Product"/> primary key
 		/// </summary>
@@ -27,7 +33,12 @@ namespace TylerMart.Domain.Models {
 		/// <summary>
 		/// <see cref="TylerMart.Domain.Models.Product"/> navigation field
 		/// </summary>
-		public virtual Product Product { get; set; }
+		/// <remarks>
+		/// This field only exists for using DbContext's Fluent API
+		/// and it will generally be null when accessed via repository,
+		/// so do not attempt to use this field for any reason.
+		/// </remarks>
+		public virtual Product Product { get; private set; }
 		/// <summary>
 		/// Get Location-Product Pairs's primary key
 		/// </summary>
@@ -90,6 +101,27 @@ namespace TylerMart.Domain.Models {
 				}
 			};
 			return locationProducts;
+		}
+		/// <summary>
+		/// Validates LocationProduct.LocationID and LocationProduct.ProductID
+		/// </summary>
+		/// <param name="context">Validation context</param>
+		/// <returns>
+		/// IEnumerable containing validation errors
+		/// </returns>
+		public IEnumerable<ValidationResult> Validate(ValidationContext context) {
+			if (LocationID <= 0) {
+				yield return new ValidationResult(
+					"LocationProduct.LocationID cannot be less than or equal to zero!",
+					new[] { nameof(LocationID), nameof(LocationProduct) }
+				);
+			}
+			if (ProductID <= 0) {
+				yield return new ValidationResult(
+					"LocationProduct.ProductID cannot be less than or equal to zero!",
+					new[] { nameof(ProductID), nameof(LocationProduct) }
+				);
+			}
 		}
 	}
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,7 +20,12 @@ namespace TylerMart.Domain.Models {
 		/// <summary>
 		/// <see cref="TylerMart.Domain.Models.Order"/> navigation field
 		/// </summary>
-		public virtual Order Order { get; set; }
+		/// <remarks>
+		/// This field only exists for using DbContext's Fluent API
+		/// and it will generally be null when accessed via repository,
+		/// so do not attempt to use this field for any reason.
+		/// </remarks>
+		public virtual Order Order { get; private set; }
 		/// <summary>
 		/// <see cref="TylerMart.Domain.Models.Product"/> primary key
 		/// </summary>
@@ -27,7 +33,12 @@ namespace TylerMart.Domain.Models {
 		/// <summary>
 		/// <see cref="TylerMart.Domain.Models.Product"/> navigation field
 		/// </summary>
-		public virtual Product Product { get; set; }
+		/// <remarks>
+		/// This field only exists for using DbContext's Fluent API
+		/// and it will generally be null when accessed via repository,
+		/// so do not attempt to use this field for any reason.
+		/// </remarks>
+		public virtual Product Product { get; private set; }
 		/// <summary>
 		/// Get Order-Product Pairs's primary key
 		/// </summary>
@@ -70,6 +81,27 @@ namespace TylerMart.Domain.Models {
 				}
 			};
 			return orderProducts;
+		}
+		/// <summary>
+		/// Validates OrderProduct.OrderID and OrderProduct.ProductID
+		/// </summary>
+		/// <param name="context">Validation context</param>
+		/// <returns>
+		/// IEnumerable containing validation errors
+		/// </returns>
+		public IEnumerable<ValidationResult> Validate(ValidationContext context) {
+			if (OrderID <= 0) {
+				yield return new ValidationResult(
+					"OrderProduct.OrderID cannot be less than or equal to zero!",
+					new[] { nameof(OrderID), nameof(OrderProduct) }
+				);
+			}
+			if (ProductID <= 0) {
+				yield return new ValidationResult(
+					"OrderProduct.ProductID cannot be less than or equal to zero!",
+					new[] { nameof(ProductID), nameof(OrderProduct) }
+				);
+			}
 		}
 	}
 }

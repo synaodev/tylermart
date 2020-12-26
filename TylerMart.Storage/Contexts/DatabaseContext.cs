@@ -59,7 +59,7 @@ namespace TylerMart.Storage.Contexts {
 			builder.Entity<OrderProduct>().HasData(OrderProduct.GenerateSeededData());
 		}
 		/// <summary>
-		/// Sets timestamp to Order when first committed to the database
+		/// Sets <see cref="TylerMart.Domain.Models.Order.CreatedAt"/> when first saved to the database
 		/// </summary>
 		/// <returns>
 		/// Number of saved changes to the database
@@ -68,7 +68,7 @@ namespace TylerMart.Storage.Contexts {
 			var entries = ChangeTracker.Entries()
 				.Where(e => e.Entity is Order && e.State == EntityState.Added);
 			foreach (var e in entries) {
-				((Order)e.Entity).PlacedAt = DateTime.Now;
+				((Order)e.Entity).CreatedAt = DateTime.Now;
 			}
 			return base.SaveChanges();
 		}

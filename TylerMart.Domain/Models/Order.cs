@@ -8,20 +8,20 @@ namespace TylerMart.Domain.Models {
 	/// Order Model
 	/// </summary>
 	[Table("Orders")]
-	public class Order : Model {
+	public class Order : Model, IValidatableObject {
 		/// <summary>
 		/// Primary key
 		/// </summary>
 		[Key]
 		public int OrderID { get; set; }
 		/// <summary>
-		/// Placement Date
+		/// Creation date
 		/// </summary>
-		public DateTime PlacedAt { get; set; }
+		public DateTime CreatedAt { get; set; }
 		/// <summary>
-		/// Completed
+		/// Order has been completed
 		/// </summary>
-		public bool Completed { get; set; }
+		public bool Complete { get; set; } = false;
 		/// <summary>
 		/// <see cref="TylerMart.Domain.Models.Customer"/> primary key
 		/// </summary>
@@ -30,7 +30,12 @@ namespace TylerMart.Domain.Models {
 		/// <summary>
 		/// <see cref="TylerMart.Domain.Models.Customer"/> navigation field
 		/// </summary>
-		public virtual Customer Customer { get; set; }
+		/// <remarks>
+		/// This field only exists for using DbContext's Fluent API
+		/// and it will generally be null when accessed via repository,
+		/// so do not attempt to use this field for any reason.
+		/// </remarks>
+		public virtual Customer Customer { get; private set; }
 		/// <summary>
 		/// <see cref="TylerMart.Domain.Models.Location"/> primary key
 		/// </summary>
@@ -39,11 +44,21 @@ namespace TylerMart.Domain.Models {
 		/// <summary>
 		/// <see cref="TylerMart.Domain.Models.Location"/> navigation field
 		/// </summary>
-		public virtual Location Location { get; set; }
+		/// <remarks>
+		/// This field only exists for using DbContext's Fluent API
+		/// and it will generally be null when accessed via repository,
+		/// so do not attempt to use this field for any reason.
+		/// </remarks>
+		public virtual Location Location { get; private set; }
 		/// <summary>
 		/// Navigation list of <see cref="TylerMart.Domain.Models.OrderProduct"/> Pairs
 		/// </summary>
-		public virtual List<OrderProduct> OrderProducts { get; set; }
+		/// <remarks>
+		/// This field only exists for using DbContext's Fluent API
+		/// and it will generally be null when accessed via repository,
+		/// so do not attempt to use this field for any reason.
+		/// </remarks>
+		public virtual List<OrderProduct> OrderProducts { get; private set; }
 		/// <summary>
 		/// Get Order's primary key
 		/// </summary>
@@ -66,20 +81,39 @@ namespace TylerMart.Domain.Models {
 			Order[] orders = new Order[] {
 				new Order() {
 					OrderID = 1,
-					PlacedAt = DateTime.Now,
-					Completed = false,
+					Complete = true,
 					CustomerID = customers[0].CustomerID,
 					LocationID = locations[0].LocationID
 				},
 				new Order() {
 					OrderID = 2,
-					PlacedAt = DateTime.Now,
-					Completed = false,
+					Complete = true,
 					CustomerID = customers[1].CustomerID,
 					LocationID = locations[1].LocationID
 				}
 			};
 			return orders;
+		}
+		/// <summary>
+		/// Validates Order.CustomerID and Order.LocationID
+		/// </summary>
+		/// <param name="context">Validation context</param>
+		/// <returns>
+		/// IEnumerable containing validation errors
+		/// </returns>
+		public IEnumerable<ValidationResult> Validate(ValidationContext context) {
+			if (CustomerID <= 0) {
+				yield return new ValidationResult(
+					"Order.CustomerID cannot be less than or equal to zero!",
+					new[] { nameof(CustomerID), nameof(Order) }
+				);
+			}
+			if (LocationID <= 0) {
+				yield return new ValidationResult(
+					"Order.LocationID cannot be less than or equal to zero!",
+					new[] { nameof(LocationID), nameof(Order) }
+				);
+			}
 		}
 	}
 }

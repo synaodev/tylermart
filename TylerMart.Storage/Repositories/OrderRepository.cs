@@ -42,7 +42,7 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public List<Order> FindByIncomplete() {
 			return Db.Set<Order>()
-				.Where(o => !o.Completed)
+				.Where(o => !o.Complete)
 				.ToList();
 		}
 		/// <summary>

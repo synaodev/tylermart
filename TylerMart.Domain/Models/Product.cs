@@ -7,7 +7,7 @@ namespace TylerMart.Domain.Models {
 	/// Product Model
 	/// </summary>
 	[Table("Products")]
-	public class Product : Model {
+	public class Product : Model, IValidatableObject {
 		/// <summary>
 		/// Primary key
 		/// </summary>
@@ -16,25 +16,37 @@ namespace TylerMart.Domain.Models {
 		/// <summary>
 		/// Name
 		/// </summary>
+		[Required(ErrorMessage = "Name is required!")]
 		[MinLength(2, ErrorMessage = "Name must be at least two letters long!")]
 		public string Name { get; set; }
 		/// <summary>
 		/// Description
 		/// </summary>
+		[Required(ErrorMessage = "Description is required!")]
 		[MinLength(3, ErrorMessage = "Description must be at least three letters long!")]
 		public string Description { get; set; }
 		/// <summary>
 		/// Price
 		/// </summary>
-		public decimal Price { get; set; }
+		public decimal Price { get; set; } = 0.0M;
 		/// <summary>
 		/// Navigation list of <see cref="TylerMart.Domain.Models.LocationProduct"/> Pairs
 		/// </summary>
-		public virtual List<LocationProduct> LocationProducts { get; set; }
+		/// <remarks>
+		/// This field only exists for using DbContext's Fluent API
+		/// and it will generally be null when accessed via repository,
+		/// so do not attempt to use this field for any reason.
+		/// </remarks>
+		public virtual List<LocationProduct> LocationProducts { get; private set; }
 		/// <summary>
 		/// Navigation list of <see cref="TylerMart.Domain.Models.OrderProduct"/> Pairs
 		/// </summary>
-		public virtual List<OrderProduct> OrderProducts { get; set; }
+		/// <remarks>
+		/// This field only exists for using DbContext's Fluent API
+		/// and it will generally be null when accessed via repository,
+		/// so do not attempt to use this field for any reason.
+		/// </remarks>
+		public virtual List<OrderProduct> OrderProducts { get; private set; }
 		/// <summary>
 		/// Get Product's primary key
 		/// </summary>
@@ -67,6 +79,21 @@ namespace TylerMart.Domain.Models {
 				}
 			};
 			return products;
+		}
+		/// <summary>
+		/// Validates Product.Price
+		/// </summary>
+		/// <param name="context">Validation context</param>
+		/// <returns>
+		/// IEnumerable containing validation errors
+		/// </returns>
+		public IEnumerable<ValidationResult> Validate(ValidationContext context) {
+			if (Price <= 0.0M) {
+				yield return new ValidationResult(
+					"Product.Price cannot be less than or equal to zero!",
+					new[] { nameof(Price), nameof(Product) }
+				);
+			}
 		}
 	}
 }

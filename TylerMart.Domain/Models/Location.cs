@@ -16,13 +16,19 @@ namespace TylerMart.Domain.Models {
 		/// <summary>
 		/// Name
 		/// </summary>
+		[Required(ErrorMessage = "Name is required!")]
 		[MinLength(2, ErrorMessage = "Name must be at least two letters long!")]
 		[RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Name must only contain letters!")]
 		public string Name { get; set; }
 		/// <summary>
 		/// Navigation list of <see cref="TylerMart.Domain.Models.LocationProduct"/> Pairs
 		/// </summary>
-		public virtual List<LocationProduct> LocationProducts { get; set; }
+		/// <remarks>
+		/// This field only exists for using DbContext's Fluent API
+		/// and it will generally be null when accessed via repository,
+		/// so do not attempt to use this field for any reason.
+		/// </remarks>
+		public virtual List<LocationProduct> LocationProducts { get; private set; }
 		/// <summary>
 		/// Get Location's primary key
 		/// </summary>
