@@ -10,11 +10,6 @@ namespace TylerMart.Domain.Models {
 	[Table("Orders")]
 	public class Order : Model, IValidatableObject {
 		/// <summary>
-		/// Primary key
-		/// </summary>
-		[Key]
-		public int OrderID { get; set; }
-		/// <summary>
 		/// Creation date
 		/// </summary>
 		public DateTime CreatedAt { get; set; }
@@ -60,13 +55,6 @@ namespace TylerMart.Domain.Models {
 		/// </remarks>
 		public virtual List<OrderProduct> OrderProducts { get; private set; }
 		/// <summary>
-		/// Get Order's primary key
-		/// </summary>
-		/// <returns>
-		/// 32-bit integer
-		/// </returns>
-		public override int GetID() => OrderID;
-		/// <summary>
 		/// Generates Order array for seeding database
 		/// </summary>
 		/// <remarks>
@@ -80,16 +68,16 @@ namespace TylerMart.Domain.Models {
 			Location[] locations = Location.GenerateSeededData();
 			Order[] orders = new Order[] {
 				new Order() {
-					OrderID = 1,
+					ID = 1,
 					Complete = true,
-					CustomerID = customers[0].CustomerID,
-					LocationID = locations[0].LocationID
+					CustomerID = customers[0].ID,
+					LocationID = locations[0].ID
 				},
 				new Order() {
-					OrderID = 2,
+					ID = 2,
 					Complete = true,
-					CustomerID = customers[1].CustomerID,
-					LocationID = locations[1].LocationID
+					CustomerID = customers[1].ID,
+					LocationID = locations[1].ID
 				}
 			};
 			return orders;

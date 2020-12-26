@@ -13,7 +13,7 @@ using TylerMart.Storage.Contexts;
 namespace TylerMart.Storage.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20201226204953_FirstMigration")]
+    [Migration("20201226231533_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,7 @@ namespace TylerMart.Storage.Migrations
 
             modelBuilder.Entity("TylerMart.Domain.Models.Customer", b =>
                 {
-                    b.Property<int>("CustomerID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
@@ -47,7 +47,7 @@ namespace TylerMart.Storage.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CustomerID");
+                    b.HasKey("ID");
 
                     b.HasIndex("EmailAddress")
                         .IsUnique();
@@ -57,7 +57,7 @@ namespace TylerMart.Storage.Migrations
                     b.HasData(
                         new
                         {
-                            CustomerID = 1,
+                            ID = 1,
                             EmailAddress = "tyler.cadena@revature.net",
                             FirstName = "Tyler",
                             LastName = "Cadena",
@@ -65,7 +65,7 @@ namespace TylerMart.Storage.Migrations
                         },
                         new
                         {
-                            CustomerID = 2,
+                            ID = 2,
                             EmailAddress = "george.bumble@revature.net",
                             FirstName = "George",
                             LastName = "Bumble",
@@ -75,7 +75,7 @@ namespace TylerMart.Storage.Migrations
 
             modelBuilder.Entity("TylerMart.Domain.Models.Location", b =>
                 {
-                    b.Property<int>("LocationID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
@@ -84,7 +84,7 @@ namespace TylerMart.Storage.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("LocationID");
+                    b.HasKey("ID");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -94,19 +94,19 @@ namespace TylerMart.Storage.Migrations
                     b.HasData(
                         new
                         {
-                            LocationID = 1,
+                            ID = 1,
                             Name = "New Jersey"
                         },
                         new
                         {
-                            LocationID = 2,
+                            ID = 2,
                             Name = "Florida"
                         });
                 });
 
             modelBuilder.Entity("TylerMart.Domain.Models.LocationProduct", b =>
                 {
-                    b.Property<int>("LocationProductID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
@@ -117,7 +117,7 @@ namespace TylerMart.Storage.Migrations
                     b.Property<int>("ProductID")
                         .HasColumnType("int");
 
-                    b.HasKey("LocationProductID");
+                    b.HasKey("ID");
 
                     b.HasIndex("LocationID");
 
@@ -128,49 +128,49 @@ namespace TylerMart.Storage.Migrations
                     b.HasData(
                         new
                         {
-                            LocationProductID = 1,
+                            ID = 1,
                             LocationID = 1,
                             ProductID = 1
                         },
                         new
                         {
-                            LocationProductID = 2,
+                            ID = 2,
                             LocationID = 1,
                             ProductID = 1
                         },
                         new
                         {
-                            LocationProductID = 3,
-                            LocationID = 1,
-                            ProductID = 2
-                        },
-                        new
-                        {
-                            LocationProductID = 4,
+                            ID = 3,
                             LocationID = 1,
                             ProductID = 2
                         },
                         new
                         {
-                            LocationProductID = 5,
+                            ID = 4,
+                            LocationID = 1,
+                            ProductID = 2
+                        },
+                        new
+                        {
+                            ID = 5,
                             LocationID = 2,
                             ProductID = 1
                         },
                         new
                         {
-                            LocationProductID = 6,
+                            ID = 6,
                             LocationID = 2,
                             ProductID = 1
                         },
                         new
                         {
-                            LocationProductID = 7,
+                            ID = 7,
                             LocationID = 2,
                             ProductID = 2
                         },
                         new
                         {
-                            LocationProductID = 8,
+                            ID = 8,
                             LocationID = 2,
                             ProductID = 2
                         });
@@ -178,7 +178,7 @@ namespace TylerMart.Storage.Migrations
 
             modelBuilder.Entity("TylerMart.Domain.Models.Order", b =>
                 {
-                    b.Property<int>("OrderID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
@@ -195,7 +195,7 @@ namespace TylerMart.Storage.Migrations
                     b.Property<int>("LocationID")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderID");
+                    b.HasKey("ID");
 
                     b.HasIndex("CustomerID");
 
@@ -206,7 +206,7 @@ namespace TylerMart.Storage.Migrations
                     b.HasData(
                         new
                         {
-                            OrderID = 1,
+                            ID = 1,
                             Complete = true,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerID = 1,
@@ -214,7 +214,7 @@ namespace TylerMart.Storage.Migrations
                         },
                         new
                         {
-                            OrderID = 2,
+                            ID = 2,
                             Complete = true,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerID = 2,
@@ -224,7 +224,7 @@ namespace TylerMart.Storage.Migrations
 
             modelBuilder.Entity("TylerMart.Domain.Models.OrderProduct", b =>
                 {
-                    b.Property<int>("OrderProductID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
@@ -235,7 +235,7 @@ namespace TylerMart.Storage.Migrations
                     b.Property<int>("ProductID")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderProductID");
+                    b.HasKey("ID");
 
                     b.HasIndex("OrderID");
 
@@ -246,25 +246,25 @@ namespace TylerMart.Storage.Migrations
                     b.HasData(
                         new
                         {
-                            OrderProductID = 1,
+                            ID = 1,
                             OrderID = 1,
                             ProductID = 1
                         },
                         new
                         {
-                            OrderProductID = 2,
+                            ID = 2,
                             OrderID = 1,
                             ProductID = 2
                         },
                         new
                         {
-                            OrderProductID = 3,
+                            ID = 3,
                             OrderID = 2,
                             ProductID = 1
                         },
                         new
                         {
-                            OrderProductID = 4,
+                            ID = 4,
                             OrderID = 2,
                             ProductID = 2
                         });
@@ -272,7 +272,7 @@ namespace TylerMart.Storage.Migrations
 
             modelBuilder.Entity("TylerMart.Domain.Models.Product", b =>
                 {
-                    b.Property<int>("ProductID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
@@ -288,21 +288,21 @@ namespace TylerMart.Storage.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("ProductID");
+                    b.HasKey("ID");
 
                     b.ToTable("Products");
 
                     b.HasData(
                         new
                         {
-                            ProductID = 1,
+                            ID = 1,
                             Description = "You can carry stuff around",
                             Name = "Bag",
                             Price = 3.50m
                         },
                         new
                         {
-                            ProductID = 2,
+                            ID = 2,
                             Description = "Helpful for those with poor eyesight",
                             Name = "Glasses",
                             Price = 20.00m

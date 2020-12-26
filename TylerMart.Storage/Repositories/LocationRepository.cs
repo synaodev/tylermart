@@ -34,7 +34,7 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public List<Location> FindFromProduct(Product product) {
 			return Db.Set<LocationProduct>()
-				.Where(lp => lp.ProductID == product.ProductID)
+				.Where(lp => lp.ProductID == product.ID)
 				.Include(lp => lp.Location)
 				.Select(lp => lp.Location)
 				.ToList();
@@ -49,8 +49,8 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public bool AddProduct(Location location, Product product) {
 			LocationProduct lp = new LocationProduct() {
-				LocationID = location.LocationID,
-				ProductID = product.ProductID
+				LocationID = location.ID,
+				ProductID = product.ID
 			};
 			Db.Set<LocationProduct>().Add(lp);
 			return Db.SaveChanges() >= 1;
@@ -65,7 +65,7 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public bool RemoveProduct(Location location, Product product) {
 			LocationProduct q = Db.Set<LocationProduct>()
-				.LastOrDefault(lp => lp.LocationID == location.LocationID && lp.ProductID == product.ProductID);
+				.LastOrDefault(lp => lp.LocationID == location.ID && lp.ProductID == product.ID);
 			if (q != null) {
 				Db.Set<LocationProduct>().Remove(q);
 				return Db.SaveChanges() >= 1;
@@ -83,8 +83,8 @@ namespace TylerMart.Storage.Repositories {
 		public bool AddProducts(Location location, List<Product> products) {
 			List<LocationProduct> lps = products.ConvertAll<LocationProduct>(p =>
 				new LocationProduct() {
-					LocationID = location.LocationID,
-					ProductID = p.ProductID
+					LocationID = location.ID,
+					ProductID = p.ID
 				}
 			);
 			Db.Set<LocationProduct>().AddRange(lps);
@@ -102,7 +102,7 @@ namespace TylerMart.Storage.Repositories {
 			List<LocationProduct> range = new List<LocationProduct>();
 			foreach (var p in products) {
 				var lps = Db.Set<LocationProduct>()
-					.Where(lp => lp.LocationID == location.LocationID && lp.ProductID == p.ProductID);
+					.Where(lp => lp.LocationID == location.ID && lp.ProductID == p.ID);
 				range.AddRange(lps);
 			}
 			if (range.Count > 0) {

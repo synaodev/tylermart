@@ -9,11 +9,6 @@ namespace TylerMart.Domain.Models {
 	[Table("OrderProducts")]
 	public class OrderProduct : Model {
 		/// <summary>
-		/// Primary key
-		/// </summary>
-		[Key]
-		public int OrderProductID { get; set; }
-		/// <summary>
 		/// <see cref="TylerMart.Domain.Models.Order"/> primary key
 		/// </summary>
 		public int OrderID { get; set; }
@@ -40,13 +35,6 @@ namespace TylerMart.Domain.Models {
 		/// </remarks>
 		public virtual Product Product { get; private set; }
 		/// <summary>
-		/// Get Order-Product Pairs's primary key
-		/// </summary>
-		/// <returns>
-		/// 32-bit integer
-		/// </returns>
-		public override int GetID() => OrderProductID;
-		/// <summary>
 		/// Generates Order-Product Pair array for seeding database
 		/// </summary>
 		/// <remarks>
@@ -60,24 +48,24 @@ namespace TylerMart.Domain.Models {
 			Product[] products = Product.GenerateSeededData();
 			OrderProduct[] orderProducts = new OrderProduct[] {
 				new OrderProduct() {
-					OrderProductID = 1,
-					OrderID = orders[0].OrderID,
-					ProductID = products[0].ProductID
+					ID = 1,
+					OrderID = orders[0].ID,
+					ProductID = products[0].ID
 				},
 				new OrderProduct() {
-					OrderProductID = 2,
-					OrderID = orders[0].OrderID,
-					ProductID = products[1].ProductID
+					ID = 2,
+					OrderID = orders[0].ID,
+					ProductID = products[1].ID
 				},
 				new OrderProduct() {
-					OrderProductID = 3,
-					OrderID = orders[1].OrderID,
-					ProductID = products[0].ProductID
+					ID = 3,
+					OrderID = orders[1].ID,
+					ProductID = products[0].ID
 				},
 				new OrderProduct() {
-					OrderProductID = 4,
-					OrderID = orders[1].OrderID,
-					ProductID = products[1].ProductID
+					ID = 4,
+					OrderID = orders[1].ID,
+					ProductID = products[1].ID
 				}
 			};
 			return orderProducts;

@@ -29,7 +29,7 @@ namespace TylerMart.Storage.Repositories {
 				return null;
 			}
 			return Db.Set<Order>()
-				.Where(o => o.OrderID == ID)
+				.Where(o => o.ID == ID)
 				.Include(o => o.Customer)
 				.Include(o => o.Location)
 				.Single();
@@ -54,7 +54,7 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public List<Order> FindFromCustomer(Customer customer) {
 			return Db.Set<Order>()
-				.Where(o => o.CustomerID == customer.CustomerID)
+				.Where(o => o.CustomerID == customer.ID)
 				.ToList();
 		}
 		/// <summary>
@@ -66,7 +66,7 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public List<Order> FindFromLocation(Location location) {
 			return Db.Set<Order>()
-				.Where(o => o.LocationID == location.LocationID)
+				.Where(o => o.LocationID == location.ID)
 				.ToList();
 		}
 		/// <summary>
@@ -78,7 +78,7 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public List<Order> FindFromProduct(Product product) {
 			return Db.Set<OrderProduct>()
-				.Where(op => op.ProductID == product.ProductID)
+				.Where(op => op.ProductID == product.ID)
 				.Include(op => op.Order)
 				.Select(op => op.Order)
 				.ToList();
@@ -93,8 +93,8 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public bool AddProduct(Order order, Product product) {
 			OrderProduct op = new OrderProduct() {
-				OrderID = order.OrderID,
-				ProductID = product.ProductID
+				OrderID = order.ID,
+				ProductID = product.ID
 			};
 			Db.Set<OrderProduct>().Add(op);
 			return Db.SaveChanges() >= 1;
@@ -109,7 +109,7 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public bool RemoveProduct(Order order, Product product) {
 			OrderProduct q = Db.Set<OrderProduct>()
-				.LastOrDefault(op => op.OrderID == order.OrderID && op.ProductID == product.ProductID);
+				.LastOrDefault(op => op.OrderID == order.ID && op.ProductID == product.ID);
 			if (q != null) {
 				Db.Set<OrderProduct>().Remove(q);
 				return Db.SaveChanges() >= 1;
@@ -127,8 +127,8 @@ namespace TylerMart.Storage.Repositories {
 		public bool AddProducts(Order order, List<Product> products) {
 			List<OrderProduct> range = products.ConvertAll<OrderProduct>(p =>
 				new OrderProduct() {
-					OrderID = order.OrderID,
-					ProductID = p.ProductID
+					OrderID = order.ID,
+					ProductID = p.ID
 				}
 			);
 			Db.Set<OrderProduct>().AddRange(range);
@@ -146,7 +146,7 @@ namespace TylerMart.Storage.Repositories {
 			List<OrderProduct> range = new List<OrderProduct>();
 			foreach (var p in products) {
 				var ops = Db.Set<OrderProduct>()
-					.Where(op => op.OrderID == order.OrderID && op.ProductID == p.ProductID);
+					.Where(op => op.OrderID == order.ID && op.ProductID == p.ID);
 				range.AddRange(ops);
 			}
 			if (range.Count > 0) {

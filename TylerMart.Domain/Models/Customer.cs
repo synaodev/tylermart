@@ -8,11 +8,6 @@ namespace TylerMart.Domain.Models {
 	[Table("Customers")]
 	public class Customer : Model {
 		/// <summary>
-		/// Primary key
-		/// </summary>
-		[Key]
-		public int CustomerID { get; set; }
-		/// <summary>
 		/// First Name
 		/// </summary>
 		[Required(ErrorMessage = "First name is required!")]
@@ -40,13 +35,6 @@ namespace TylerMart.Domain.Models {
 		[MinLength(8, ErrorMessage = "Password must be at least eight characters long!")]
 		public string Password { get; set; }
 		/// <summary>
-		/// Get Customer's primary key
-		/// </summary>
-		/// <returns>
-		/// 32-bit integer
-		/// </returns>
-		public override int GetID() => CustomerID;
-		/// <summary>
 		/// Generates Customer array for seeding database
 		/// </summary>
 		/// <remarks>
@@ -58,14 +46,14 @@ namespace TylerMart.Domain.Models {
 		public static Customer[] GenerateSeededData() {
 			Customer[] customers = new Customer[] {
 				new Customer() {
-					CustomerID = 1,
+					ID = 1,
 					FirstName = "Tyler",
 					LastName = "Cadena",
 					EmailAddress = "tyler.cadena@revature.net",
 					Password = "tylercadena"
 				},
 				new Customer() {
-					CustomerID = 2,
+					ID = 2,
 					FirstName = "George",
 					LastName = "Bumble",
 					EmailAddress = "george.bumble@revature.net",

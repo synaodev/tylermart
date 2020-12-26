@@ -9,11 +9,6 @@ namespace TylerMart.Domain.Models {
 	[Table("Products")]
 	public class Product : Model, IValidatableObject {
 		/// <summary>
-		/// Primary key
-		/// </summary>
-		[Key]
-		public int ProductID { get; set; }
-		/// <summary>
 		/// Name
 		/// </summary>
 		[Required(ErrorMessage = "Name is required!")]
@@ -48,13 +43,6 @@ namespace TylerMart.Domain.Models {
 		/// </remarks>
 		public virtual List<OrderProduct> OrderProducts { get; private set; }
 		/// <summary>
-		/// Get Product's primary key
-		/// </summary>
-		/// <returns>
-		/// 32-bit integer
-		/// </returns>
-		public override int GetID() => ProductID;
-		/// <summary>
 		/// Generates Product array for seeding database
 		/// </summary>
 		/// <remarks>
@@ -66,13 +54,13 @@ namespace TylerMart.Domain.Models {
 		public static Product[] GenerateSeededData() {
 			Product[] products = new Product[] {
 				new Product() {
-					ProductID = 1,
+					ID = 1,
 					Name = "Bag",
 					Description = "You can carry stuff around",
 					Price = 3.50M
 				},
 				new Product() {
-					ProductID = 2,
+					ID = 2,
 					Name = "Glasses",
 					Description = "Helpful for those with poor eyesight",
 					Price = 20.00M

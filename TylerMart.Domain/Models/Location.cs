@@ -9,11 +9,6 @@ namespace TylerMart.Domain.Models {
 	[Table("Locations")]
 	public class Location : Model {
 		/// <summary>
-		/// Primary key
-		/// </summary>
-		[Key]
-		public int LocationID { get; set; }
-		/// <summary>
 		/// Name
 		/// </summary>
 		[Required(ErrorMessage = "Name is required!")]
@@ -30,13 +25,6 @@ namespace TylerMart.Domain.Models {
 		/// </remarks>
 		public virtual List<LocationProduct> LocationProducts { get; private set; }
 		/// <summary>
-		/// Get Location's primary key
-		/// </summary>
-		/// <returns>
-		/// 32-bit integer
-		/// </returns>
-		public override int GetID() => LocationID;
-		/// <summary>
 		/// Generates Location array for seeding database
 		/// </summary>
 		/// <remarks>
@@ -48,11 +36,11 @@ namespace TylerMart.Domain.Models {
 		public static Location[] GenerateSeededData() {
 			Location[] locations = new Location[] {
 				new Location() {
-					LocationID = 1,
+					ID = 1,
 					Name = "New Jersey"
 				},
 				new Location() {
-					LocationID = 2,
+					ID = 2,
 					Name = "Florida"
 				}
 			};

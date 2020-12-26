@@ -23,7 +23,7 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public List<Product> FindFromOrder(Order order) {
 			return Db.Set<OrderProduct>()
-				.Where(op => op.OrderID == order.OrderID)
+				.Where(op => op.OrderID == order.ID)
 				.Include(op => op.Product)
 				.Select(op => op.Product)
 				.ToList();
@@ -37,7 +37,7 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public List<Product> FindFromLocation(Location location) {
 			return Db.Set<LocationProduct>()
-				.Where(lp => lp.LocationID == location.LocationID)
+				.Where(lp => lp.LocationID == location.ID)
 				.Include(lp => lp.Product)
 				.Select(lp => lp.Product)
 				.ToList();

@@ -9,11 +9,6 @@ namespace TylerMart.Domain.Models {
 	[Table("LocationProducts")]
 	public class LocationProduct : Model, IValidatableObject {
 		/// <summary>
-		/// Primary key
-		/// </summary>
-		[Key]
-		public int LocationProductID { get; set; }
-		/// <summary>
 		/// <see cref="TylerMart.Domain.Models.Location"/> primary key
 		/// </summary>
 		public int LocationID { get; set; }
@@ -40,13 +35,6 @@ namespace TylerMart.Domain.Models {
 		/// </remarks>
 		public virtual Product Product { get; private set; }
 		/// <summary>
-		/// Get Location-Product Pairs's primary key
-		/// </summary>
-		/// <returns>
-		/// 32-bit integer
-		/// </returns>
-		public override int GetID() => LocationProductID;
-		/// <summary>
 		/// Generates Location-Product Pair array for seeding database
 		/// </summary>
 		/// <remarks>
@@ -60,50 +48,50 @@ namespace TylerMart.Domain.Models {
 			Product[] products = Product.GenerateSeededData();
 			LocationProduct[] locationProducts = new LocationProduct[] {
 				new LocationProduct() {
-					LocationProductID = 1,
-					LocationID = locations[0].LocationID,
-					ProductID = products[0].ProductID
+					ID = 1,
+					LocationID = locations[0].ID,
+					ProductID = products[0].ID
 				},
 				new LocationProduct() {
-					LocationProductID = 2,
-					LocationID = locations[0].LocationID,
-					ProductID = products[0].ProductID
+					ID = 2,
+					LocationID = locations[0].ID,
+					ProductID = products[0].ID
 				},
 				new LocationProduct() {
-					LocationProductID = 3,
-					LocationID = locations[0].LocationID,
-					ProductID = products[1].ProductID
+					ID = 3,
+					LocationID = locations[0].ID,
+					ProductID = products[1].ID
 				},
 				new LocationProduct() {
-					LocationProductID = 4,
-					LocationID = locations[0].LocationID,
-					ProductID = products[1].ProductID
+					ID = 4,
+					LocationID = locations[0].ID,
+					ProductID = products[1].ID
 				},
 				new LocationProduct() {
-					LocationProductID = 5,
-					LocationID = locations[1].LocationID,
-					ProductID = products[0].ProductID
+					ID = 5,
+					LocationID = locations[1].ID,
+					ProductID = products[0].ID
 				},
 				new LocationProduct() {
-					LocationProductID = 6,
-					LocationID = locations[1].LocationID,
-					ProductID = products[0].ProductID
+					ID = 6,
+					LocationID = locations[1].ID,
+					ProductID = products[0].ID
 				},
 				new LocationProduct() {
-					LocationProductID = 7,
-					LocationID = locations[1].LocationID,
-					ProductID = products[1].ProductID
+					ID = 7,
+					LocationID = locations[1].ID,
+					ProductID = products[1].ID
 				},
 				new LocationProduct() {
-					LocationProductID = 8,
-					LocationID = locations[1].LocationID,
-					ProductID = products[1].ProductID
+					ID = 8,
+					LocationID = locations[1].ID,
+					ProductID = products[1].ID
 				}
 			};
 			return locationProducts;
 		}
 		/// <summary>
-		/// Validates LocationProduct.LocationID and LocationProduct.ProductID
+		/// Validates LocationProduct.ID and LocationProduct.ID
 		/// </summary>
 		/// <param name="context">Validation context</param>
 		/// <returns>
@@ -112,13 +100,13 @@ namespace TylerMart.Domain.Models {
 		public IEnumerable<ValidationResult> Validate(ValidationContext context) {
 			if (LocationID <= 0) {
 				yield return new ValidationResult(
-					"LocationProduct.LocationID cannot be less than or equal to zero!",
+					"LocationProduct.ID cannot be less than or equal to zero!",
 					new[] { nameof(LocationID), nameof(LocationProduct) }
 				);
 			}
 			if (ProductID <= 0) {
 				yield return new ValidationResult(
-					"LocationProduct.ProductID cannot be less than or equal to zero!",
+					"LocationProduct.ID cannot be less than or equal to zero!",
 					new[] { nameof(ProductID), nameof(LocationProduct) }
 				);
 			}

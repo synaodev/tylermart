@@ -13,7 +13,7 @@ namespace TylerMart.Storage.Migrations
                 name: "Customers",
                 columns: table => new
                 {
-                    CustomerID = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -22,27 +22,27 @@ namespace TylerMart.Storage.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.CustomerID);
+                    table.PrimaryKey("PK_Customers", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Locations",
                 columns: table => new
                 {
-                    LocationID = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Locations", x => x.LocationID);
+                    table.PrimaryKey("PK_Locations", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
-                    ProductID = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -50,14 +50,14 @@ namespace TylerMart.Storage.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.ProductID);
+                    table.PrimaryKey("PK_Products", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
-                    OrderID = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Complete = table.Column<bool>(type: "bit", nullable: false),
@@ -66,18 +66,18 @@ namespace TylerMart.Storage.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.OrderID);
+                    table.PrimaryKey("PK_Orders", x => x.ID);
                     table.ForeignKey(
                         name: "FK_Orders_Customers_CustomerID",
                         column: x => x.CustomerID,
                         principalTable: "Customers",
-                        principalColumn: "CustomerID",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Orders_Locations_LocationID",
                         column: x => x.LocationID,
                         principalTable: "Locations",
-                        principalColumn: "LocationID",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -85,25 +85,25 @@ namespace TylerMart.Storage.Migrations
                 name: "LocationProducts",
                 columns: table => new
                 {
-                    LocationProductID = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LocationID = table.Column<int>(type: "int", nullable: false),
                     ProductID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LocationProducts", x => x.LocationProductID);
+                    table.PrimaryKey("PK_LocationProducts", x => x.ID);
                     table.ForeignKey(
                         name: "FK_LocationProducts_Locations_LocationID",
                         column: x => x.LocationID,
                         principalTable: "Locations",
-                        principalColumn: "LocationID",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_LocationProducts_Products_ProductID",
                         column: x => x.ProductID,
                         principalTable: "Products",
-                        principalColumn: "ProductID",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -111,31 +111,31 @@ namespace TylerMart.Storage.Migrations
                 name: "OrderProducts",
                 columns: table => new
                 {
-                    OrderProductID = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderID = table.Column<int>(type: "int", nullable: false),
                     ProductID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderProducts", x => x.OrderProductID);
+                    table.PrimaryKey("PK_OrderProducts", x => x.ID);
                     table.ForeignKey(
                         name: "FK_OrderProducts_Orders_OrderID",
                         column: x => x.OrderID,
                         principalTable: "Orders",
-                        principalColumn: "OrderID",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderProducts_Products_ProductID",
                         column: x => x.ProductID,
                         principalTable: "Products",
-                        principalColumn: "ProductID",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "Customers",
-                columns: new[] { "CustomerID", "EmailAddress", "FirstName", "LastName", "Password" },
+                columns: new[] { "ID", "EmailAddress", "FirstName", "LastName", "Password" },
                 values: new object[,]
                 {
                     { 1, "tyler.cadena@revature.net", "Tyler", "Cadena", "tylercadena" },
@@ -144,7 +144,7 @@ namespace TylerMart.Storage.Migrations
 
             migrationBuilder.InsertData(
                 table: "Locations",
-                columns: new[] { "LocationID", "Name" },
+                columns: new[] { "ID", "Name" },
                 values: new object[,]
                 {
                     { 1, "New Jersey" },
@@ -153,7 +153,7 @@ namespace TylerMart.Storage.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "ProductID", "Description", "Name", "Price" },
+                columns: new[] { "ID", "Description", "Name", "Price" },
                 values: new object[,]
                 {
                     { 1, "You can carry stuff around", "Bag", 3.50m },
@@ -162,7 +162,7 @@ namespace TylerMart.Storage.Migrations
 
             migrationBuilder.InsertData(
                 table: "LocationProducts",
-                columns: new[] { "LocationProductID", "LocationID", "ProductID" },
+                columns: new[] { "ID", "LocationID", "ProductID" },
                 values: new object[,]
                 {
                     { 1, 1, 1 },
@@ -177,7 +177,7 @@ namespace TylerMart.Storage.Migrations
 
             migrationBuilder.InsertData(
                 table: "Orders",
-                columns: new[] { "OrderID", "Complete", "CreatedAt", "CustomerID", "LocationID" },
+                columns: new[] { "ID", "Complete", "CreatedAt", "CustomerID", "LocationID" },
                 values: new object[,]
                 {
                     { 1, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 },
@@ -186,7 +186,7 @@ namespace TylerMart.Storage.Migrations
 
             migrationBuilder.InsertData(
                 table: "OrderProducts",
-                columns: new[] { "OrderProductID", "OrderID", "ProductID" },
+                columns: new[] { "ID", "OrderID", "ProductID" },
                 values: new object[,]
                 {
                     { 1, 1, 1 },
