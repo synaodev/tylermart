@@ -37,6 +37,7 @@ namespace TylerMart.Storage.Repositories {
 				.Where(lp => lp.ProductID == product.ID)
 				.Include(lp => lp.Location)
 				.Select(lp => lp.Location)
+				.Distinct()
 				.ToList();
 		}
 		/// <summary>

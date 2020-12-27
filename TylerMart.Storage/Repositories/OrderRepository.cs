@@ -81,6 +81,7 @@ namespace TylerMart.Storage.Repositories {
 				.Where(op => op.ProductID == product.ID)
 				.Include(op => op.Order)
 				.Select(op => op.Order)
+				.Distinct()
 				.ToList();
 		}
 		/// <summary>
