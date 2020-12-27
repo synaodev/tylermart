@@ -15,6 +15,18 @@ namespace TylerMart.Storage.Repositories {
 		/// <param name="db">Instance of DbContext</param>
 		public ProductRepository(DbContext db) : base(db) {}
 		/// <summary>
+		/// Finds Products
+		/// </summary>
+		/// <param name="name">Product name</param>
+		/// <returns>
+		/// List of Products
+		/// </returns>
+		public List<Product> FindFromName(string name) {
+			return Db.Set<Product>()
+				.Where(p => p.Name.Contains(name))
+				.ToList();
+		}
+		/// <summary>
 		/// Finds Products contained in an Order
 		/// </summary>
 		/// <param name="order">The Order</param>

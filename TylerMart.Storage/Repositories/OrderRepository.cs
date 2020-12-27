@@ -35,14 +35,14 @@ namespace TylerMart.Storage.Repositories {
 				.Single();
 		}
 		/// <summary>
-		/// Find Orders that are incomplete
+		/// Find Orders by completion status
 		/// </summary>
 		/// <returns>
 		/// List of Orders
 		/// </returns>
-		public List<Order> FindByIncomplete() {
+		public List<Order> FindByCompleteness(bool complete = true) {
 			return Db.Set<Order>()
-				.Where(o => !o.Complete)
+				.Where(o => o.Complete == complete)
 				.ToList();
 		}
 		/// <summary>
@@ -110,7 +110,7 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public bool RemoveProduct(Order order, Product product) {
 			OrderProduct q = Db.Set<OrderProduct>()
-				.LastOrDefault(op => op.OrderID == order.ID && op.ProductID == product.ID);
+				.SingleOrDefault(op => op.OrderID == order.ID && op.ProductID == product.ID);
 			if (q != null) {
 				Db.Set<OrderProduct>().Remove(q);
 				return Db.SaveChanges() >= 1;

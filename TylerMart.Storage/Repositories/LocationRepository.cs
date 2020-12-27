@@ -66,7 +66,7 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public bool RemoveProduct(Location location, Product product) {
 			LocationProduct q = Db.Set<LocationProduct>()
-				.LastOrDefault(lp => lp.LocationID == location.ID && lp.ProductID == product.ID);
+				.SingleOrDefault(lp => lp.LocationID == location.ID && lp.ProductID == product.ID);
 			if (q != null) {
 				Db.Set<LocationProduct>().Remove(q);
 				return Db.SaveChanges() >= 1;
