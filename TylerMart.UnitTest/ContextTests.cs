@@ -5,9 +5,9 @@ using Xunit;
 using Microsoft.EntityFrameworkCore;
 
 using TylerMart.Domain.Models;
-using TylerMart.Testing.Services;
+using TylerMart.UnitTest.Services;
 
-namespace TylerMart.Testing {
+namespace TylerMart.UnitTest {
 	/// <summary>
 	/// Tests for <see cref="TylerMart.Storage.Contexts.DatabaseContext"/>
 	/// </summary>

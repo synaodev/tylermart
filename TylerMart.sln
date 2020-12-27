@@ -1,15 +1,15 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TylerMart.Storage", "TylerMart.Storage\TylerMart.Storage.csproj", "{851D1799-2335-4364-8C1C-7FBE05AE4937}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TylerMart.Testing", "TylerMart.Testing\TylerMart.Testing.csproj", "{CD092691-AE3B-4F0F-A6E7-D976C43360F7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TylerMart.Client", "TylerMart.Client\TylerMart.Client.csproj", "{C830358A-BB9A-4C37-9C21-85D4FF0916D5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TylerMart.Domain", "TylerMart.Domain\TylerMart.Domain.csproj", "{74EF96AD-683D-4164-80BA-F7F4B8CC5294}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TylerMart.UnitTest", "TylerMart.UnitTest\TylerMart.UnitTest.csproj", "{D43E671F-8F03-41F9-94D4-3445863A68F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,18 +36,6 @@ Global
 		{851D1799-2335-4364-8C1C-7FBE05AE4937}.Release|x64.Build.0 = Release|Any CPU
 		{851D1799-2335-4364-8C1C-7FBE05AE4937}.Release|x86.ActiveCfg = Release|Any CPU
 		{851D1799-2335-4364-8C1C-7FBE05AE4937}.Release|x86.Build.0 = Release|Any CPU
-		{CD092691-AE3B-4F0F-A6E7-D976C43360F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CD092691-AE3B-4F0F-A6E7-D976C43360F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CD092691-AE3B-4F0F-A6E7-D976C43360F7}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{CD092691-AE3B-4F0F-A6E7-D976C43360F7}.Debug|x64.Build.0 = Debug|Any CPU
-		{CD092691-AE3B-4F0F-A6E7-D976C43360F7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{CD092691-AE3B-4F0F-A6E7-D976C43360F7}.Debug|x86.Build.0 = Debug|Any CPU
-		{CD092691-AE3B-4F0F-A6E7-D976C43360F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CD092691-AE3B-4F0F-A6E7-D976C43360F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CD092691-AE3B-4F0F-A6E7-D976C43360F7}.Release|x64.ActiveCfg = Release|Any CPU
-		{CD092691-AE3B-4F0F-A6E7-D976C43360F7}.Release|x64.Build.0 = Release|Any CPU
-		{CD092691-AE3B-4F0F-A6E7-D976C43360F7}.Release|x86.ActiveCfg = Release|Any CPU
-		{CD092691-AE3B-4F0F-A6E7-D976C43360F7}.Release|x86.Build.0 = Release|Any CPU
 		{C830358A-BB9A-4C37-9C21-85D4FF0916D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C830358A-BB9A-4C37-9C21-85D4FF0916D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C830358A-BB9A-4C37-9C21-85D4FF0916D5}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -72,5 +60,17 @@ Global
 		{74EF96AD-683D-4164-80BA-F7F4B8CC5294}.Release|x64.Build.0 = Release|Any CPU
 		{74EF96AD-683D-4164-80BA-F7F4B8CC5294}.Release|x86.ActiveCfg = Release|Any CPU
 		{74EF96AD-683D-4164-80BA-F7F4B8CC5294}.Release|x86.Build.0 = Release|Any CPU
+		{D43E671F-8F03-41F9-94D4-3445863A68F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D43E671F-8F03-41F9-94D4-3445863A68F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D43E671F-8F03-41F9-94D4-3445863A68F7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D43E671F-8F03-41F9-94D4-3445863A68F7}.Debug|x64.Build.0 = Debug|Any CPU
+		{D43E671F-8F03-41F9-94D4-3445863A68F7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D43E671F-8F03-41F9-94D4-3445863A68F7}.Debug|x86.Build.0 = Debug|Any CPU
+		{D43E671F-8F03-41F9-94D4-3445863A68F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D43E671F-8F03-41F9-94D4-3445863A68F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D43E671F-8F03-41F9-94D4-3445863A68F7}.Release|x64.ActiveCfg = Release|Any CPU
+		{D43E671F-8F03-41F9-94D4-3445863A68F7}.Release|x64.Build.0 = Release|Any CPU
+		{D43E671F-8F03-41F9-94D4-3445863A68F7}.Release|x86.ActiveCfg = Release|Any CPU
+		{D43E671F-8F03-41F9-94D4-3445863A68F7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

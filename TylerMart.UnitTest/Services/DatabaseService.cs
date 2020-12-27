@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using TylerMart.Storage.Contexts;
 using TylerMart.Storage.Repositories;
 
-namespace TylerMart.Testing.Services {
+namespace TylerMart.UnitTest.Services {
 	internal class DatabaseFactory : IDesignTimeDbContextFactory<DatabaseContext>, IDisposable {
 		private DbConnection Connection;
 		/// <summary>

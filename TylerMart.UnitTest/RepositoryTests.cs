@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using Xunit;
 
 using TylerMart.Domain.Models;
-using TylerMart.Testing.Services;
+using TylerMart.UnitTest.Services;
 
-namespace TylerMart.Testing {
+namespace TylerMart.UnitTest {
 	/// <summary>
 	/// Tests for <see cref="TylerMart.Storage.Repositories.Repository{T}"/>
 	/// </summary>

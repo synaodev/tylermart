@@ -21,7 +21,6 @@
   <ItemGroup>
     <ProjectReference Include="..\TylerMart.Storage\TylerMart.Storage.csproj" />
     <ProjectReference Include="..\TylerMart.Domain\TylerMart.Domain.csproj" />
-    <ProjectReference Include="..\TylerMart.Client\TylerMart.Client.csproj" />
   </ItemGroup>
 
 </Project>

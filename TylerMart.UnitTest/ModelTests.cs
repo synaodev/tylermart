@@ -5,7 +5,7 @@ using System.Linq;
 
 using TylerMart.Domain.Models;
 
-namespace TylerMart.Testing {
+namespace TylerMart.UnitTest {
 	/// <summary>
 	/// Tests for <see cref="TylerMart.Domain.Models.Model"/>
 	/// </summary>
