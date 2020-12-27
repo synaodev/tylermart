@@ -6,42 +6,69 @@ using TylerMart.Testing.Services;
 
 namespace TylerMart.Testing {
 	/// <summary>
-	/// Tests for every repository
+	/// Tests for <see cref="TylerMart.Storage.Repositories.Repository{T}"/>
 	/// </summary>
+	/// <remarks>
+	/// Derived classes are also tested
+	/// </remarks>
 	public class RepositoryTests {
 		/// <summary>
-		/// Checks for seeded data in database
+		/// Generic CRUD
 		/// </summary>
 		[Fact]
-		public void TestSeededData() {
+		public void TestGenericCRUD() {
 			DatabaseService db = new DatabaseService();
 
-			List<Customer> customers = db.Customers.All();
-			Assert.Equal(2, customers.Count);
+			bool creationSuccessful = db.Customers.Create(new Customer() {
+				FirstName = "Johnny",
+				LastName = "Bravo",
+				EmailAddress = "johnny.bravo@revature.net",
+				Password = "johnnybravo"
+			});
+			Assert.True(creationSuccessful);
 
-			List<Product> products = db.Products.All();
-			Assert.Equal(2, products.Count);
+			Customer johnny1 = db.Customers.Get(3);
+			Assert.Equal("johnny.bravo@revature.net", johnny1.EmailAddress);
 
-			List<Location> locations = db.Locations.All();
-			Assert.Equal(2, locations.Count);
+			johnny1.EmailAddress = "johnny.bravo@revature.com";
+			bool updateSuccessful = db.Customers.Update(johnny1);
+			Assert.True(updateSuccessful);
 
-			List<Order> orders = db.Orders.All();
-			Assert.Equal(2, orders.Count);
+			Customer johnny2 = db.Customers.Get(3);
+			Assert.Equal("johnny.bravo@revature.com", johnny2.EmailAddress);
+
+			bool deleteSuccessful = db.Customers.Delete(johnny2);
+			Assert.True(deleteSuccessful);
+
+			Customer johnny3 = db.Customers.Get(3);
+			Assert.Null(johnny3);
 		}
 		/// <summary>
-		/// Checks for valid many-to-many relationships in database
+		/// For <see cref="TylerMart.Storage.Repositories.CustomerRepository"/>
 		/// </summary>
 		[Fact]
-		public void TestSeededManyToManyData() {
+		public void TestCustomerRepository() {
 			DatabaseService db = new DatabaseService();
 
-			Location location = db.Locations.Get(1);
-			List<Product> productsAtLocation = db.Products.FindFromLocation(location);
-			Assert.Equal(4, productsAtLocation.Count);
+			Customer tyler = db.Customers.GetByEmailAddress("tyler.cadena@revature.net");
+			Assert.NotNull(tyler);
+			Assert.Equal("tylercadena", tyler.Password);
 
-			Order order = db.Orders.Get(1);
-			List<Product> productsInOrder = db.Products.FindFromOrder(order);
-			Assert.Equal(2, productsInOrder.Count);
+			db.Customers.Create(new Customer() {
+				FirstName = "Tyler",
+				LastName = "Cadena",
+				EmailAddress = "tyler.cadena@revature.com",
+				Password = "tylercadena"
+			});
+
+			List<Customer> tylerList = db.Customers.FindByFirstName("Tyler");
+			Assert.Equal(2, tylerList.Count);
+
+			List<Customer> cadenaList = db.Customers.FindByLastName("Cadena");
+			Assert.Equal(2, cadenaList.Count);
+
+			List<Customer> tylerCadenaList = db.Customers.FindByWholeName("Tyler", "Cadena");
+			Assert.Equal(2, tylerCadenaList.Count);
 		}
 	}
 }
