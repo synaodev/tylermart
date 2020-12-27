@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Xunit;
+
+using Microsoft.EntityFrameworkCore;
 
 using TylerMart.Domain.Models;
 using TylerMart.Testing.Services;
@@ -70,21 +73,35 @@ namespace TylerMart.Testing {
 		public void TestUniqueFields() {
 			DatabaseService db = new DatabaseService();
 
-			bool creationSuccessful = db.Customers.Create(new Customer() {
-				FirstName = "Tyler2",
-				LastName = "Cadena2",
-				// this email exists in seeded data
-				EmailAddress = "tyler.cadena@revature.net",
-				Password = "tyler2cadena2"
+			Action attempt1 = new Action(delegate() {
+				db.Customers.Create(new Customer() {
+					FirstName = "Tyler2",
+					LastName = "Cadena2",
+					// this email exists in seeded data
+					EmailAddress = "tyler.cadena@revature.net",
+					Password = "tyler2cadena2"
+				});
 			});
-			Assert.False(creationSuccessful);
+			Action attempt2 = new Action(delegate() {
+				Customer c = db.Customers.Get(2);
+				c.EmailAddress = "tyler.cadena@revature.net";
+				db.Customers.Update(c);
+			});
+			Assert.Throws<DbUpdateException>(attempt2);
 
-			Customer george = db.Customers.Get(2);
-			Assert.NotNull(george);
+			Action attempt3 = new Action(delegate() {
+				db.Locations.Create(new Location() {
+					Name = "Florida"
+				});
+			});
+			Assert.Throws<DbUpdateException>(attempt3);
 
-			george.EmailAddress = "tyler.cadena@revature.net";
-			bool updateSuccessful = db.Customers.Update(george);
-			Assert.False(updateSuccessful);
+			Action attempt4 = new Action(delegate() {
+				Location l = db.Locations.Get(1);
+				l.Name = "Florida";
+				db.Locations.Update(l);
+			});
+			Assert.Throws<DbUpdateException>(attempt4);
 		}
 	}
 }

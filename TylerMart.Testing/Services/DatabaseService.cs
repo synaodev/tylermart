@@ -1,3 +1,7 @@
+using System;
+using System.Data.Common;
+
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
@@ -5,9 +9,21 @@ using TylerMart.Storage.Contexts;
 using TylerMart.Storage.Repositories;
 
 namespace TylerMart.Testing.Services {
-	internal class DatabaseFactory : IDesignTimeDbContextFactory<DatabaseContext> {
+	internal class DatabaseFactory : IDesignTimeDbContextFactory<DatabaseContext>, IDisposable {
+		private DbConnection Connection;
 		/// <summary>
-		/// Creates database context configured to use transient in-memory database
+		/// Default constructor
+		/// </summary>
+		public DatabaseFactory() {
+			Connection = new SqliteConnection("Filename=:memory:");
+			Connection.Open();
+		}
+		/// <summary>
+		/// Dispose of connection
+		/// </summary>
+		public void Dispose() => Connection.Dispose();
+		/// <summary>
+		/// Creates database context configured to use SQLite in-memory
 		/// </summary>
 		/// <param name="args">Argument list</param>
 		/// <returns>
@@ -15,12 +31,12 @@ namespace TylerMart.Testing.Services {
 		/// </returns>
 		public DatabaseContext CreateDbContext(string[] args) {
 			var options = new DbContextOptionsBuilder<DatabaseContext>()
-				.UseInMemoryDatabase("InMemoryDB")
+				.UseSqlite(Connection)
 				.Options;
 			return new DatabaseContext(options);
 		}
 		/// <summary>
-		/// Creates database context configured to use transient in-memory database
+		/// Creates database context configured to use SQLite in-memory
 		/// </summary>
 		/// <returns>
 		/// Database context

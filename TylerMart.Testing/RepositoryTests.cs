@@ -70,5 +70,20 @@ namespace TylerMart.Testing {
 			List<Customer> tylerCadenaList = db.Customers.FindByWholeName("Tyler", "Cadena");
 			Assert.Equal(2, tylerCadenaList.Count);
 		}
+		/// <summary>
+		/// For <see cref="TylerMart.Storage.Repositories.LocationRepository"/>
+		/// </summary>
+		[Fact]
+		public void TestLocationRepository() {
+			DatabaseService db = new DatabaseService();
+
+			Location jersey = db.Locations.GetByName("New Jersey");
+			Assert.NotNull(jersey);
+			Assert.Equal("New Jersey", jersey.Name);
+
+			Product product = db.Products.Get(1);
+			List<Location> locations = db.Locations.FindFromProduct(product);
+			Assert.Contains(jersey, locations);
+		}
 	}
 }
