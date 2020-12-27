@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Microsoft.EntityFrameworkCore;
-
 using TylerMart.Domain.Models;
+using TylerMart.Storage.Contexts;
 
 namespace TylerMart.Storage.Repositories {
 	/// <summary>
@@ -62,14 +61,14 @@ namespace TylerMart.Storage.Repositories {
 	/// </summary>
 	public abstract class Repository<T> : IRepository<T> where T : Model {
 		/// <summary>
-		/// Instance of DbContext used for database access
+		/// Instance of DatabaseContext used for database access
 		/// </summary>
-		protected DbContext Db;
+		protected DatabaseContext Db;
 		/// <summary>
 		/// Constructor that takes an instance of DbContext
 		/// </summary>
-		/// <param name="db">Instance of DbContext</param>
-		public Repository(DbContext db) {
+		/// <param name="db">Instance of DatabaseContext</param>
+		public Repository(DatabaseContext db) {
 			Db = db;
 		}
 		/// <summary>

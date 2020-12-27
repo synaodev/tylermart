@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+
 using Microsoft.EntityFrameworkCore;
 
 using TylerMart.Domain.Models;
+using TylerMart.Storage.Contexts;
 
 namespace TylerMart.Storage.Repositories {
 	/// <summary>
@@ -10,10 +12,10 @@ namespace TylerMart.Storage.Repositories {
 	/// </summary>
 	public class LocationRepository : Repository<Location> {
 		/// <summary>
-		/// Constructor that takes an instance of DbContext
+		/// Constructor that takes an instance of DatabaseContext
 		/// </summary>
-		/// <param name="db">Instance of DbContext</param>
-		public LocationRepository(DbContext db) : base(db) {}
+		/// <param name="db">Instance of DatabaseContext</param>
+		public LocationRepository(DatabaseContext db) : base(db) {}
 		/// <summary>
 		/// Gets Location from name
 		/// </summary>
@@ -22,7 +24,7 @@ namespace TylerMart.Storage.Repositories {
 		/// Single Location or null
 		/// </returns>
 		public Location GetByName(string name) {
-			return Db.Set<Location>()
+			return Db.Locations
 				.SingleOrDefault(l => l.Name == name);
 		}
 		/// <summary>

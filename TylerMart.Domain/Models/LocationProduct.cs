@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TylerMart.Domain.Models {
@@ -7,7 +5,7 @@ namespace TylerMart.Domain.Models {
 	/// Location-Product Pair Model
 	/// </summary>
 	[Table("LocationProducts")]
-	public class LocationProduct : Model, IValidatableObject {
+	public class LocationProduct : Model {
 		/// <summary>
 		/// <see cref="TylerMart.Domain.Models.Location"/> primary key
 		/// </summary>
@@ -89,27 +87,6 @@ namespace TylerMart.Domain.Models {
 				}
 			};
 			return locationProducts;
-		}
-		/// <summary>
-		/// Validates LocationProduct.ID and LocationProduct.ID
-		/// </summary>
-		/// <param name="context">Validation context</param>
-		/// <returns>
-		/// IEnumerable containing validation errors
-		/// </returns>
-		public IEnumerable<ValidationResult> Validate(ValidationContext context) {
-			if (LocationID <= 0) {
-				yield return new ValidationResult(
-					"LocationProduct.ID cannot be less than or equal to zero!",
-					new[] { nameof(LocationID), nameof(LocationProduct) }
-				);
-			}
-			if (ProductID <= 0) {
-				yield return new ValidationResult(
-					"LocationProduct.ID cannot be less than or equal to zero!",
-					new[] { nameof(ProductID), nameof(LocationProduct) }
-				);
-			}
 		}
 	}
 }

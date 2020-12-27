@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 using TylerMart.Domain.Models;
+using TylerMart.Storage.Contexts;
 
 namespace TylerMart.Storage.Repositories {
 	/// <summary>
@@ -10,10 +11,10 @@ namespace TylerMart.Storage.Repositories {
 	/// </summary>
 	public class OrderRepository : Repository<Order> {
 		/// <summary>
-		/// Constructor that takes an instance of DbContext
+		/// Constructor that takes an instance of DatabaseContext
 		/// </summary>
-		/// <param name="db">Instance of DbContext</param>
-		public OrderRepository(DbContext db) : base(db) {}
+		/// <param name="db">Instance of DatabaseContext</param>
+		public OrderRepository(DatabaseContext db) : base(db) {}
 		/// <summary>
 		/// Get Order from primary key
 		/// </summary>
@@ -28,7 +29,7 @@ namespace TylerMart.Storage.Repositories {
 			if (!this.Exists(ID)) {
 				return null;
 			}
-			return Db.Set<Order>()
+			return Db.Orders
 				.Where(o => o.ID == ID)
 				.Include(o => o.Customer)
 				.Include(o => o.Location)
@@ -41,7 +42,7 @@ namespace TylerMart.Storage.Repositories {
 		/// List of Orders
 		/// </returns>
 		public List<Order> FindByCompleteness(bool complete = true) {
-			return Db.Set<Order>()
+			return Db.Orders
 				.Where(o => o.Complete == complete)
 				.ToList();
 		}
@@ -53,7 +54,7 @@ namespace TylerMart.Storage.Repositories {
 		/// List of Orders
 		/// </returns>
 		public List<Order> FindFromCustomer(Customer customer) {
-			return Db.Set<Order>()
+			return Db.Orders
 				.Where(o => o.CustomerID == customer.ID)
 				.ToList();
 		}
@@ -65,7 +66,7 @@ namespace TylerMart.Storage.Repositories {
 		/// List of Orders
 		/// </returns>
 		public List<Order> FindFromLocation(Location location) {
-			return Db.Set<Order>()
+			return Db.Orders
 				.Where(o => o.LocationID == location.ID)
 				.ToList();
 		}

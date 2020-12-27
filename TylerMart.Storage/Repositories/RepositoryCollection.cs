@@ -1,11 +1,11 @@
-using Microsoft.EntityFrameworkCore;
+using TylerMart.Storage.Contexts;
 
 namespace TylerMart.Storage.Repositories {
 	/// <summary>
 	/// Abstract class for services that access the database
 	/// </summary>
 	public abstract class RepositoryCollection {
-		private DbContext Db;
+		private DatabaseContext Db;
 		/// <summary>
 		/// The <see cref="TylerMart.Storage.Repositories.CustomerRepository"/>
 		/// </summary>
@@ -30,7 +30,7 @@ namespace TylerMart.Storage.Repositories {
 		/// </remarks>
 		/// <param name="db">Instance of DbContext</param>
 		/// <param name="transient">Database provider is transient (set to 'true' when testing)</param>
-		public void Initialize(DbContext db, bool transient = false) {
+		public void Initialize(DatabaseContext db, bool transient = false) {
 			Db = db;
 			if (transient) {
 				Db.Database.EnsureDeleted();

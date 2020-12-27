@@ -12,13 +12,13 @@ namespace TylerMart.Domain.Models {
 		/// Name
 		/// </summary>
 		[Required(ErrorMessage = "Name is required!")]
-		[MinLength(2, ErrorMessage = "Name must be at least two letters long!")]
+		[StringLength(100, MinimumLength = 2, ErrorMessage = "Name must be at least two letters long!")]
 		public string Name { get; set; }
 		/// <summary>
 		/// Description
 		/// </summary>
 		[Required(ErrorMessage = "Description is required!")]
-		[MinLength(3, ErrorMessage = "Description must be at least three letters long!")]
+		[StringLength(500, MinimumLength = 2, ErrorMessage = "Description must be at least three letters long!")]
 		public string Description { get; set; }
 		/// <summary>
 		/// Price
@@ -78,7 +78,7 @@ namespace TylerMart.Domain.Models {
 		public IEnumerable<ValidationResult> Validate(ValidationContext context) {
 			if (Price <= 0.0M) {
 				yield return new ValidationResult(
-					"Product.Price cannot be less than or equal to zero!",
+					"Price cannot be less than or equal to zero!",
 					new[] { nameof(Price), nameof(Product) }
 				);
 			}

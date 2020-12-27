@@ -92,13 +92,13 @@ namespace TylerMart.Domain.Models {
 		public IEnumerable<ValidationResult> Validate(ValidationContext context) {
 			if (CustomerID <= 0) {
 				yield return new ValidationResult(
-					"Order.CustomerID cannot be less than or equal to zero!",
+					"CustomerID cannot be less than or equal to zero!",
 					new[] { nameof(CustomerID), nameof(Order) }
 				);
 			}
 			if (LocationID <= 0) {
 				yield return new ValidationResult(
-					"Order.LocationID cannot be less than or equal to zero!",
+					"LocationID cannot be less than or equal to zero!",
 					new[] { nameof(LocationID), nameof(Order) }
 				);
 			}

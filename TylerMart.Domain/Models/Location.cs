@@ -12,7 +12,7 @@ namespace TylerMart.Domain.Models {
 		/// Name
 		/// </summary>
 		[Required(ErrorMessage = "Name is required!")]
-		[MinLength(2, ErrorMessage = "Name must be at least two letters long!")]
+		[StringLength(100, MinimumLength = 2, ErrorMessage = "Name must be at least two letters long!")]
 		[RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Name must only contain letters!")]
 		public string Name { get; set; }
 		/// <summary>

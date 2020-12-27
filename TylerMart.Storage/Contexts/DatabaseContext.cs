@@ -9,10 +9,22 @@ namespace TylerMart.Storage.Contexts {
 	/// Main database context used for testing and client
 	/// </summary>
 	public class DatabaseContext : DbContext {
-		private DbSet<Customer> Customers;
-		private DbSet<Product> Products;
-		private DbSet<Location> Locations;
-		private DbSet<Order> Orders;
+		/// <summary>
+		/// Customer table
+		/// </summary>
+		public DbSet<Customer> Customers { get; private set; }
+		/// <summary>
+		/// Product table
+		/// </summary>
+		public DbSet<Product> Products { get; private set; }
+		/// <summary>
+		/// Location table
+		/// </summary>
+		public DbSet<Location> Locations { get; private set; }
+		/// <summary>
+		/// Order table
+		/// </summary>
+		public DbSet<Order> Orders { get; private set; }
 		/// <summary>
 		/// Constructor that takes options
 		/// </summary>

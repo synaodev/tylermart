@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 using TylerMart.Domain.Models;
+using TylerMart.Storage.Contexts;
 
 namespace TylerMart.Storage.Repositories {
 	/// <summary>
@@ -10,10 +11,10 @@ namespace TylerMart.Storage.Repositories {
 	/// </summary>
 	public class ProductRepository : Repository<Product> {
 		/// <summary>
-		/// Constructor that takes an instance of DbContext
+		/// Constructor that takes an instance of DatabaseContext
 		/// </summary>
-		/// <param name="db">Instance of DbContext</param>
-		public ProductRepository(DbContext db) : base(db) {}
+		/// <param name="db">Instance of DatabaseContext</param>
+		public ProductRepository(DatabaseContext db) : base(db) {}
 		/// <summary>
 		/// Finds Products
 		/// </summary>
@@ -22,7 +23,7 @@ namespace TylerMart.Storage.Repositories {
 		/// List of Products
 		/// </returns>
 		public List<Product> FindFromName(string name) {
-			return Db.Set<Product>()
+			return Db.Products
 				.Where(p => p.Name.Contains(name))
 				.ToList();
 		}

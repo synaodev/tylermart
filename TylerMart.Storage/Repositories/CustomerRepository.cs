@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 using TylerMart.Domain.Models;
+using TylerMart.Storage.Contexts;
 
 namespace TylerMart.Storage.Repositories {
 	/// <summary>
@@ -10,10 +10,10 @@ namespace TylerMart.Storage.Repositories {
 	/// </summary>
 	public class CustomerRepository : Repository<Customer> {
 		/// <summary>
-		/// Constructor that takes an instance of DbContext
+		/// Constructor that takes an instance of DatabaseContext
 		/// </summary>
-		/// <param name="db">Instance of DbContext</param>
-		public CustomerRepository(DbContext db) : base(db) {}
+		/// <param name="db">Instance of DatabaseContext</param>
+		public CustomerRepository(DatabaseContext db) : base(db) {}
 		/// <summary>
 		/// Gets Customer from email address
 		/// </summary>
@@ -22,7 +22,7 @@ namespace TylerMart.Storage.Repositories {
 		/// Single Customer or null
 		/// </returns>
 		public Customer GetByEmailAddress(string emailAddress) {
-			return Db.Set<Customer>()
+			return Db.Customers
 				.SingleOrDefault(c => c.EmailAddress == emailAddress);
 		}
 		/// <summary>
@@ -33,7 +33,7 @@ namespace TylerMart.Storage.Repositories {
 		/// List of Customers
 		/// </returns>
 		public List<Customer> FindByFirstName(string name) {
-			return Db.Set<Customer>()
+			return Db.Customers
 				.Where(c => c.FirstName == name)
 				.ToList();
 		}
@@ -45,7 +45,7 @@ namespace TylerMart.Storage.Repositories {
 		/// List of Customers
 		/// </returns>
 		public List<Customer> FindByLastName(string name) {
-			return Db.Set<Customer>()
+			return Db.Customers
 				.Where(c => c.LastName == name)
 				.ToList();
 		}
@@ -58,7 +58,7 @@ namespace TylerMart.Storage.Repositories {
 		/// List of Customers
 		/// </returns>
 		public List<Customer> FindByWholeName(string firstName, string lastName) {
-			return Db.Set<Customer>()
+			return Db.Customers
 				.Where(c => c.FirstName == firstName && c.LastName == lastName)
 				.ToList();
 		}
