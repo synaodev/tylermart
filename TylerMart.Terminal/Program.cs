@@ -1,8 +1,8 @@
 using System;
 
-using TylerMart.Client.Services;
+using TylerMart.Terminal.Services;
 
-namespace TylerMart.Client {
+namespace TylerMart.Terminal {
 	internal class Program {
 		private static void Main(string[] args) {
 			DatabaseService service = new DatabaseService();
