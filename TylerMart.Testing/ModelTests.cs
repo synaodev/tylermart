@@ -81,5 +81,31 @@ namespace TylerMart.Testing {
 			Assert.Equal("CustomerID cannot be less than or equal to zero!", results[0].ErrorMessage);
 			Assert.Equal("LocationID cannot be less than or equal to zero!", results[1].ErrorMessage);
 		}
+		/// <summary>
+		/// LocationProduct validation for LocationID + ProductID
+		/// </summary>
+		[Fact]
+		public void TestValidateLocationProductLocationIDProductID() {
+			LocationProduct lp = new LocationProduct();
+			ValidationContext context = new ValidationContext(lp);
+
+			List<ValidationResult> results = lp.Validate(context).ToList();
+			Assert.NotEmpty(results);
+			Assert.Equal("LocationID cannot be less than or equal to zero!", results[0].ErrorMessage);
+			Assert.Equal("ProductID cannot be less than or equal to zero!", results[1].ErrorMessage);
+		}
+		/// <summary>
+		/// OrderProduct validation for OrderID + ProductID
+		/// </summary>
+		[Fact]
+		public void TestValidateOrderProductOrderIDProductID() {
+			OrderProduct op = new OrderProduct();
+			ValidationContext context = new ValidationContext(op);
+
+			List<ValidationResult> results = op.Validate(context).ToList();
+			Assert.NotEmpty(results);
+			Assert.Equal("OrderID cannot be less than or equal to zero!", results[0].ErrorMessage);
+			Assert.Equal("ProductID cannot be less than or equal to zero!", results[1].ErrorMessage);
+		}
 	}
 }

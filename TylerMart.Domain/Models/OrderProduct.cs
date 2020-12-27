@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TylerMart.Domain.Models {
@@ -5,7 +7,7 @@ namespace TylerMart.Domain.Models {
 	/// Order-Product Pair Model
 	/// </summary>
 	[Table("OrderProducts")]
-	public class OrderProduct : Model {
+	public class OrderProduct : Model, IValidatableObject {
 		/// <summary>
 		/// <see cref="TylerMart.Domain.Models.Order"/> primary key
 		/// </summary>
@@ -67,6 +69,27 @@ namespace TylerMart.Domain.Models {
 				}
 			};
 			return orderProducts;
+		}
+		/// <summary>
+		/// Validates OrderID and ProductID
+		/// </summary>
+		/// <param name="context">Validation context</param>
+		/// <returns>
+		/// IEnumerable containing validation errors
+		/// </returns>
+		public IEnumerable<ValidationResult> Validate(ValidationContext context) {
+			if (OrderID <= 0) {
+				yield return new ValidationResult(
+					"OrderID cannot be less than or equal to zero!",
+					new[] { nameof(OrderID), nameof(OrderProduct) }
+				);
+			}
+			if (ProductID <= 0) {
+				yield return new ValidationResult(
+					"ProductID cannot be less than or equal to zero!",
+					new[] { nameof(ProductID), nameof(OrderProduct) }
+				);
+			}
 		}
 	}
 }
