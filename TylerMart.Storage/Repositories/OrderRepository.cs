@@ -34,6 +34,8 @@ namespace TylerMart.Storage.Repositories {
 				.Where(o => o.ID == ID)
 				.Include(o => o.Customer)
 				.Include(o => o.Location)
+				.Include(o => o.OrderProducts)
+				.ThenInclude(op => op.Product)
 				.Single();
 		}
 		/// <summary>
@@ -68,6 +70,22 @@ namespace TylerMart.Storage.Repositories {
 		public List<Order> FindFromCustomer(Customer customer) {
 			return Db.Orders
 				.Where(o => o.CustomerID == customer.ID)
+				.ToList();
+		}
+		/// <summary>
+		/// Find Orders made by a Customer + Details
+		/// </summary>
+		/// <param name="customer">The Customer</param>
+		/// <returns>
+		/// List of Orders
+		/// </returns>
+		public List<Order> FindFromCustomerWithDetails(Customer customer) {
+			return Db.Orders
+				.Where(o => o.CustomerID == customer.ID)
+				.Include(o => o.Customer)
+				.Include(o => o.Location)
+				.Include(o => o.OrderProducts)
+				.ThenInclude(op => op.Product)
 				.ToList();
 		}
 		/// <summary>

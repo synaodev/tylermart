@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace TylerMart.Domain.Models {
 	/// <summary>
@@ -76,6 +77,41 @@ namespace TylerMart.Domain.Models {
 				}
 			};
 			return orders;
+		}
+		/// <summary>
+		/// Order prettifier
+		/// </summary>
+		/// <returns>
+		/// Order as a string
+		/// </returns>
+		public override string ToString() {
+			string result = "";
+			result += string.Format("\tOrder ID: {0}\n", ID);
+			result += string.Format("\tCreated At: {0}\n", CreatedAt);
+			result += string.Format("\tCompleted: {0}\n", Complete);
+			if (Customer != null) {
+				result += string.Format("\tCustomer: {0} {1}\n", Customer.FirstName, Customer.LastName);
+			} else {
+				result += string.Format("\tCustomer ID: {0}\n", CustomerID);
+			}
+			if (Location != null) {
+				result += string.Format("\tLocation: {0}\n", Location.Name);
+			} else {
+				result += string.Format("\tLocation ID: {0}\n", LocationID);
+			}
+			if (OrderProducts != null) {
+				result += "\tProducts:\n";
+				int c = 0;
+				decimal price = 0.0M;
+				OrderProducts.ForEach(op => {
+					if (op.Product != null) {
+						result += string.Format("\t\t{0}: {1}\n", c++, op.Product.Name);
+						price += op.Product.Price;
+					}
+				});
+				result += string.Format("\tTotal Price: {0}\n", price);
+			}
+			return result;
 		}
 		/// <summary>
 		/// Validates Order.CustomerID and Order.LocationID

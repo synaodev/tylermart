@@ -49,7 +49,7 @@ namespace TylerMart.Terminal {
 						Console.WriteLine("{0} {1}'s orders:", customer.FirstName, customer.LastName);
 						List<Order> orders = db.Orders.FindFromCustomer(customer);
 						orders.ForEach(o => {
-							Console.WriteLine(o.ToString());
+							Console.Write(o);
 						});
 					}
 					break;
