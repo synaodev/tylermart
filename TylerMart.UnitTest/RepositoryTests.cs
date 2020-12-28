@@ -91,9 +91,9 @@ namespace TylerMart.UnitTest {
 				Price = 30.0M
 			});
 
-			List<Product> things = db.Products.FindFromName("Thingamajig");
-			Assert.NotEmpty(things);
-			Assert.Equal("Thingamajig", things[0].Name);
+			Product thing = db.Products.GetFromName("Thingamajig");
+			Assert.NotNull(thing);
+			Assert.Equal("Thingamajig", thing.Name);
 		}
 		/// <summary>
 		/// For <see cref="TylerMart.Storage.Repositories.LocationRepository"/>
@@ -106,10 +106,10 @@ namespace TylerMart.UnitTest {
 			Assert.NotNull(dreamland);
 			Assert.Equal("Dreamland", dreamland.Name);
 
-			List<Product> nightmares = db.Products.FindFromName("Nightmare");
-			Assert.NotEmpty(nightmares);
+			Product nightmare = db.Products.GetFromName("Nightmare");
+			Assert.NotNull(nightmare);
 
-			List<Location> locations = db.Locations.FindFromProduct(nightmares[0]);
+			List<Location> locations = db.Locations.FindFromProduct(nightmare);
 			Assert.NotEmpty(locations);
 			Assert.Contains(dreamland, locations);
 		}
@@ -156,8 +156,8 @@ namespace TylerMart.UnitTest {
 
 			Location jersey = db.Locations.GetByName("New Jersey");
 			Location florida = db.Locations.GetByName("Florida");
-			Product bananas = db.Products.FindFromName("Bananas").First();
-			Product apples = db.Products.FindFromName("Apples").First();
+			Product bananas = db.Products.GetFromName("Bananas");
+			Product apples = db.Products.GetFromName("Apples");
 
 			bool successfulAddedJerseyBananas = db.Locations.AddProduct(jersey, bananas);
 			Assert.True(successfulAddedJerseyBananas);
@@ -219,8 +219,8 @@ namespace TylerMart.UnitTest {
 			List<Order> orders = db.Orders.FindByCompleteness(false);
 			Order o1 = orders[0];
 			Order o2 = orders[1];
-			Product bananas = db.Products.FindFromName("Bananas").First();
-			Product apples = db.Products.FindFromName("Apples").First();
+			Product bananas = db.Products.GetFromName("Bananas");
+			Product apples = db.Products.GetFromName("Apples");
 
 			bool successfulAddedO1Banana = db.Orders.AddProduct(o1, bananas);
 			Assert.True(successfulAddedO1Banana);
@@ -270,9 +270,9 @@ namespace TylerMart.UnitTest {
 				Price = 1.0M
 			});
 			List<Product> products = new List<Product>() {
-				db.Products.FindFromName("P0").First(),
-				db.Products.FindFromName("P1").First(),
-				db.Products.FindFromName("P2").First()
+				db.Products.GetFromName("P0"),
+				db.Products.GetFromName("P1"),
+				db.Products.GetFromName("P2")
 			};
 			products.ForEach(p => Assert.NotNull(p));
 

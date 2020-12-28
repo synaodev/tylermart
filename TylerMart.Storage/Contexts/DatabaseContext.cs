@@ -47,6 +47,8 @@ namespace TylerMart.Storage.Contexts {
 			// Field Properties
 			builder.Entity<Customer>().HasIndex(c => c.EmailAddress)
 				.IsUnique();
+			builder.Entity<Product>().HasIndex(p => p.Name)
+				.IsUnique();
 			builder.Entity<Location>().HasIndex(l => l.Name)
 				.IsUnique();
 			// Clarify Relationships

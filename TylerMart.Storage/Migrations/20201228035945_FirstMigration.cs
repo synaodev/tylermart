@@ -204,6 +204,12 @@ namespace TylerMart.Storage.Migrations
                 name: "IX_Orders_LocationID",
                 table: "Orders",
                 column: "LocationID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_Name",
+                table: "Products",
+                column: "Name",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

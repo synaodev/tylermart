@@ -91,16 +91,39 @@ namespace TylerMart.UnitTest {
 			bool failure2 = db.Customers.Update(tyler);
 			Assert.False(failure2);
 
-			bool failure3 = db.Locations.Create(new Location() { Name = "Dreamland" });
+			bool failure3 = db.Locations.Create(new Location() {
+				Name = "Dreamland"
+			});
 			Assert.False(failure3);
 
-			bool success2 = db.Locations.Create(new Location() { Name = "Nightmareland" });
+			bool success2 = db.Locations.Create(new Location() {
+				Name = "Nightmareland"
+			});
 			Assert.True(success2);
 
 			Location nightmareland = db.Locations.Get(2);
 			nightmareland.Name = "Dreamland";
 			bool failure4 = db.Locations.Update(nightmareland);
 			Assert.False(failure4);
+
+			bool failure5 = db.Products.Create(new Product() {
+				Name = "Nightmare",
+				Description = "Boo, it's scary",
+				Price = 786.0M
+			});
+			Assert.False(failure5);
+
+			bool success3 = db.Products.Create(new Product() {
+				Name = "Dream",
+				Description = "Yay, it's not scary",
+				Price = 231.02M
+			});
+			Assert.True(success3);
+
+			Product dream = db.Products.Get(2);
+			dream.Name = "Nightmare";
+			bool failure6 = db.Products.Update(dream);
+			Assert.False(failure6);
 		}
 	}
 }

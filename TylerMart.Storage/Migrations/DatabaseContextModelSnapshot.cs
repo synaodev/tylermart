@@ -213,6 +213,9 @@ namespace TylerMart.Storage.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Products");
 
                     b.HasData(

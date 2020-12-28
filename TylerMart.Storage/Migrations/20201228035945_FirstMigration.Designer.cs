@@ -13,7 +13,7 @@ using TylerMart.Storage.Contexts;
 namespace TylerMart.Storage.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20201228002149_FirstMigration")]
+    [Migration("20201228035945_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -214,6 +214,9 @@ namespace TylerMart.Storage.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Products");
 
