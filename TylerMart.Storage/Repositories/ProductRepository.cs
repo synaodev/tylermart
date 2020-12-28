@@ -16,7 +16,7 @@ namespace TylerMart.Storage.Repositories {
 		/// <param name="db">Instance of DatabaseContext</param>
 		public ProductRepository(DatabaseContext db) : base(db) {}
 		/// <summary>
-		/// Finds Products
+		/// Finds Products from name
 		/// </summary>
 		/// <param name="name">Product name</param>
 		/// <returns>
@@ -54,6 +54,23 @@ namespace TylerMart.Storage.Repositories {
 				.Include(lp => lp.Product)
 				.Select(lp => lp.Product)
 				.ToList();
+		}
+		/// <summary>
+		/// Finds the total for every different Product at a Location
+		/// </summary>
+		/// <param name="location">The Location</param>
+		/// <returns>
+		/// Dictionary of Products and their stock
+		/// </returns>
+		public Dictionary<Product, int> CountAtLocation(Location location) {
+			return Db.Set<LocationProduct>()
+				.Where(lp => lp.LocationID == location.ID)
+				.Include(lp => lp.Product)
+				.Select(lp => lp.Product)
+				.ToList()
+				.GroupBy(p => p)
+				.Select(g => new { Product = g.Key, Total = g.Count() })
+				.ToDictionary(kv => kv.Product, kv => kv.Total);
 		}
 	}
 }

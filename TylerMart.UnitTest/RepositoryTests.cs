@@ -246,5 +246,48 @@ namespace TylerMart.UnitTest {
 			);
 			Assert.True(successfulRemovedO2Fruits);
 		}
+		/// <summary>
+		/// Specifically for <see cref="TylerMart.Storage.Repositories.ProductRepository.CountAtLocation(Location)"/>
+		/// because it's the most complicated query in the entire codebase
+		/// </summary>
+		[Fact]
+		public void TestProductRepositoryCountAtLocation() {
+			DatabaseService db = new DatabaseService();
+
+			db.Products.Create(new Product() {
+				Name = "P0",
+				Description = "-----",
+				Price = 1.0M
+			});
+			db.Products.Create(new Product() {
+				Name = "P1",
+				Description = "-----",
+				Price = 1.0M
+			});
+			db.Products.Create(new Product() {
+				Name = "P2",
+				Description = "-----",
+				Price = 1.0M
+			});
+			List<Product> products = new List<Product>() {
+				db.Products.FindFromName("P0").First(),
+				db.Products.FindFromName("P1").First(),
+				db.Products.FindFromName("P2").First()
+			};
+			products.ForEach(p => Assert.NotNull(p));
+
+			Location dreamland = db.Locations.GetByName("Dreamland");
+			db.Locations.AddProducts(dreamland, products);
+			db.Locations.AddProduct(dreamland, products[1]);
+			db.Locations.AddProducts(dreamland, new List<Product>() {
+				products[2],
+				products[2]
+			});
+
+			Dictionary<Product, int> results = db.Products.CountAtLocation(dreamland);
+			Assert.Equal(1, results[products[0]]);
+			Assert.Equal(2, results[products[1]]);
+			Assert.Equal(3, results[products[2]]);
+		}
 	}
 }
