@@ -58,6 +58,42 @@ namespace TylerMart.Domain.Models {
 					Name = "Nightmare",
 					Description = "This is a nightmare!",
 					Price = 180.50M
+				},
+				new Product() {
+					ID = 2,
+					Name = "Eggs",
+					Description = "Delicious eggs",
+					Price = 4.40M
+				},
+				new Product() {
+					ID = 3,
+					Name = "Bookshelf",
+					Description = "For storing books",
+					Price = 68.99M
+				},
+				new Product() {
+					ID = 4,
+					Name = "Jacket",
+					Description = "For when it's chilly outside",
+					Price = 18.99M
+				},
+				new Product() {
+					ID = 5,
+					Name = "Oranges",
+					Description = "A bunch of oranges",
+					Price = 4.0M
+				},
+				new Product() {
+					ID = 6,
+					Name = "Lipstick",
+					Description = "It's a purple-ish color",
+					Price = 5.99M
+				},
+				new Product() {
+					ID = 7,
+					Name = "Cave Story Switch",
+					Description = "An excellent game",
+					Price = 35.99M
 				}
 			};
 			return products;

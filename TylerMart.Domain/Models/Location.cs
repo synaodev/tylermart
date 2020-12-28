@@ -38,6 +38,30 @@ namespace TylerMart.Domain.Models {
 				new Location() {
 					ID = 1,
 					Name = "Dreamland"
+				},
+				new Location() {
+					ID = 2,
+					Name = "California"
+				},
+				new Location() {
+					ID = 3,
+					Name = "Washington"
+				},
+				new Location() {
+					ID = 4,
+					Name = "Oregon"
+				},
+				new Location() {
+					ID = 5,
+					Name = "Texas"
+				},
+				new Location() {
+					ID = 6,
+					Name = "New York"
+				},
+				new Location() {
+					ID = 7,
+					Name = "Virginia"
 				}
 			};
 			return locations;
