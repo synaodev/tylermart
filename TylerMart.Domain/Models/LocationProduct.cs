@@ -47,10 +47,170 @@ namespace TylerMart.Domain.Models {
 			Location[] locations = Location.GenerateSeededData();
 			Product[] products = Product.GenerateSeededData();
 			LocationProduct[] locationProducts = new LocationProduct[] {
+				// Dummy
 				new LocationProduct() {
 					ID = 1,
 					LocationID = locations[0].ID,
 					ProductID = products[0].ID
+				},
+				/*
+				 * California:
+				 * - Eggs: 2
+				 * - Bookshelf: 3
+				 */
+				new LocationProduct() {
+					ID = 2,
+					LocationID = locations[1].ID,
+					ProductID = products[1].ID
+				},
+				new LocationProduct() {
+					ID = 3,
+					LocationID = locations[1].ID,
+					ProductID = products[1].ID
+				},
+				new LocationProduct() {
+					ID = 4,
+					LocationID = locations[1].ID,
+					ProductID = products[2].ID
+				},
+				new LocationProduct() {
+					ID = 5,
+					LocationID = locations[1].ID,
+					ProductID = products[2].ID
+				},
+				new LocationProduct() {
+					ID = 6,
+					LocationID = locations[1].ID,
+					ProductID = products[2].ID
+				},
+				/*
+				 * Washington:
+				 * - Jacket: 3
+				 */
+				new LocationProduct() {
+					ID = 7,
+					LocationID = locations[2].ID,
+					ProductID = products[3].ID
+				},
+				new LocationProduct() {
+					ID = 8,
+					LocationID = locations[2].ID,
+					ProductID = products[3].ID
+				},
+				new LocationProduct() {
+					ID = 9,
+					LocationID = locations[2].ID,
+					ProductID = products[3].ID
+				},
+				/*
+				 * Oregon:
+				 * - Oranges: 1
+				 * - Lipstick: 1
+				 * - Cave Story: 1
+				 */
+				new LocationProduct() {
+					ID = 10,
+					LocationID = locations[3].ID,
+					ProductID = products[4].ID
+				},
+				new LocationProduct() {
+					ID = 11,
+					LocationID = locations[3].ID,
+					ProductID = products[5].ID
+				},
+				new LocationProduct() {
+					ID = 12,
+					LocationID = locations[3].ID,
+					ProductID = products[6].ID
+				},
+				/*
+				 * Texas:
+				 * - Eggs: 4
+				 */
+				new LocationProduct() {
+					ID = 13,
+					LocationID = locations[4].ID,
+					ProductID = products[1].ID
+				},
+				new LocationProduct() {
+					ID = 14,
+					LocationID = locations[4].ID,
+					ProductID = products[1].ID
+				},
+				new LocationProduct() {
+					ID = 15,
+					LocationID = locations[4].ID,
+					ProductID = products[1].ID
+				},
+				new LocationProduct() {
+					ID = 16,
+					LocationID = locations[4].ID,
+					ProductID = products[1].ID
+				},
+				/*
+				 * New York:
+				 * - Bookshelf: 2
+				 * - Cave Story: 2
+				 * - Oranges: 1
+				 */
+				new LocationProduct() {
+					ID = 17,
+					LocationID = locations[5].ID,
+					ProductID = products[2].ID
+				},
+				new LocationProduct() {
+					ID = 18,
+					LocationID = locations[5].ID,
+					ProductID = products[2].ID
+				},
+				new LocationProduct() {
+					ID = 19,
+					LocationID = locations[5].ID,
+					ProductID = products[6].ID
+				},
+				new LocationProduct() {
+					ID = 20,
+					LocationID = locations[5].ID,
+					ProductID = products[6].ID
+				},
+				new LocationProduct() {
+					ID = 21,
+					LocationID = locations[5].ID,
+					ProductID = products[4].ID
+				},
+				/*
+				 * Virginia:
+				 * - One of each
+				 */
+				new LocationProduct() {
+					ID = 22,
+					LocationID = locations[6].ID,
+					ProductID = products[1].ID
+				},
+				new LocationProduct() {
+					ID = 23,
+					LocationID = locations[6].ID,
+					ProductID = products[2].ID
+				},
+				new LocationProduct() {
+					ID = 24,
+					LocationID = locations[6].ID,
+					ProductID = products[3].ID
+				},
+				new LocationProduct() {
+					ID = 25,
+					LocationID = locations[6].ID,
+					ProductID = products[4].ID
+				},
+				new LocationProduct() {
+					ID = 26,
+					LocationID = locations[6].ID,
+					ProductID = products[5].ID
+				},
+				new LocationProduct() {
+					ID = 27,
+					LocationID = locations[6].ID,
+					ProductID = products[6].ID
 				}
 			};
 			return locationProducts;

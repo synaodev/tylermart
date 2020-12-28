@@ -142,22 +142,69 @@ namespace TylerMart.Storage.Migrations
             migrationBuilder.InsertData(
                 table: "Locations",
                 columns: new[] { "ID", "Name" },
-                values: new object[] { 1, "Dreamland" });
+                values: new object[,]
+                {
+                    { 1, "Dreamland" },
+                    { 2, "California" },
+                    { 3, "Washington" },
+                    { 4, "Oregon" },
+                    { 5, "Texas" },
+                    { 6, "New York" },
+                    { 7, "Virginia" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "ID", "Description", "Name", "Price" },
-                values: new object[] { 1, "This is a nightmare!", "Nightmare", 180.50m });
+                values: new object[,]
+                {
+                    { 1, "This is a nightmare!", "Nightmare", 180.50m },
+                    { 2, "Delicious eggs", "Eggs", 4.40m },
+                    { 3, "For storing books", "Bookshelf", 68.99m },
+                    { 4, "For when it's chilly outside", "Jacket", 18.99m },
+                    { 5, "A bunch of oranges", "Oranges", 4.0m },
+                    { 6, "It's a purple-ish color", "Lipstick", 5.99m },
+                    { 7, "An excellent game", "Cave Story Switch", 35.99m }
+                });
 
             migrationBuilder.InsertData(
                 table: "LocationProducts",
                 columns: new[] { "ID", "LocationID", "ProductID" },
-                values: new object[] { 1, 1, 1 });
+                values: new object[,]
+                {
+                    { 18, 6, 3 },
+                    { 19, 6, 7 },
+                    { 12, 4, 7 },
+                    { 26, 7, 6 },
+                    { 11, 4, 6 },
+                    { 25, 7, 5 },
+                    { 21, 6, 5 },
+                    { 10, 4, 5 },
+                    { 24, 7, 4 },
+                    { 9, 3, 4 },
+                    { 8, 3, 4 },
+                    { 7, 3, 4 },
+                    { 23, 7, 3 },
+                    { 27, 7, 7 },
+                    { 17, 6, 3 },
+                    { 6, 2, 3 },
+                    { 5, 2, 3 },
+                    { 4, 2, 3 },
+                    { 22, 7, 2 },
+                    { 16, 5, 2 },
+                    { 15, 5, 2 },
+                    { 14, 5, 2 },
+                    { 13, 5, 2 },
+                    { 3, 2, 2 },
+                    { 2, 2, 2 },
+                    { 1, 1, 1 },
+                    { 20, 6, 7 }
+                });
 
             migrationBuilder.InsertData(
                 table: "Orders",
                 columns: new[] { "ID", "Complete", "CreatedAt", "CustomerID", "LocationID" },
-                values: new object[] { 1, true, new DateTime(2020, 12, 28, 8, 59, 2, 585, DateTimeKind.Local).AddTicks(1879), 1, 1 });
+                values: new object[] { 1, true, new DateTime(2020, 12, 28, 11, 13, 41, 39, DateTimeKind.Local).AddTicks(2859), 1, 1 });
 
             migrationBuilder.InsertData(
                 table: "OrderProducts",

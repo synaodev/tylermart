@@ -95,6 +95,36 @@ namespace TylerMart.Storage.Migrations
                         {
                             ID = 1,
                             Name = "Dreamland"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Name = "California"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Name = "Washington"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            Name = "Oregon"
+                        },
+                        new
+                        {
+                            ID = 5,
+                            Name = "Texas"
+                        },
+                        new
+                        {
+                            ID = 6,
+                            Name = "New York"
+                        },
+                        new
+                        {
+                            ID = 7,
+                            Name = "Virginia"
                         });
                 });
 
@@ -125,6 +155,162 @@ namespace TylerMart.Storage.Migrations
                             ID = 1,
                             LocationID = 1,
                             ProductID = 1
+                        },
+                        new
+                        {
+                            ID = 2,
+                            LocationID = 2,
+                            ProductID = 2
+                        },
+                        new
+                        {
+                            ID = 3,
+                            LocationID = 2,
+                            ProductID = 2
+                        },
+                        new
+                        {
+                            ID = 4,
+                            LocationID = 2,
+                            ProductID = 3
+                        },
+                        new
+                        {
+                            ID = 5,
+                            LocationID = 2,
+                            ProductID = 3
+                        },
+                        new
+                        {
+                            ID = 6,
+                            LocationID = 2,
+                            ProductID = 3
+                        },
+                        new
+                        {
+                            ID = 7,
+                            LocationID = 3,
+                            ProductID = 4
+                        },
+                        new
+                        {
+                            ID = 8,
+                            LocationID = 3,
+                            ProductID = 4
+                        },
+                        new
+                        {
+                            ID = 9,
+                            LocationID = 3,
+                            ProductID = 4
+                        },
+                        new
+                        {
+                            ID = 10,
+                            LocationID = 4,
+                            ProductID = 5
+                        },
+                        new
+                        {
+                            ID = 11,
+                            LocationID = 4,
+                            ProductID = 6
+                        },
+                        new
+                        {
+                            ID = 12,
+                            LocationID = 4,
+                            ProductID = 7
+                        },
+                        new
+                        {
+                            ID = 13,
+                            LocationID = 5,
+                            ProductID = 2
+                        },
+                        new
+                        {
+                            ID = 14,
+                            LocationID = 5,
+                            ProductID = 2
+                        },
+                        new
+                        {
+                            ID = 15,
+                            LocationID = 5,
+                            ProductID = 2
+                        },
+                        new
+                        {
+                            ID = 16,
+                            LocationID = 5,
+                            ProductID = 2
+                        },
+                        new
+                        {
+                            ID = 17,
+                            LocationID = 6,
+                            ProductID = 3
+                        },
+                        new
+                        {
+                            ID = 18,
+                            LocationID = 6,
+                            ProductID = 3
+                        },
+                        new
+                        {
+                            ID = 19,
+                            LocationID = 6,
+                            ProductID = 7
+                        },
+                        new
+                        {
+                            ID = 20,
+                            LocationID = 6,
+                            ProductID = 7
+                        },
+                        new
+                        {
+                            ID = 21,
+                            LocationID = 6,
+                            ProductID = 5
+                        },
+                        new
+                        {
+                            ID = 22,
+                            LocationID = 7,
+                            ProductID = 2
+                        },
+                        new
+                        {
+                            ID = 23,
+                            LocationID = 7,
+                            ProductID = 3
+                        },
+                        new
+                        {
+                            ID = 24,
+                            LocationID = 7,
+                            ProductID = 4
+                        },
+                        new
+                        {
+                            ID = 25,
+                            LocationID = 7,
+                            ProductID = 5
+                        },
+                        new
+                        {
+                            ID = 26,
+                            LocationID = 7,
+                            ProductID = 6
+                        },
+                        new
+                        {
+                            ID = 27,
+                            LocationID = 7,
+                            ProductID = 7
                         });
                 });
 
@@ -160,7 +346,7 @@ namespace TylerMart.Storage.Migrations
                         {
                             ID = 1,
                             Complete = true,
-                            CreatedAt = new DateTime(2020, 12, 28, 8, 59, 2, 585, DateTimeKind.Local).AddTicks(1879),
+                            CreatedAt = new DateTime(2020, 12, 28, 11, 13, 41, 39, DateTimeKind.Local).AddTicks(2859),
                             CustomerID = 1,
                             LocationID = 1
                         });
@@ -230,6 +416,48 @@ namespace TylerMart.Storage.Migrations
                             Description = "This is a nightmare!",
                             Name = "Nightmare",
                             Price = 180.50m
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Description = "Delicious eggs",
+                            Name = "Eggs",
+                            Price = 4.40m
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Description = "For storing books",
+                            Name = "Bookshelf",
+                            Price = 68.99m
+                        },
+                        new
+                        {
+                            ID = 4,
+                            Description = "For when it's chilly outside",
+                            Name = "Jacket",
+                            Price = 18.99m
+                        },
+                        new
+                        {
+                            ID = 5,
+                            Description = "A bunch of oranges",
+                            Name = "Oranges",
+                            Price = 4.0m
+                        },
+                        new
+                        {
+                            ID = 6,
+                            Description = "It's a purple-ish color",
+                            Name = "Lipstick",
+                            Price = 5.99m
+                        },
+                        new
+                        {
+                            ID = 7,
+                            Description = "An excellent game",
+                            Name = "Cave Story Switch",
+                            Price = 35.99m
                         });
                 });
 
