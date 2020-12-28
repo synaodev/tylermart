@@ -28,6 +28,7 @@ namespace TylerMart.UnitTest {
 			Assert.Equal("Last name is required!", results[1].ErrorMessage);
 			Assert.Equal("Email address is required!", results[2].ErrorMessage);
 			Assert.Equal("Password is required!", results[3].ErrorMessage);
+			Assert.Equal("Real address is required!", results[4].ErrorMessage);
 		}
 		/// <summary>
 		/// Location validation for [Required]

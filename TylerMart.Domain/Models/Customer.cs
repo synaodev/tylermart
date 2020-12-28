@@ -34,6 +34,12 @@ namespace TylerMart.Domain.Models {
 		[StringLength(50, MinimumLength = 8, ErrorMessage = "Password must be at least eight characters long!")]
 		public string Password { get; set; }
 		/// <summary>
+		/// Real Address
+		/// </summary>
+		[Required(ErrorMessage = "Real address is required!")]
+		[StringLength(100, MinimumLength = 5, ErrorMessage = "Real address must be at least five characters long!")]
+		public string RealAddress { get; set; }
+		/// <summary>
 		/// Generates Customer array for seeding database
 		/// </summary>
 		/// <remarks>
@@ -49,7 +55,8 @@ namespace TylerMart.Domain.Models {
 					FirstName = "Admin",
 					LastName = "Admin",
 					EmailAddress = "admin.admin@revature.net",
-					Password = "administrator"
+					Password = "administrator",
+					RealAddress = "Nowhere"
 				}
 			};
 			return customers;

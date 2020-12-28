@@ -58,6 +58,7 @@ namespace TylerMart.Terminal {
 			string lastName = "";
 			string emailAddress = "";
 			string password = "";
+			string realAddress = "";
 
 			while (firstName.Length == 0) {
 				Console.WriteLine("What's your first name? ");
@@ -117,11 +118,23 @@ namespace TylerMart.Terminal {
 					}
 				}
 			}
+			while (realAddress.Length == 0) {
+				Console.WriteLine("What's your real address? ");
+				realAddress = Console.ReadLine();
+				if (realAddress.Length < 5) {
+					Console.WriteLine("Real address must be at least five letters long!");
+					realAddress = "";
+				} else if (realAddress.Length > 100) {
+					Console.WriteLine("Real address must be under one-hundred letters long!");
+					realAddress = "";
+				}
+			}
 			bool success = db.Customers.Create(new Customer() {
 				FirstName = firstName,
 				LastName = lastName,
 				EmailAddress = emailAddress,
-				Password = password
+				Password = password,
+				RealAddress = realAddress
 			});
 			if (success) {
 				Console.WriteLine("Registration successful!");

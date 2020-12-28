@@ -62,5 +62,17 @@ namespace TylerMart.Storage.Repositories {
 				.Where(c => c.FirstName == firstName && c.LastName == lastName)
 				.ToList();
 		}
+		/// <summary>
+		/// Finds Customers with a real address
+		/// </summary>
+		/// <param name="address">Real address</param>
+		/// <returns>
+		/// List of Customers
+		/// </returns>
+		public List<Customer> FindByRealAddress(string address) {
+			return Db.Customers
+				.Where(c => c.RealAddress == address)
+				.ToList();
+		}
 	}
 }

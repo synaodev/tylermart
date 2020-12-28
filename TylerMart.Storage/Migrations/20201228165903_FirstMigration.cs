@@ -18,7 +18,8 @@ namespace TylerMart.Storage.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     EmailAddress = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    RealAddress = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -135,8 +136,8 @@ namespace TylerMart.Storage.Migrations
 
             migrationBuilder.InsertData(
                 table: "Customers",
-                columns: new[] { "ID", "EmailAddress", "FirstName", "LastName", "Password" },
-                values: new object[] { 1, "admin.admin@revature.net", "Admin", "Admin", "administrator" });
+                columns: new[] { "ID", "EmailAddress", "FirstName", "LastName", "Password", "RealAddress" },
+                values: new object[] { 1, "admin.admin@revature.net", "Admin", "Admin", "administrator", "Nowhere" });
 
             migrationBuilder.InsertData(
                 table: "Locations",
@@ -156,7 +157,7 @@ namespace TylerMart.Storage.Migrations
             migrationBuilder.InsertData(
                 table: "Orders",
                 columns: new[] { "ID", "Complete", "CreatedAt", "CustomerID", "LocationID" },
-                values: new object[] { 1, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 });
+                values: new object[] { 1, true, new DateTime(2020, 12, 28, 8, 59, 2, 585, DateTimeKind.Local).AddTicks(1879), 1, 1 });
 
             migrationBuilder.InsertData(
                 table: "OrderProducts",

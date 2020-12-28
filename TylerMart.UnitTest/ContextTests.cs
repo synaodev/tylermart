@@ -77,7 +77,8 @@ namespace TylerMart.UnitTest {
 				FirstName = "Tyler",
 				LastName = "Cadena",
 				EmailAddress = "admin.admin@revature.net",
-				Password = "tylercadena"
+				Password = "tylercadena",
+				RealAddress = "12345 Main Street, CA, 93949"
 			});
 			Assert.False(failure1);
 
@@ -85,7 +86,8 @@ namespace TylerMart.UnitTest {
 				FirstName = "Tyler",
 				LastName = "Cadena",
 				EmailAddress = "tyler.cadena@revature.net",
-				Password = "tylercadena"
+				Password = "tylercadena",
+				RealAddress = "12345 Main Street, CA, 93949"
 			});
 			Assert.True(success1);
 

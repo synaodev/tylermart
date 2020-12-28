@@ -24,7 +24,8 @@ namespace TylerMart.UnitTest {
 				FirstName = "Tyler",
 				LastName = "Cadena",
 				EmailAddress = "tyler.cadena@revature.net",
-				Password = "tylercadena"
+				Password = "tylercadena",
+				RealAddress = "12345 Main Street, CA, 93949"
 			});
 			Assert.True(creationSuccessful);
 
@@ -57,7 +58,8 @@ namespace TylerMart.UnitTest {
 				FirstName = "Tyler",
 				LastName = "Cadena",
 				EmailAddress = "tyler.cadena@revature.net",
-				Password = "tylercadena"
+				Password = "tylercadena",
+				RealAddress = "12345 Main Street, CA, 93949"
 			});
 
 			Customer tyler = db.Customers.GetByEmailAddress("tyler.cadena@revature.net");
@@ -68,17 +70,24 @@ namespace TylerMart.UnitTest {
 				FirstName = "Tyler",
 				LastName = "Cadena",
 				EmailAddress = "tyler.cadena@revature.com",
-				Password = "tylercadena"
+				Password = "tylercadena",
+				RealAddress = "12345 Main Street, CA, 93949"
 			});
 
 			List<Customer> tylerList = db.Customers.FindByFirstName("Tyler");
-			Assert.Equal(2, tylerList.Count);
+			Assert.NotEmpty(tylerList);
 
 			List<Customer> cadenaList = db.Customers.FindByLastName("Cadena");
-			Assert.Equal(2, cadenaList.Count);
+			Assert.NotEmpty(cadenaList);
+			Assert.Equal(tylerList, cadenaList);
 
 			List<Customer> tylerCadenaList = db.Customers.FindByWholeName("Tyler", "Cadena");
-			Assert.Equal(2, tylerCadenaList.Count);
+			Assert.NotEmpty(tylerCadenaList);
+			Assert.Equal(cadenaList, tylerCadenaList);
+
+			List<Customer> mainStreetList = db.Customers.FindByRealAddress("12345 Main Street, CA, 93949");
+			Assert.NotEmpty(mainStreetList);
+			Assert.Contains(tylerList[0], mainStreetList);
 		}
 		/// <summary>
 		/// For <see cref="TylerMart.Storage.Repositories.ProductRepository"/>
