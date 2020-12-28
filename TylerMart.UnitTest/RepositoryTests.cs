@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 using TylerMart.Domain.Models;
@@ -131,6 +131,18 @@ namespace TylerMart.UnitTest {
 			List<Order> dreamlandOrders = db.Orders.FindFromLocation(dreamland);
 			Assert.NotEmpty(dreamlandOrders);
 			Assert.Equal(adminOrders[0], dreamlandOrders[0]);
+
+			DateTime now = DateTime.Now;
+			db.Orders.Create(new Order() {
+				Complete = false,
+				CreatedAt = now,
+				CustomerID = admin.ID,
+				LocationID = dreamland.ID
+			});
+			Order lastOrder = db.Orders.GetByTimestamp(now);
+			Assert.NotNull(lastOrder);
+			Assert.Equal(lastOrder.CustomerID, admin.ID);
+			Assert.Equal(lastOrder.LocationID, dreamland.ID);
 		}
 		/// <summary>
 		/// For <see cref="TylerMart.Storage.Repositories.LocationRepository"/>
@@ -197,11 +209,13 @@ namespace TylerMart.UnitTest {
 
 			db.Orders.Create(new Order() {
 				Complete = false,
+				CreatedAt = DateTime.Now,
 				CustomerID = admin.ID,
 				LocationID = dreamland.ID
 			});
 			db.Orders.Create(new Order() {
 				Complete = false,
+				CreatedAt = DateTime.Now,
 				CustomerID = admin.ID,
 				LocationID = dreamland.ID
 			});

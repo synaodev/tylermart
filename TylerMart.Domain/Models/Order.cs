@@ -70,6 +70,7 @@ namespace TylerMart.Domain.Models {
 				new Order() {
 					ID = 1,
 					Complete = true,
+					CreatedAt = DateTime.Now,
 					CustomerID = customers[0].ID,
 					LocationID = locations[0].ID
 				}
