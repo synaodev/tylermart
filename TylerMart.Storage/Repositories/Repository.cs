@@ -80,14 +80,14 @@ namespace TylerMart.Storage.Repositories {
 		/// <returns>
 		/// List of models
 		/// </returns>
-		public virtual List<T> All() => Db.Set<T>().ToList();
+		public List<T> All() => Db.Set<T>().ToList();
 		/// <summary>
 		/// Check for row with primary key
 		/// </summary>
 		/// <returns>
 		/// 'true' if row exists
 		/// </returns>
-		public virtual bool Exists(int ID) => Db.Set<T>().Any(m => m.ID == ID);
+		public bool Exists(int ID) => Db.Set<T>().Any(m => m.ID == ID);
 		/// <summary>
 		/// Get a row with primary key
 		/// </summary>
@@ -95,7 +95,7 @@ namespace TylerMart.Storage.Repositories {
 		/// <returns>
 		/// Single row or null
 		/// </returns>
-		public virtual T Get(int ID) => Db.Set<T>().SingleOrDefault(m => m.ID == ID);
+		public T Get(int ID) => Db.Set<T>().SingleOrDefault(m => m.ID == ID);
 		/// <summary>
 		/// Update existing row using model data
 		/// </summary>
@@ -103,7 +103,7 @@ namespace TylerMart.Storage.Repositories {
 		/// <returns>
 		/// 'true' if successfully updated in database
 		/// </returns>
-		public virtual bool Create(T model) {
+		public bool Create(T model) {
 			Db.Set<T>().Add(model);
 			return this.TryMakingChanges();
 		}
@@ -114,7 +114,7 @@ namespace TylerMart.Storage.Repositories {
 		/// <returns>
 		/// 'true' if successfully updated in database
 		/// </returns>
-		public virtual bool Update(T model) {
+		public bool Update(T model) {
 			Db.Set<T>().Update(model);
 			return this.TryMakingChanges();
 		}
@@ -125,7 +125,7 @@ namespace TylerMart.Storage.Repositories {
 		/// <returns>
 		/// 'true' if successfully removed from database
 		/// </returns>
-		public virtual bool Delete(T model) {
+		public bool Delete(T model) {
 			Db.Set<T>().Remove(model);
 			return this.TryMakingChanges();
 		}

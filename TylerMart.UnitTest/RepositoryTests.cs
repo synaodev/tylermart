@@ -28,20 +28,22 @@ namespace TylerMart.UnitTest {
 			});
 			Assert.True(creationSuccessful);
 
-			Customer tyler1 = db.Customers.Get(2);
+			int count = db.Customers.All().Count;
+
+			Customer tyler1 = db.Customers.Get(count);
 			Assert.Equal("tyler.cadena@revature.net", tyler1.EmailAddress);
 
 			tyler1.EmailAddress = "tyler.cadena@revature.com";
 			bool updateSuccessful = db.Customers.Update(tyler1);
 			Assert.True(updateSuccessful);
 
-			Customer tyler2 = db.Customers.Get(2);
+			Customer tyler2 = db.Customers.Get(count);
 			Assert.Equal("tyler.cadena@revature.com", tyler2.EmailAddress);
 
 			bool deleteSuccessful = db.Customers.Delete(tyler2);
 			Assert.True(deleteSuccessful);
 
-			Customer tyler3 = db.Customers.Get(2);
+			Customer tyler3 = db.Customers.Get(count);
 			Assert.Null(tyler3);
 		}
 		/// <summary>

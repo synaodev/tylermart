@@ -179,13 +179,16 @@ namespace TylerMart.Storage.Repositories {
 		/// 'true' if change to the database was successful
 		/// </returns>
 		protected override bool TryMakingChanges() {
-			// foreach (
-				// var e in Db.ChangeTracker
-				// .Entries()
-				// .Where(e => e.Entity is Order && e.State == EntityState.Added))
-			// {
-				// ((Order)e.Entity).CreatedAt = DateTime.Now;
-			// }
+			foreach (
+				var e in Db.ChangeTracker
+				.Entries()
+				.Where(e => e.Entity is Order && e.State == EntityState.Added))
+			{
+				Order order = (Order)e.Entity;
+				if (order.CreatedAt == null) {
+					order.CreatedAt = DateTime.Now;
+				}
+			}
 			return base.TryMakingChanges();
 		}
 	}
