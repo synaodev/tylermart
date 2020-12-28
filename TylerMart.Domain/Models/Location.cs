@@ -37,11 +37,7 @@ namespace TylerMart.Domain.Models {
 			Location[] locations = new Location[] {
 				new Location() {
 					ID = 1,
-					Name = "New Jersey"
-				},
-				new Location() {
-					ID = 2,
-					Name = "Florida"
+					Name = "Dreamland"
 				}
 			};
 			return locations;

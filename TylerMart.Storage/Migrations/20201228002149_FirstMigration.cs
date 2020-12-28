@@ -136,64 +136,32 @@ namespace TylerMart.Storage.Migrations
             migrationBuilder.InsertData(
                 table: "Customers",
                 columns: new[] { "ID", "EmailAddress", "FirstName", "LastName", "Password" },
-                values: new object[,]
-                {
-                    { 1, "tyler.cadena@revature.net", "Tyler", "Cadena", "tylercadena" },
-                    { 2, "george.bumble@revature.net", "George", "Bumble", "georgebumble" }
-                });
+                values: new object[] { 1, "admin.admin@revature.net", "Admin", "Admin", "administrator" });
 
             migrationBuilder.InsertData(
                 table: "Locations",
                 columns: new[] { "ID", "Name" },
-                values: new object[,]
-                {
-                    { 1, "New Jersey" },
-                    { 2, "Florida" }
-                });
+                values: new object[] { 1, "Dreamland" });
 
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "ID", "Description", "Name", "Price" },
-                values: new object[,]
-                {
-                    { 1, "You can carry stuff around", "Bag", 3.50m },
-                    { 2, "Helpful for those with poor eyesight", "Glasses", 20.00m }
-                });
+                values: new object[] { 1, "This is a nightmare!", "Nightmare", 180.50m });
 
             migrationBuilder.InsertData(
                 table: "LocationProducts",
                 columns: new[] { "ID", "LocationID", "ProductID" },
-                values: new object[,]
-                {
-                    { 1, 1, 1 },
-                    { 2, 1, 1 },
-                    { 5, 2, 1 },
-                    { 6, 2, 1 },
-                    { 3, 1, 2 },
-                    { 4, 1, 2 },
-                    { 7, 2, 2 },
-                    { 8, 2, 2 }
-                });
+                values: new object[] { 1, 1, 1 });
 
             migrationBuilder.InsertData(
                 table: "Orders",
                 columns: new[] { "ID", "Complete", "CreatedAt", "CustomerID", "LocationID" },
-                values: new object[,]
-                {
-                    { 1, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 },
-                    { 2, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 2 }
-                });
+                values: new object[] { 1, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 });
 
             migrationBuilder.InsertData(
                 table: "OrderProducts",
                 columns: new[] { "ID", "OrderID", "ProductID" },
-                values: new object[,]
-                {
-                    { 1, 1, 1 },
-                    { 2, 1, 2 },
-                    { 3, 2, 1 },
-                    { 4, 2, 2 }
-                });
+                values: new object[] { 1, 1, 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_EmailAddress",

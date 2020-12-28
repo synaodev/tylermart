@@ -70,19 +70,5 @@ namespace TylerMart.Storage.Contexts {
 			builder.Entity<LocationProduct>().HasData(LocationProduct.GenerateSeededData());
 			builder.Entity<OrderProduct>().HasData(OrderProduct.GenerateSeededData());
 		}
-		/// <summary>
-		/// Sets <see cref="TylerMart.Domain.Models.Order.CreatedAt"/> when first saved to the database
-		/// </summary>
-		/// <returns>
-		/// Number of saved changes to the database
-		/// </returns>
-		public override int SaveChanges() {
-			var entries = ChangeTracker.Entries()
-				.Where(e => e.Entity is Order && e.State == EntityState.Added);
-			foreach (var e in entries) {
-				((Order)e.Entity).CreatedAt = DateTime.Now;
-			}
-			return base.SaveChanges();
-		}
 	}
 }

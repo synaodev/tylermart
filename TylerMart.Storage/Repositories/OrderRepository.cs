@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -99,7 +100,7 @@ namespace TylerMart.Storage.Repositories {
 				ProductID = product.ID
 			};
 			Db.Set<OrderProduct>().Add(op);
-			return Db.SaveChanges() >= 1;
+			return base.TryMakingChanges();
 		}
 		/// <summary>
 		/// Remove a Product from an Order
@@ -114,7 +115,7 @@ namespace TylerMart.Storage.Repositories {
 				.SingleOrDefault(op => op.OrderID == order.ID && op.ProductID == product.ID);
 			if (q != null) {
 				Db.Set<OrderProduct>().Remove(q);
-				return Db.SaveChanges() >= 1;
+				return base.TryMakingChanges();
 			}
 			return false;
 		}
@@ -134,7 +135,7 @@ namespace TylerMart.Storage.Repositories {
 				}
 			);
 			Db.Set<OrderProduct>().AddRange(range);
-			return Db.SaveChanges() >= 1;
+			return base.TryMakingChanges();
 		}
 		/// <summary>
 		/// Removes a range of Products from an Order
@@ -153,9 +154,28 @@ namespace TylerMart.Storage.Repositories {
 			}
 			if (range.Count > 0) {
 				Db.Set<OrderProduct>().RemoveRange(range);
-				return Db.SaveChanges() >= 1;
+				return base.TryMakingChanges();
 			}
 			return false;
+		}
+		/// <summary>
+		/// Attempts to save changes and to roll them back if something goes wrong
+		/// </summary>
+		/// <remarks>
+		/// This version also sets CreatedAt to the current time for newly added Orders.
+		/// </remarks>
+		/// <returns>
+		/// 'true' if change to the database was successful
+		/// </returns>
+		protected override bool TryMakingChanges() {
+			foreach (
+				var e in Db.ChangeTracker
+				.Entries()
+				.Where(e => e.Entity is Order && e.State == EntityState.Added))
+			{
+				((Order)e.Entity).CreatedAt = DateTime.Now;
+			}
+			return base.TryMakingChanges();
 		}
 	}
 }

@@ -51,41 +51,6 @@ namespace TylerMart.Domain.Models {
 					ID = 1,
 					LocationID = locations[0].ID,
 					ProductID = products[0].ID
-				},
-				new LocationProduct() {
-					ID = 2,
-					LocationID = locations[0].ID,
-					ProductID = products[0].ID
-				},
-				new LocationProduct() {
-					ID = 3,
-					LocationID = locations[0].ID,
-					ProductID = products[1].ID
-				},
-				new LocationProduct() {
-					ID = 4,
-					LocationID = locations[0].ID,
-					ProductID = products[1].ID
-				},
-				new LocationProduct() {
-					ID = 5,
-					LocationID = locations[1].ID,
-					ProductID = products[0].ID
-				},
-				new LocationProduct() {
-					ID = 6,
-					LocationID = locations[1].ID,
-					ProductID = products[0].ID
-				},
-				new LocationProduct() {
-					ID = 7,
-					LocationID = locations[1].ID,
-					ProductID = products[1].ID
-				},
-				new LocationProduct() {
-					ID = 8,
-					LocationID = locations[1].ID,
-					ProductID = products[1].ID
 				}
 			};
 			return locationProducts;

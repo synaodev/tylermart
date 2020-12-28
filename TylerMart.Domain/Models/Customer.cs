@@ -46,17 +46,10 @@ namespace TylerMart.Domain.Models {
 			Customer[] customers = new Customer[] {
 				new Customer() {
 					ID = 1,
-					FirstName = "Tyler",
-					LastName = "Cadena",
-					EmailAddress = "tyler.cadena@revature.net",
-					Password = "tylercadena"
-				},
-				new Customer() {
-					ID = 2,
-					FirstName = "George",
-					LastName = "Bumble",
-					EmailAddress = "george.bumble@revature.net",
-					Password = "georgebumble"
+					FirstName = "Admin",
+					LastName = "Admin",
+					EmailAddress = "admin.admin@revature.net",
+					Password = "administrator"
 				}
 			};
 			return customers;

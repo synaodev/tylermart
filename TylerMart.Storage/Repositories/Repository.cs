@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using Microsoft.EntityFrameworkCore;
 
 using TylerMart.Domain.Models;
 using TylerMart.Storage.Contexts;
@@ -77,14 +80,14 @@ namespace TylerMart.Storage.Repositories {
 		/// <returns>
 		/// List of models
 		/// </returns>
-		public List<T> All() => Db.Set<T>().ToList();
+		public virtual List<T> All() => Db.Set<T>().ToList();
 		/// <summary>
 		/// Check for row with primary key
 		/// </summary>
 		/// <returns>
 		/// 'true' if row exists
 		/// </returns>
-		public bool Exists(int ID) => Db.Set<T>().Any(m => m.ID == ID);
+		public virtual bool Exists(int ID) => Db.Set<T>().Any(m => m.ID == ID);
 		/// <summary>
 		/// Get a row with primary key
 		/// </summary>
@@ -92,7 +95,7 @@ namespace TylerMart.Storage.Repositories {
 		/// <returns>
 		/// Single row or null
 		/// </returns>
-		public T Get(int ID) => Db.Set<T>().SingleOrDefault(m => m.ID == ID);
+		public virtual T Get(int ID) => Db.Set<T>().SingleOrDefault(m => m.ID == ID);
 		/// <summary>
 		/// Update existing row using model data
 		/// </summary>
@@ -100,9 +103,9 @@ namespace TylerMart.Storage.Repositories {
 		/// <returns>
 		/// 'true' if successfully updated in database
 		/// </returns>
-		public bool Create(T model) {
+		public virtual bool Create(T model) {
 			Db.Set<T>().Add(model);
-			return Db.SaveChanges() >= 1;
+			return this.TryMakingChanges();
 		}
 		/// <summary>
 		/// Update existing row using model data
@@ -111,9 +114,9 @@ namespace TylerMart.Storage.Repositories {
 		/// <returns>
 		/// 'true' if successfully updated in database
 		/// </returns>
-		public bool Update(T model) {
+		public virtual bool Update(T model) {
 			Db.Set<T>().Update(model);
-			return Db.SaveChanges() >= 1;
+			return this.TryMakingChanges();
 		}
 		/// <summary>
 		/// Remove existing row with model's primary key
@@ -122,9 +125,45 @@ namespace TylerMart.Storage.Repositories {
 		/// <returns>
 		/// 'true' if successfully removed from database
 		/// </returns>
-		public bool Delete(T model) {
+		public virtual bool Delete(T model) {
 			Db.Set<T>().Remove(model);
-			return Db.SaveChanges() >= 1;
+			return this.TryMakingChanges();
+		}
+		/// <summary>
+		/// Attempts to save changes and to roll them back if something goes wrong
+		/// </summary>
+		/// <returns>
+		/// 'true' if change to the database was successful
+		/// </returns>
+		protected virtual bool TryMakingChanges() {
+			bool success = true;
+			try {
+				Db.SaveChanges();
+			} catch (DbUpdateException) { // Expected
+				success = false;
+			} catch (Exception) { // Unexpected
+				success = false;
+				throw;
+			} finally {
+				if (!success) {
+					Db.ChangeTracker.Entries().ToList().ForEach(e => {
+						switch (e.State) {
+						case EntityState.Modified:
+							e.State = EntityState.Unchanged;
+							break;
+						case EntityState.Added:
+							e.State = EntityState.Detached;
+							break;
+						case EntityState.Deleted:
+							e.Reload();
+							break;
+						default:
+							break;
+						}
+					});
+				}
+			}
+			return success;
 		}
 	}
 }

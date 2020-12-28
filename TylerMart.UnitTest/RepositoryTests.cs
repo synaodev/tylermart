@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 using TylerMart.Domain.Models;
@@ -20,28 +21,28 @@ namespace TylerMart.UnitTest {
 			DatabaseService db = new DatabaseService();
 
 			bool creationSuccessful = db.Customers.Create(new Customer() {
-				FirstName = "Johnny",
-				LastName = "Bravo",
-				EmailAddress = "johnny.bravo@revature.net",
-				Password = "johnnybravo"
+				FirstName = "Tyler",
+				LastName = "Cadena",
+				EmailAddress = "tyler.cadena@revature.net",
+				Password = "tylercadena"
 			});
 			Assert.True(creationSuccessful);
 
-			Customer johnny1 = db.Customers.Get(3);
-			Assert.Equal("johnny.bravo@revature.net", johnny1.EmailAddress);
+			Customer tyler1 = db.Customers.Get(2);
+			Assert.Equal("tyler.cadena@revature.net", tyler1.EmailAddress);
 
-			johnny1.EmailAddress = "johnny.bravo@revature.com";
-			bool updateSuccessful = db.Customers.Update(johnny1);
+			tyler1.EmailAddress = "tyler.cadena@revature.com";
+			bool updateSuccessful = db.Customers.Update(tyler1);
 			Assert.True(updateSuccessful);
 
-			Customer johnny2 = db.Customers.Get(3);
-			Assert.Equal("johnny.bravo@revature.com", johnny2.EmailAddress);
+			Customer tyler2 = db.Customers.Get(2);
+			Assert.Equal("tyler.cadena@revature.com", tyler2.EmailAddress);
 
-			bool deleteSuccessful = db.Customers.Delete(johnny2);
+			bool deleteSuccessful = db.Customers.Delete(tyler2);
 			Assert.True(deleteSuccessful);
 
-			Customer johnny3 = db.Customers.Get(3);
-			Assert.Null(johnny3);
+			Customer tyler3 = db.Customers.Get(2);
+			Assert.Null(tyler3);
 		}
 		/// <summary>
 		/// For <see cref="TylerMart.Storage.Repositories.CustomerRepository"/>
@@ -49,6 +50,13 @@ namespace TylerMart.UnitTest {
 		[Fact]
 		public void TestCustomerRepository() {
 			DatabaseService db = new DatabaseService();
+
+			db.Customers.Create(new Customer() {
+				FirstName = "Tyler",
+				LastName = "Cadena",
+				EmailAddress = "tyler.cadena@revature.net",
+				Password = "tylercadena"
+			});
 
 			Customer tyler = db.Customers.GetByEmailAddress("tyler.cadena@revature.net");
 			Assert.NotNull(tyler);
@@ -77,8 +85,15 @@ namespace TylerMart.UnitTest {
 		public void TestProductRepository() {
 			DatabaseService db = new DatabaseService();
 
-			List<Product> bags = db.Products.FindFromName("Bag");
-			Assert.NotEmpty(bags);
+			db.Products.Create(new Product() {
+				Name = "Thingamajig",
+				Description = "Blah blah blah",
+				Price = 30.0M
+			});
+
+			List<Product> things = db.Products.FindFromName("Thingamajig");
+			Assert.NotEmpty(things);
+			Assert.Equal("Thingamajig", things[0].Name);
 		}
 		/// <summary>
 		/// For <see cref="TylerMart.Storage.Repositories.LocationRepository"/>
@@ -87,14 +102,16 @@ namespace TylerMart.UnitTest {
 		public void TestLocationRepository() {
 			DatabaseService db = new DatabaseService();
 
-			Location jersey = db.Locations.GetByName("New Jersey");
-			Assert.NotNull(jersey);
-			Assert.Equal("New Jersey", jersey.Name);
+			Location dreamland = db.Locations.GetByName("Dreamland");
+			Assert.NotNull(dreamland);
+			Assert.Equal("Dreamland", dreamland.Name);
 
-			Product product = db.Products.Get(1);
-			List<Location> locations = db.Locations.FindFromProduct(product);
+			List<Product> nightmares = db.Products.FindFromName("Nightmare");
+			Assert.NotEmpty(nightmares);
 
-			Assert.Contains(jersey, locations);
+			List<Location> locations = db.Locations.FindFromProduct(nightmares[0]);
+			Assert.NotEmpty(locations);
+			Assert.Contains(dreamland, locations);
 		}
 		/// <summary>
 		/// For <see cref="TylerMart.Storage.Repositories.OrderRepository"/>
@@ -106,13 +123,14 @@ namespace TylerMart.UnitTest {
 			List<Order> incompleteOrders = db.Orders.FindByCompleteness(false);
 			Assert.Empty(incompleteOrders);
 
-			Customer tyler = db.Customers.GetByEmailAddress("tyler.cadena@revature.net");
-			List<Order> tylerOrders = db.Orders.FindFromCustomer(tyler);
-			Assert.NotEmpty(tylerOrders);
+			Customer admin = db.Customers.GetByEmailAddress("admin.admin@revature.net");
+			List<Order> adminOrders = db.Orders.FindFromCustomer(admin);
+			Assert.NotEmpty(adminOrders);
 
-			Location jersey = db.Locations.GetByName("New Jersey");
-			List<Order> jerseyOrders = db.Orders.FindFromLocation(jersey);
-			Assert.NotEmpty(jerseyOrders);
+			Location dreamland = db.Locations.GetByName("Dreamland");
+			List<Order> dreamlandOrders = db.Orders.FindFromLocation(dreamland);
+			Assert.NotEmpty(dreamlandOrders);
+			Assert.Equal(adminOrders[0], dreamlandOrders[0]);
 		}
 		/// <summary>
 		/// For <see cref="TylerMart.Storage.Repositories.LocationRepository"/>
@@ -123,20 +141,23 @@ namespace TylerMart.UnitTest {
 		public void TestLocationsAndProducts() {
 			DatabaseService db = new DatabaseService();
 
-			List<Product> bagProducts = db.Products.FindFromName("Bag");
-			List<Location> bagLocations = db.Locations.FindFromProduct(bagProducts[0]);
-			Assert.NotEmpty(bagLocations);
-
-			Location jersey = db.Locations.GetByName("New Jersey");
-			Location florida = db.Locations.GetByName("Florida");
-
+			db.Locations.Create(new Location() { Name = "New Jersey" });
+			db.Locations.Create(new Location() { Name = "Florida" });
 			db.Products.Create(new Product() {
 				Name = "Bananas",
 				Description = "Bananas",
 				Price = 20.0M
 			});
-			List<Product> bananaProducts = db.Products.FindFromName("Bananas");
-			Product bananas = bananaProducts[0];
+			db.Products.Create(new Product() {
+				Name = "Apples",
+				Description = "Apples",
+				Price = 15.0M
+			});
+
+			Location jersey = db.Locations.GetByName("New Jersey");
+			Location florida = db.Locations.GetByName("Florida");
+			Product bananas = db.Products.FindFromName("Bananas").First();
+			Product apples = db.Products.FindFromName("Apples").First();
 
 			bool successfulAddedJerseyBananas = db.Locations.AddProduct(jersey, bananas);
 			Assert.True(successfulAddedJerseyBananas);
@@ -146,14 +167,6 @@ namespace TylerMart.UnitTest {
 
 			bool successfulRemovedJerseyBananas = db.Locations.RemoveProduct(jersey, bananas);
 			Assert.True(successfulRemovedJerseyBananas);
-
-			db.Products.Create(new Product() {
-				Name = "Apples",
-				Description = "Apples",
-				Price = 15.0M
-			});
-			List<Product> appleProducts = db.Products.FindFromName("Apples");
-			Product apples = appleProducts[0];
 
 			bool successfulAddedFloridaFruits = db.Locations.AddProducts(
 				florida, new List<Product>() { bananas, apples }
@@ -179,21 +192,35 @@ namespace TylerMart.UnitTest {
 		public void TestOrdersAndProducts() {
 			DatabaseService db = new DatabaseService();
 
-			List<Product> products = db.Products.FindFromName("Bag");
-			List<Order> bagOrders = db.Orders.FindFromProduct(products[0]);
-			Assert.NotEmpty(bagOrders);
+			Customer admin = db.Customers.GetByEmailAddress("admin.admin@revature.net");
+			Location dreamland = db.Locations.GetByName("Dreamland");
 
-			List<Order> orders = db.Orders.All();
-			Order o1 = orders[0];
-			Order o2 = orders[1];
-
+			db.Orders.Create(new Order() {
+				Complete = false,
+				CustomerID = admin.ID,
+				LocationID = dreamland.ID
+			});
+			db.Orders.Create(new Order() {
+				Complete = false,
+				CustomerID = admin.ID,
+				LocationID = dreamland.ID
+			});
 			db.Products.Create(new Product() {
 				Name = "Bananas",
 				Description = "Bananas",
 				Price = 20.0M
 			});
-			List<Product> bananaProducts = db.Products.FindFromName("Bananas");
-			Product bananas = bananaProducts[0];
+			db.Products.Create(new Product() {
+				Name = "Apples",
+				Description = "Apples",
+				Price = 15.0M
+			});
+
+			List<Order> orders = db.Orders.FindByCompleteness(false);
+			Order o1 = orders[0];
+			Order o2 = orders[1];
+			Product bananas = db.Products.FindFromName("Bananas").First();
+			Product apples = db.Products.FindFromName("Apples").First();
 
 			bool successfulAddedO1Banana = db.Orders.AddProduct(o1, bananas);
 			Assert.True(successfulAddedO1Banana);
@@ -203,14 +230,6 @@ namespace TylerMart.UnitTest {
 
 			bool successfulRemovedO1Banana = db.Orders.RemoveProduct(o1, bananas);
 			Assert.True(successfulRemovedO1Banana);
-
-			db.Products.Create(new Product() {
-				Name = "Apples",
-				Description = "Apples",
-				Price = 15.0M
-			});
-			List<Product> appleProducts = db.Products.FindFromName("Apples");
-			Product apples = appleProducts[0];
 
 			bool successfulAddedO2Fruits = db.Orders.AddProducts(
 				o2, new List<Product>() { apples, bananas }

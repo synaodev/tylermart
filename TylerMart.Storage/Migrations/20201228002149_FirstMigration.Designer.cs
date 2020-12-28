@@ -13,7 +13,7 @@ using TylerMart.Storage.Contexts;
 namespace TylerMart.Storage.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20201227043019_FirstMigration")]
+    [Migration("20201228002149_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,18 +61,10 @@ namespace TylerMart.Storage.Migrations
                         new
                         {
                             ID = 1,
-                            EmailAddress = "tyler.cadena@revature.net",
-                            FirstName = "Tyler",
-                            LastName = "Cadena",
-                            Password = "tylercadena"
-                        },
-                        new
-                        {
-                            ID = 2,
-                            EmailAddress = "george.bumble@revature.net",
-                            FirstName = "George",
-                            LastName = "Bumble",
-                            Password = "georgebumble"
+                            EmailAddress = "admin.admin@revature.net",
+                            FirstName = "Admin",
+                            LastName = "Admin",
+                            Password = "administrator"
                         });
                 });
 
@@ -99,12 +91,7 @@ namespace TylerMart.Storage.Migrations
                         new
                         {
                             ID = 1,
-                            Name = "New Jersey"
-                        },
-                        new
-                        {
-                            ID = 2,
-                            Name = "Florida"
+                            Name = "Dreamland"
                         });
                 });
 
@@ -135,48 +122,6 @@ namespace TylerMart.Storage.Migrations
                             ID = 1,
                             LocationID = 1,
                             ProductID = 1
-                        },
-                        new
-                        {
-                            ID = 2,
-                            LocationID = 1,
-                            ProductID = 1
-                        },
-                        new
-                        {
-                            ID = 3,
-                            LocationID = 1,
-                            ProductID = 2
-                        },
-                        new
-                        {
-                            ID = 4,
-                            LocationID = 1,
-                            ProductID = 2
-                        },
-                        new
-                        {
-                            ID = 5,
-                            LocationID = 2,
-                            ProductID = 1
-                        },
-                        new
-                        {
-                            ID = 6,
-                            LocationID = 2,
-                            ProductID = 1
-                        },
-                        new
-                        {
-                            ID = 7,
-                            LocationID = 2,
-                            ProductID = 2
-                        },
-                        new
-                        {
-                            ID = 8,
-                            LocationID = 2,
-                            ProductID = 2
                         });
                 });
 
@@ -215,14 +160,6 @@ namespace TylerMart.Storage.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerID = 1,
                             LocationID = 1
-                        },
-                        new
-                        {
-                            ID = 2,
-                            Complete = true,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CustomerID = 2,
-                            LocationID = 2
                         });
                 });
 
@@ -253,24 +190,6 @@ namespace TylerMart.Storage.Migrations
                             ID = 1,
                             OrderID = 1,
                             ProductID = 1
-                        },
-                        new
-                        {
-                            ID = 2,
-                            OrderID = 1,
-                            ProductID = 2
-                        },
-                        new
-                        {
-                            ID = 3,
-                            OrderID = 2,
-                            ProductID = 1
-                        },
-                        new
-                        {
-                            ID = 4,
-                            OrderID = 2,
-                            ProductID = 2
                         });
                 });
 
@@ -302,16 +221,9 @@ namespace TylerMart.Storage.Migrations
                         new
                         {
                             ID = 1,
-                            Description = "You can carry stuff around",
-                            Name = "Bag",
-                            Price = 3.50m
-                        },
-                        new
-                        {
-                            ID = 2,
-                            Description = "Helpful for those with poor eyesight",
-                            Name = "Glasses",
-                            Price = 20.00m
+                            Description = "This is a nightmare!",
+                            Name = "Nightmare",
+                            Price = 180.50m
                         });
                 });
 

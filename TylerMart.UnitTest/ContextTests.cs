@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
 using Xunit;
-
-using Microsoft.EntityFrameworkCore;
 
 using TylerMart.Domain.Models;
 using TylerMart.UnitTest.Services;
@@ -73,35 +70,37 @@ namespace TylerMart.UnitTest {
 		public void TestUniqueFields() {
 			DatabaseService db = new DatabaseService();
 
-			Action attempt1 = new Action(delegate() {
-				db.Customers.Create(new Customer() {
-					FirstName = "Tyler2",
-					LastName = "Cadena2",
-					// this email exists in seeded data
-					EmailAddress = "tyler.cadena@revature.net",
-					Password = "tyler2cadena2"
-				});
+			bool failure1 = db.Customers.Create(new Customer() {
+				FirstName = "Tyler",
+				LastName = "Cadena",
+				EmailAddress = "admin.admin@revature.net",
+				Password = "tylercadena"
 			});
-			Action attempt2 = new Action(delegate() {
-				Customer c = db.Customers.Get(2);
-				c.EmailAddress = "tyler.cadena@revature.net";
-				db.Customers.Update(c);
-			});
-			Assert.Throws<DbUpdateException>(attempt2);
+			Assert.False(failure1);
 
-			Action attempt3 = new Action(delegate() {
-				db.Locations.Create(new Location() {
-					Name = "Florida"
-				});
+			bool success1 = db.Customers.Create(new Customer() {
+				FirstName = "Tyler",
+				LastName = "Cadena",
+				EmailAddress = "tyler.cadena@revature.net",
+				Password = "tylercadena"
 			});
-			Assert.Throws<DbUpdateException>(attempt3);
+			Assert.True(success1);
 
-			Action attempt4 = new Action(delegate() {
-				Location l = db.Locations.Get(1);
-				l.Name = "Florida";
-				db.Locations.Update(l);
-			});
-			Assert.Throws<DbUpdateException>(attempt4);
+			Customer tyler = db.Customers.Get(2);
+			tyler.EmailAddress = "admin.admin@revature.net";
+			bool failure2 = db.Customers.Update(tyler);
+			Assert.False(failure2);
+
+			bool failure3 = db.Locations.Create(new Location() { Name = "Dreamland" });
+			Assert.False(failure3);
+
+			bool success2 = db.Locations.Create(new Location() { Name = "Nightmareland" });
+			Assert.True(success2);
+
+			Location nightmareland = db.Locations.Get(2);
+			nightmareland.Name = "Dreamland";
+			bool failure4 = db.Locations.Update(nightmareland);
+			Assert.False(failure4);
 		}
 	}
 }

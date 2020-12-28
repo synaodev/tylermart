@@ -51,21 +51,6 @@ namespace TylerMart.Domain.Models {
 					ID = 1,
 					OrderID = orders[0].ID,
 					ProductID = products[0].ID
-				},
-				new OrderProduct() {
-					ID = 2,
-					OrderID = orders[0].ID,
-					ProductID = products[1].ID
-				},
-				new OrderProduct() {
-					ID = 3,
-					OrderID = orders[1].ID,
-					ProductID = products[0].ID
-				},
-				new OrderProduct() {
-					ID = 4,
-					OrderID = orders[1].ID,
-					ProductID = products[1].ID
 				}
 			};
 			return orderProducts;

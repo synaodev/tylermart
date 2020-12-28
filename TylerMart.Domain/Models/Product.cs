@@ -55,15 +55,9 @@ namespace TylerMart.Domain.Models {
 			Product[] products = new Product[] {
 				new Product() {
 					ID = 1,
-					Name = "Bag",
-					Description = "You can carry stuff around",
-					Price = 3.50M
-				},
-				new Product() {
-					ID = 2,
-					Name = "Glasses",
-					Description = "Helpful for those with poor eyesight",
-					Price = 20.00M
+					Name = "Nightmare",
+					Description = "This is a nightmare!",
+					Price = 180.50M
 				}
 			};
 			return products;

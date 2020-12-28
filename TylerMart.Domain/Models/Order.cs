@@ -72,12 +72,6 @@ namespace TylerMart.Domain.Models {
 					Complete = true,
 					CustomerID = customers[0].ID,
 					LocationID = locations[0].ID
-				},
-				new Order() {
-					ID = 2,
-					Complete = true,
-					CustomerID = customers[1].ID,
-					LocationID = locations[1].ID
 				}
 			};
 			return orders;
