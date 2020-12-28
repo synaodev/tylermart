@@ -37,6 +37,17 @@ namespace TylerMart.Storage.Repositories {
 				.Single();
 		}
 		/// <summary>
+		/// Get Order by timestamp
+		/// </summary>
+		/// <param name="dateTime">Timestamp</param>
+		/// <returns>
+		/// Single Order or null
+		/// </returns>
+		public Order GetByTimestamp(DateTime dateTime) {
+			return Db.Orders
+				.SingleOrDefault(o => o.CreatedAt == dateTime);
+		}
+		/// <summary>
 		/// Find Orders by completion status
 		/// </summary>
 		/// <returns>
@@ -168,13 +179,13 @@ namespace TylerMart.Storage.Repositories {
 		/// 'true' if change to the database was successful
 		/// </returns>
 		protected override bool TryMakingChanges() {
-			foreach (
-				var e in Db.ChangeTracker
-				.Entries()
-				.Where(e => e.Entity is Order && e.State == EntityState.Added))
-			{
-				((Order)e.Entity).CreatedAt = DateTime.Now;
-			}
+			// foreach (
+				// var e in Db.ChangeTracker
+				// .Entries()
+				// .Where(e => e.Entity is Order && e.State == EntityState.Added))
+			// {
+				// ((Order)e.Entity).CreatedAt = DateTime.Now;
+			// }
 			return base.TryMakingChanges();
 		}
 	}
