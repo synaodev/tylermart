@@ -7,14 +7,14 @@ using TylerMart.Terminal.Services;
 namespace TylerMart.Terminal {
 	internal class Program {
 		public static void Main(string[] args) {
-			Console.WriteLine("**** Welcome to TylerMart ****\n");
+			Console.WriteLine("\n**** Welcome to TylerMart ****");
 
 			DatabaseService db = new DatabaseService();
 			Customer customer = null;
 			bool done = false;
 
 			while (!done) {
-				Console.WriteLine("[Main Menu]");
+				Console.WriteLine("\n[Main Menu]");
 				Console.WriteLine("1 - Register");
 				if (customer == null) {
 					Console.WriteLine("2 - Login");

@@ -25,6 +25,7 @@ namespace TylerMart.Terminal {
 					Console.Write("*");
 				}
 			}
+			Console.Write('\n');
 			return password;
 		}
 		/// <summary>
@@ -40,6 +41,7 @@ namespace TylerMart.Terminal {
 
 			Customer result = db.Customers.GetByEmailAddress(emailAddress);
 			if (result != null && result.Password == password) {
+				Console.WriteLine("Login successful!");
 				return result;
 			}
 

@@ -44,12 +44,15 @@ namespace TylerMart.Terminal {
 			while (true) {
 				Console.WriteLine("Here are all of products available at {0}: ", location.Name);
 				foreach (var pc in inventory) {
-					Console.WriteLine("\t{0}: {1} ", pc.Key.Name, pc.Value);
+					Console.WriteLine("\t{0}: {1} ({2})", pc.Key.Name, pc.Value, pc.Key.Description);
 				}
-				Console.WriteLine("Please choose one: ");
+				Console.WriteLine("Please choose one: (type 'rm' to remove something)");
 				string input = Console.ReadLine();
-				Product possible = inventory.Keys.SingleOrDefault(p => String.Compare(p.Name, input, true) == 0);
-				if (possible == null) {
+				Product possible = null;
+				if (String.Compare(input, "rm", true) != 0) {
+					possible = inventory.Keys.SingleOrDefault(p => String.Compare(p.Name, input, true) == 0);
+				}
+				if (possible == null && String.Compare(input, "rm", true) != 0) {
 					Console.WriteLine("That product doesn't exist!");
 					Console.WriteLine("I'm sorry.");
 				} else if (inventory[possible] > 0) {
@@ -83,7 +86,7 @@ namespace TylerMart.Terminal {
 						}
 					}
 				} else {
-					Console.WriteLine("Do you not want to buy anything?");
+					Console.WriteLine("Do you actually want to buy anything? (Y/N)");
 					if (Console.ReadKey(true).Key == ConsoleKey.Y) {
 						Console.WriteLine("Okay.");
 						return;
@@ -100,6 +103,7 @@ namespace TylerMart.Terminal {
 			Order order = db.Orders.GetByTimestamp(now);
 			db.Orders.AddProducts(order, shoppingCart);
 			db.Locations.RemoveProducts(location, shoppingCart);
+			Console.WriteLine("Order sent!");
 		}
 	}
 }
