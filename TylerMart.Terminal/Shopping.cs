@@ -103,7 +103,7 @@ namespace TylerMart.Terminal {
 			Order order = db.Orders.GetByTimestamp(now);
 			db.Orders.AddProducts(order, shoppingCart);
 			db.Locations.RemoveProducts(location, shoppingCart);
-			Console.WriteLine("Order sent!");
+			Console.WriteLine("\nOrder sent!");
 		}
 	}
 }

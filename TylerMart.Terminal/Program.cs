@@ -38,14 +38,14 @@ namespace TylerMart.Terminal {
 					break;
 				case ConsoleKey.D3:
 					if (customer == null) {
-						Console.WriteLine("You must log in first!");
+						Console.WriteLine("\nYou must log in first!");
 					} else {
 						Shopping.MakeOrder(db, customer);
 					}
 					break;
 				case ConsoleKey.D4:
 					if (customer == null) {
-						Console.WriteLine("You must log in first!");
+						Console.WriteLine("\nYou must log in first!");
 					} else {
 						Console.WriteLine("{0} {1}'s orders:", customer.FirstName, customer.LastName);
 						List<Order> orders = db.Orders.FindFromCustomerWithDetails(customer);
@@ -56,7 +56,7 @@ namespace TylerMart.Terminal {
 					break;
 				case ConsoleKey.D5:
 					if (customer == null) {
-						Console.WriteLine("You must log in first!");
+						Console.WriteLine("\nYou must log in first!");
 					} else {
 						List<Location> locations = db.Locations.All();
 						Console.WriteLine("Here are all the locations: ");
@@ -81,11 +81,11 @@ namespace TylerMart.Terminal {
 					}
 					break;
 				case ConsoleKey.D6:
-					Console.WriteLine("Goodbye!");
+					Console.WriteLine("\nGoodbye!");
 					done = true;
 					break;
 				default:
-					Console.WriteLine("Invalid key pressed!");
+					Console.WriteLine("\nInvalid key pressed!");
 					break;
 				}
 			}

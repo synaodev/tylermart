@@ -41,11 +41,11 @@ namespace TylerMart.Terminal {
 
 			Customer result = db.Customers.GetByEmail(email);
 			if (result != null && result.Password == password) {
-				Console.WriteLine("Login successful!");
+				Console.WriteLine("\nLogin successful!");
 				return result;
 			}
 
-			Console.WriteLine("Either your email or your password were invalid!");
+			Console.WriteLine("\nEither your email or your password were invalid!");
 			Console.WriteLine("I'm sorry.");
 			return null;
 		}
@@ -127,9 +127,9 @@ namespace TylerMart.Terminal {
 				Address = address
 			});
 			if (success) {
-				Console.WriteLine("Registration successful!");
+				Console.WriteLine("\nRegistration successful!");
 			} else {
-				Console.WriteLine("Error! Registration failed!");
+				Console.WriteLine("\nError! Registration failed!");
 				Console.WriteLine("I'm sorry.");
 			}
 		}
