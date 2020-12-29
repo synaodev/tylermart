@@ -71,9 +71,6 @@ namespace TylerMart.Terminal {
 				} else if (firstName.Length < 2) {
 					Console.WriteLine("First name must be at least two letters long!");
 					firstName = "";
-				} else if (firstName.Length > 50) {
-					Console.WriteLine("First name must be under fifty letters long!");
-					firstName = "";
 				}
 			}
 			while (lastName.Length == 0) {
@@ -84,9 +81,6 @@ namespace TylerMart.Terminal {
 					lastName = "";
 				} else if (lastName.Length < 2) {
 					Console.WriteLine("Last name must be at least two letters long!");
-					lastName = "";
-				} else if (lastName.Length > 50) {
-					Console.WriteLine("Last name must be under fifty letters long!");
 					lastName = "";
 				}
 			}
@@ -102,11 +96,8 @@ namespace TylerMart.Terminal {
 				if (password.Length == 0) {
 					Console.WriteLine("Please enter your password: ");
 					password = ReadPasswordFromInput();
-					if (password.Length < 2) {
+					if (password.Length < 8) {
 						Console.WriteLine("Password must be at least eight letters long!");
-						password = "";
-					} else if (password.Length > 50) {
-						Console.WriteLine("Password must be under fifty letters long!");
 						password = "";
 					}
 				} else {
@@ -125,9 +116,6 @@ namespace TylerMart.Terminal {
 				realAddress = Console.ReadLine();
 				if (realAddress.Length < 5) {
 					Console.WriteLine("Real address must be at least five letters long!");
-					realAddress = "";
-				} else if (realAddress.Length > 100) {
-					Console.WriteLine("Real address must be under one-hundred letters long!");
 					realAddress = "";
 				}
 			}

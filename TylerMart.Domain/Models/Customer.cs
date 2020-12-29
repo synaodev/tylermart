@@ -11,14 +11,14 @@ namespace TylerMart.Domain.Models {
 		/// First Name
 		/// </summary>
 		[Required(ErrorMessage = "First name is required!")]
-		[StringLength(50, MinimumLength = 2, ErrorMessage = "First name must be at least two letters long!")]
+		[MinLength(2, ErrorMessage = "First name must be at least two letters long!")]
 		[RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "First name should only contain letters!")]
 		public string FirstName { get; set; }
 		/// <summary>
 		/// Last Name
 		/// </summary>
 		[Required(ErrorMessage = "Last name is required!")]
-		[StringLength(50, MinimumLength = 2, ErrorMessage = "Last name must be at least two letters long!")]
+		[MinLength(2, ErrorMessage = "Last name must be at least two letters long!")]
 		[RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Last name should only contain letters!")]
 		public string LastName { get; set; }
 		/// <summary>
@@ -31,13 +31,13 @@ namespace TylerMart.Domain.Models {
 		/// Password
 		/// </summary>
 		[Required(ErrorMessage = "Password is required!")]
-		[StringLength(50, MinimumLength = 8, ErrorMessage = "Password must be at least eight characters long!")]
+		[MinLength(8, ErrorMessage = "Password must be at least eight characters long!")]
 		public string Password { get; set; }
 		/// <summary>
 		/// Real Address
 		/// </summary>
 		[Required(ErrorMessage = "Real address is required!")]
-		[StringLength(100, MinimumLength = 5, ErrorMessage = "Real address must be at least five characters long!")]
+		[MinLength(5, ErrorMessage = "Real address must be at least five characters long!")]
 		public string RealAddress { get; set; }
 		/// <summary>
 		/// Generates Customer array for seeding database
