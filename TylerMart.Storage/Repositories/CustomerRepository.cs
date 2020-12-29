@@ -15,15 +15,15 @@ namespace TylerMart.Storage.Repositories {
 		/// <param name="db">Instance of DatabaseContext</param>
 		public CustomerRepository(DatabaseContext db) : base(db) {}
 		/// <summary>
-		/// Gets Customer from email address
+		/// Gets Customer from email
 		/// </summary>
-		/// <param name="emailAddress">Email Address</param>
+		/// <param name="email">Email</param>
 		/// <returns>
 		/// Single Customer or null
 		/// </returns>
-		public Customer GetByEmailAddress(string emailAddress) {
+		public Customer GetByEmail(string email) {
 			return Db.Customers
-				.SingleOrDefault(c => c.EmailAddress == emailAddress);
+				.SingleOrDefault(c => c.Email == email);
 		}
 		/// <summary>
 		/// Finds Customers with first name
@@ -63,15 +63,15 @@ namespace TylerMart.Storage.Repositories {
 				.ToList();
 		}
 		/// <summary>
-		/// Finds Customers with a real address
+		/// Finds Customers with an address
 		/// </summary>
-		/// <param name="address">Real address</param>
+		/// <param name="address">Address</param>
 		/// <returns>
 		/// List of Customers
 		/// </returns>
-		public List<Customer> FindByRealAddress(string address) {
+		public List<Customer> FindByAddress(string address) {
 			return Db.Customers
-				.Where(c => c.RealAddress == address)
+				.Where(c => c.Address == address)
 				.ToList();
 		}
 	}

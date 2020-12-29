@@ -12,13 +12,11 @@ namespace TylerMart.Domain.Models {
 		/// Name
 		/// </summary>
 		[Required(ErrorMessage = "Name is required!")]
-		[MinLength(2, ErrorMessage = "Name must be at least two letters long!")]
 		public string Name { get; set; }
 		/// <summary>
 		/// Description
 		/// </summary>
 		[Required(ErrorMessage = "Description is required!")]
-		[MinLength(3, ErrorMessage = "Description must be at least three letters long!")]
 		public string Description { get; set; }
 		/// <summary>
 		/// Price

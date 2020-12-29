@@ -23,23 +23,23 @@ namespace TylerMart.UnitTest {
 			bool creationSuccessful = db.Customers.Create(new Customer() {
 				FirstName = "Tyler",
 				LastName = "Cadena",
-				EmailAddress = "tyler.cadena@revature.net",
+				Email = "tyler.cadena@revature.net",
 				Password = "tylercadena",
-				RealAddress = "12345 Main Street, CA, 93949"
+				Address = "12345 Main Street, CA, 93949"
 			});
 			Assert.True(creationSuccessful);
 
 			int count = db.Customers.All().Count;
 
 			Customer tyler1 = db.Customers.Get(count);
-			Assert.Equal("tyler.cadena@revature.net", tyler1.EmailAddress);
+			Assert.Equal("tyler.cadena@revature.net", tyler1.Email);
 
-			tyler1.EmailAddress = "tyler.cadena@revature.com";
+			tyler1.Email = "tyler.cadena@revature.com";
 			bool updateSuccessful = db.Customers.Update(tyler1);
 			Assert.True(updateSuccessful);
 
 			Customer tyler2 = db.Customers.Get(count);
-			Assert.Equal("tyler.cadena@revature.com", tyler2.EmailAddress);
+			Assert.Equal("tyler.cadena@revature.com", tyler2.Email);
 
 			bool deleteSuccessful = db.Customers.Delete(tyler2);
 			Assert.True(deleteSuccessful);
@@ -57,21 +57,21 @@ namespace TylerMart.UnitTest {
 			db.Customers.Create(new Customer() {
 				FirstName = "Tyler",
 				LastName = "Cadena",
-				EmailAddress = "tyler.cadena@revature.net",
+				Email = "tyler.cadena@revature.net",
 				Password = "tylercadena",
-				RealAddress = "12345 Main Street, CA, 93949"
+				Address = "12345 Main Street, CA, 93949"
 			});
 
-			Customer tyler = db.Customers.GetByEmailAddress("tyler.cadena@revature.net");
+			Customer tyler = db.Customers.GetByEmail("tyler.cadena@revature.net");
 			Assert.NotNull(tyler);
 			Assert.Equal("tylercadena", tyler.Password);
 
 			db.Customers.Create(new Customer() {
 				FirstName = "Tyler",
 				LastName = "Cadena",
-				EmailAddress = "tyler.cadena@revature.com",
+				Email = "tyler.cadena@revature.com",
 				Password = "tylercadena",
-				RealAddress = "12345 Main Street, CA, 93949"
+				Address = "12345 Main Street, CA, 93949"
 			});
 
 			List<Customer> tylerList = db.Customers.FindByFirstName("Tyler");
@@ -85,7 +85,7 @@ namespace TylerMart.UnitTest {
 			Assert.NotEmpty(tylerCadenaList);
 			Assert.Equal(cadenaList, tylerCadenaList);
 
-			List<Customer> mainStreetList = db.Customers.FindByRealAddress("12345 Main Street, CA, 93949");
+			List<Customer> mainStreetList = db.Customers.FindByAddress("12345 Main Street, CA, 93949");
 			Assert.NotEmpty(mainStreetList);
 			Assert.Contains(tylerList[0], mainStreetList);
 		}
@@ -134,7 +134,7 @@ namespace TylerMart.UnitTest {
 			List<Order> incompleteOrders = db.Orders.FindByCompleteness(false);
 			Assert.Empty(incompleteOrders);
 
-			Customer admin = db.Customers.GetByEmailAddress("admin.admin@revature.net");
+			Customer admin = db.Customers.GetByEmail("admin.admin@revature.net");
 			List<Order> adminOrders = db.Orders.FindFromCustomer(admin);
 			Assert.NotEmpty(adminOrders);
 
@@ -215,7 +215,7 @@ namespace TylerMart.UnitTest {
 		public void TestOrdersAndProducts() {
 			DatabaseService db = new DatabaseService();
 
-			Customer admin = db.Customers.GetByEmailAddress("admin.admin@revature.net");
+			Customer admin = db.Customers.GetByEmail("admin.admin@revature.net");
 			Location dreamland = db.Locations.GetByName("Dreamland");
 
 			db.Orders.Create(new Order() {

@@ -76,25 +76,25 @@ namespace TylerMart.UnitTest {
 			bool failure1 = db.Customers.Create(new Customer() {
 				FirstName = "Tyler",
 				LastName = "Cadena",
-				EmailAddress = "admin.admin@revature.net",
+				Email = "admin.admin@revature.net",
 				Password = "tylercadena",
-				RealAddress = "12345 Main Street, CA, 93949"
+				Address = "12345 Main Street, CA, 93949"
 			});
 			Assert.False(failure1);
 
 			bool success1 = db.Customers.Create(new Customer() {
 				FirstName = "Tyler",
 				LastName = "Cadena",
-				EmailAddress = "tyler.cadena@revature.net",
+				Email = "tyler.cadena@revature.net",
 				Password = "tylercadena",
-				RealAddress = "12345 Main Street, CA, 93949"
+				Address = "12345 Main Street, CA, 93949"
 			});
 			Assert.True(success1);
 
 			int customerCount = db.Customers.All().Count;
 
 			Customer tyler = db.Customers.Get(customerCount);
-			tyler.EmailAddress = "admin.admin@revature.net";
+			tyler.Email = "admin.admin@revature.net";
 			bool failure2 = db.Customers.Update(tyler);
 			Assert.False(failure2);
 

@@ -17,28 +17,6 @@ namespace TylerMart.Storage.Repositories {
 		/// <param name="db">Instance of DatabaseContext</param>
 		public OrderRepository(DatabaseContext db) : base(db) {}
 		/// <summary>
-		/// Get Order from primary key
-		/// </summary>
-		/// <remarks>
-		/// Eagerly loads the Customer and Location
-		/// </remarks>
-		/// <param name="ID">Primary Key</param>
-		/// <returns>
-		/// Single Order or null
-		/// </returns>
-		public Order GetWithDetails(int ID) {
-			if (!this.Exists(ID)) {
-				return null;
-			}
-			return Db.Orders
-				.Where(o => o.ID == ID)
-				.Include(o => o.Customer)
-				.Include(o => o.Location)
-				.Include(o => o.OrderProducts)
-				.ThenInclude(op => op.Product)
-				.Single();
-		}
-		/// <summary>
 		/// Get Order by timestamp
 		/// </summary>
 		/// <param name="dateTime">Timestamp</param>
@@ -123,7 +101,6 @@ namespace TylerMart.Storage.Repositories {
 		/// <returns>
 		/// List of Orders
 		/// </returns>
-
 		public List<Order> FindFromProduct(Product product) {
 			return Db.Set<OrderProduct>()
 				.Where(op => op.ProductID == product.ID)
@@ -146,7 +123,7 @@ namespace TylerMart.Storage.Repositories {
 				ProductID = product.ID
 			};
 			Db.Set<OrderProduct>().Add(op);
-			return base.TryMakingChanges();
+			return base.Commit();
 		}
 		/// <summary>
 		/// Remove a Product from an Order
@@ -161,7 +138,7 @@ namespace TylerMart.Storage.Repositories {
 				.FirstOrDefault(op => op.OrderID == order.ID && op.ProductID == product.ID);
 			if (q != null) {
 				Db.Set<OrderProduct>().Remove(q);
-				return base.TryMakingChanges();
+				return base.Commit();
 			}
 			return false;
 		}
@@ -181,7 +158,7 @@ namespace TylerMart.Storage.Repositories {
 				}
 			);
 			Db.Set<OrderProduct>().AddRange(range);
-			return base.TryMakingChanges();
+			return base.Commit();
 		}
 		/// <summary>
 		/// Removes a range of Products from an Order
@@ -202,7 +179,7 @@ namespace TylerMart.Storage.Repositories {
 			}
 			if (range.Count > 0) {
 				Db.Set<OrderProduct>().RemoveRange(range);
-				return base.TryMakingChanges();
+				return base.Commit();
 			}
 			return false;
 		}
@@ -215,7 +192,7 @@ namespace TylerMart.Storage.Repositories {
 		/// <returns>
 		/// 'true' if change to the database was successful
 		/// </returns>
-		protected override bool TryMakingChanges() {
+		protected override bool Commit() {
 			foreach (
 				var e in Db.ChangeTracker
 				.Entries()
@@ -226,7 +203,7 @@ namespace TylerMart.Storage.Repositories {
 					order.CreatedAt = DateTime.Now;
 				}
 			}
-			return base.TryMakingChanges();
+			return base.Commit();
 		}
 	}
 }

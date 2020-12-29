@@ -105,7 +105,7 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public bool Create(T model) {
 			Db.Set<T>().Add(model);
-			return this.TryMakingChanges();
+			return this.Commit();
 		}
 		/// <summary>
 		/// Update existing row using model data
@@ -116,7 +116,7 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public bool Update(T model) {
 			Db.Set<T>().Update(model);
-			return this.TryMakingChanges();
+			return this.Commit();
 		}
 		/// <summary>
 		/// Remove existing row with model's primary key
@@ -127,7 +127,7 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public bool Delete(T model) {
 			Db.Set<T>().Remove(model);
-			return this.TryMakingChanges();
+			return this.Commit();
 		}
 		/// <summary>
 		/// Attempts to save changes and to roll them back if something goes wrong
@@ -135,7 +135,7 @@ namespace TylerMart.Storage.Repositories {
 		/// <returns>
 		/// 'true' if change to the database was successful
 		/// </returns>
-		protected virtual bool TryMakingChanges() {
+		protected virtual bool Commit() {
 			bool success = true;
 			try {
 				Db.SaveChanges();

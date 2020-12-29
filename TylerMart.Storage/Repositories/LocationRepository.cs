@@ -56,7 +56,7 @@ namespace TylerMart.Storage.Repositories {
 				ProductID = product.ID
 			};
 			Db.Set<LocationProduct>().Add(lp);
-			return base.TryMakingChanges();
+			return base.Commit();
 		}
 		/// <summary>
 		/// Removes a Product from a Location's inventory
@@ -71,7 +71,7 @@ namespace TylerMart.Storage.Repositories {
 				.FirstOrDefault(lp => lp.LocationID == location.ID && lp.ProductID == product.ID);
 			if (q != null) {
 				Db.Set<LocationProduct>().Remove(q);
-				return base.TryMakingChanges();
+				return base.Commit();
 			}
 			return false;
 		}
@@ -91,7 +91,7 @@ namespace TylerMart.Storage.Repositories {
 				}
 			);
 			Db.Set<LocationProduct>().AddRange(lps);
-			return base.TryMakingChanges();
+			return base.Commit();
 		}
 		/// <summary>
 		/// Removes a range of Products from a Location's inventory
@@ -112,7 +112,7 @@ namespace TylerMart.Storage.Repositories {
 			}
 			if (range.Count > 0) {
 				Db.Set<LocationProduct>().RemoveRange(range);
-				return base.TryMakingChanges();
+				return base.Commit();
 			}
 			return false;
 		}

@@ -1,7 +1,4 @@
-using System;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
-
 using TylerMart.Domain.Models;
 
 namespace TylerMart.Storage.Contexts {
@@ -45,7 +42,7 @@ namespace TylerMart.Storage.Contexts {
 		/// <param name="builder">Model builder</param>
 		protected override void OnModelCreating(ModelBuilder builder) {
 			// Field Properties
-			builder.Entity<Customer>().HasIndex(c => c.EmailAddress)
+			builder.Entity<Customer>().HasIndex(c => c.Email)
 				.IsUnique();
 			builder.Entity<Product>().HasIndex(p => p.Name)
 				.IsUnique();

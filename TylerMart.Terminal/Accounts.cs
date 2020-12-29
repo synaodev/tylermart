@@ -33,19 +33,19 @@ namespace TylerMart.Terminal {
 		/// </summary>
 		/// <param name="db">Database service</param>
 		public static Customer LoginCustomer(DatabaseService db) {
-			Console.WriteLine("Please enter your email address: ");
-			string emailAddress = Console.ReadLine();
+			Console.WriteLine("Please enter your email: ");
+			string email = Console.ReadLine();
 
 			Console.WriteLine("Please enter your password: ");
 			string password = ReadPasswordFromInput();
 
-			Customer result = db.Customers.GetByEmailAddress(emailAddress);
+			Customer result = db.Customers.GetByEmail(email);
 			if (result != null && result.Password == password) {
 				Console.WriteLine("Login successful!");
 				return result;
 			}
 
-			Console.WriteLine("Either your email address or your password were invalid!");
+			Console.WriteLine("Either your email or your password were invalid!");
 			Console.WriteLine("I'm sorry.");
 			return null;
 		}
@@ -58,9 +58,9 @@ namespace TylerMart.Terminal {
 			Regex emailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
 			string firstName = "";
 			string lastName = "";
-			string emailAddress = "";
+			string email = "";
 			string password = "";
-			string realAddress = "";
+			string address = "";
 
 			while (firstName.Length == 0) {
 				Console.WriteLine("What's your first name? ");
@@ -84,12 +84,12 @@ namespace TylerMart.Terminal {
 					lastName = "";
 				}
 			}
-			while (emailAddress.Length == 0) {
-				Console.WriteLine("What's your email address? ");
-				emailAddress = Console.ReadLine();
-				if (!emailRegex.Match(emailAddress).Success) {
-					Console.WriteLine("Email address must be in the proper format!");
-					emailAddress = "";
+			while (email.Length == 0) {
+				Console.WriteLine("What's your email? ");
+				email = Console.ReadLine();
+				if (!emailRegex.Match(email).Success) {
+					Console.WriteLine("Email must be in the proper format!");
+					email = "";
 				}
 			}
 			while (true) {
@@ -111,20 +111,20 @@ namespace TylerMart.Terminal {
 					}
 				}
 			}
-			while (realAddress.Length == 0) {
+			while (address.Length == 0) {
 				Console.WriteLine("What's your real address? ");
-				realAddress = Console.ReadLine();
-				if (realAddress.Length < 5) {
+				address = Console.ReadLine();
+				if (address.Length < 5) {
 					Console.WriteLine("Real address must be at least five letters long!");
-					realAddress = "";
+					address = "";
 				}
 			}
 			bool success = db.Customers.Create(new Customer() {
 				FirstName = firstName,
 				LastName = lastName,
-				EmailAddress = emailAddress,
+				Email = email,
 				Password = password,
-				RealAddress = realAddress
+				Address = address
 			});
 			if (success) {
 				Console.WriteLine("Registration successful!");
