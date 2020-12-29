@@ -12,7 +12,7 @@ using TylerMart.Storage.Contexts;
 namespace TylerMart.Storage.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20201229083150_FirstMigration")]
+    [Migration("20201229214903_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,7 +30,11 @@ namespace TylerMart.Storage.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("EmailAddress")
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -46,13 +50,9 @@ namespace TylerMart.Storage.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RealAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("ID");
 
-                    b.HasIndex("EmailAddress")
+                    b.HasIndex("Email")
                         .IsUnique();
 
                     b.ToTable("Customers");
@@ -61,11 +61,11 @@ namespace TylerMart.Storage.Migrations
                         new
                         {
                             ID = 1,
-                            EmailAddress = "admin.admin@revature.net",
+                            Address = "Nowhere",
+                            Email = "admin.admin@revature.net",
                             FirstName = "Admin",
                             LastName = "Admin",
-                            Password = "administrator",
-                            RealAddress = "Nowhere"
+                            Password = "administrator"
                         });
                 });
 
@@ -343,7 +343,7 @@ namespace TylerMart.Storage.Migrations
                         {
                             ID = 1,
                             Complete = true,
-                            CreatedAt = new DateTime(2020, 12, 29, 0, 31, 49, 607, DateTimeKind.Local).AddTicks(1305),
+                            CreatedAt = new DateTime(2020, 12, 29, 13, 49, 2, 975, DateTimeKind.Local).AddTicks(6245),
                             CustomerID = 1,
                             LocationID = 1
                         });

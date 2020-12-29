@@ -17,9 +17,9 @@ namespace TylerMart.Storage.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmailAddress = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RealAddress = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -136,8 +136,8 @@ namespace TylerMart.Storage.Migrations
 
             migrationBuilder.InsertData(
                 table: "Customers",
-                columns: new[] { "ID", "EmailAddress", "FirstName", "LastName", "Password", "RealAddress" },
-                values: new object[] { 1, "admin.admin@revature.net", "Admin", "Admin", "administrator", "Nowhere" });
+                columns: new[] { "ID", "Address", "Email", "FirstName", "LastName", "Password" },
+                values: new object[] { 1, "Nowhere", "admin.admin@revature.net", "Admin", "Admin", "administrator" });
 
             migrationBuilder.InsertData(
                 table: "Locations",
@@ -204,7 +204,7 @@ namespace TylerMart.Storage.Migrations
             migrationBuilder.InsertData(
                 table: "Orders",
                 columns: new[] { "ID", "Complete", "CreatedAt", "CustomerID", "LocationID" },
-                values: new object[] { 1, true, new DateTime(2020, 12, 29, 0, 31, 49, 607, DateTimeKind.Local).AddTicks(1305), 1, 1 });
+                values: new object[] { 1, true, new DateTime(2020, 12, 29, 13, 49, 2, 975, DateTimeKind.Local).AddTicks(6245), 1, 1 });
 
             migrationBuilder.InsertData(
                 table: "OrderProducts",
@@ -212,9 +212,9 @@ namespace TylerMart.Storage.Migrations
                 values: new object[] { 1, 1, 1 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Customers_EmailAddress",
+                name: "IX_Customers_Email",
                 table: "Customers",
-                column: "EmailAddress",
+                column: "Email",
                 unique: true);
 
             migrationBuilder.CreateIndex(
