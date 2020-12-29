@@ -101,7 +101,7 @@ namespace TylerMart.Domain.Models {
 			}
 			if (OrderProducts != null) {
 				result += "\tProducts:\n";
-				int c = 0;
+				int c = 1;
 				decimal price = 0.0M;
 				OrderProducts.ForEach(op => {
 					if (op.Product != null) {

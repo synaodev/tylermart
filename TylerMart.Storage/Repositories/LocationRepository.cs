@@ -105,8 +105,10 @@ namespace TylerMart.Storage.Repositories {
 			List<LocationProduct> range = new List<LocationProduct>();
 			foreach (var p in products) {
 				LocationProduct lp = Db.Set<LocationProduct>()
-					.FirstOrDefault(lp => lp.LocationID == location.ID && lp.ProductID == p.ID);
-				range.Add(lp);
+					.FirstOrDefault(lp => lp.LocationID == location.ID && lp.ProductID == p.ID && !range.Contains(lp));
+				if (lp != null) {
+					range.Add(lp);
+				}
 			}
 			if (range.Count > 0) {
 				Db.Set<LocationProduct>().RemoveRange(range);

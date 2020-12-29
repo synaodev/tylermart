@@ -22,8 +22,9 @@ namespace TylerMart.Terminal {
 					Console.WriteLine("2 - Logout");
 				}
 				Console.WriteLine("3 - Fill Order");
-				Console.WriteLine("4 - My History");
-				Console.WriteLine("5 - Quit");
+				Console.WriteLine("4 - Customer History");
+				Console.WriteLine("5 - Location History");
+				Console.WriteLine("6 - Quit");
 				switch (Console.ReadKey(true).Key) {
 				case ConsoleKey.D1:
 					Accounts.RegisterCustomer(db);
@@ -47,13 +48,39 @@ namespace TylerMart.Terminal {
 						Console.WriteLine("You must log in first!");
 					} else {
 						Console.WriteLine("{0} {1}'s orders:", customer.FirstName, customer.LastName);
-						List<Order> orders = db.Orders.FindFromCustomer(customer);
+						List<Order> orders = db.Orders.FindFromCustomerWithDetails(customer);
 						orders.ForEach(o => {
 							Console.Write(o);
 						});
 					}
 					break;
 				case ConsoleKey.D5:
+					if (customer == null) {
+						Console.WriteLine("You must log in first!");
+					} else {
+						List<Location> locations = db.Locations.All();
+						Console.WriteLine("Here are all the locations: ");
+						locations.ForEach(l => Console.WriteLine("\t{0}", l.Name));
+
+						Location location = null;
+						while (location == null) {
+							Console.WriteLine("Which location would you like to see orders from?");
+							string name = Console.ReadLine();
+							location = locations.Find(l => String.Compare(l.Name, name, true) == 0);
+							if (location == null) {
+								Console.WriteLine("That location doesn't exist!");
+								Console.WriteLine("I'm sorry.");
+							}
+						}
+
+						Console.WriteLine("{0} location's orders:", location.Name);
+						List<Order> orders = db.Orders.FindFromLocationWithDetails(location);
+						orders.ForEach(o => {
+							Console.Write(o);
+						});
+					}
+					break;
+				case ConsoleKey.D6:
 					Console.WriteLine("Goodbye!");
 					done = true;
 					break;

@@ -101,12 +101,29 @@ namespace TylerMart.Storage.Repositories {
 				.ToList();
 		}
 		/// <summary>
+		/// Find Orders made by a Location + Details
+		/// </summary>
+		/// <param name="location">The Location</param>
+		/// <returns>
+		/// List of Orders
+		/// </returns>
+		public List<Order> FindFromLocationWithDetails(Location location) {
+			return Db.Orders
+				.Where(o => o.LocationID == location.ID)
+				.Include(o => o.Customer)
+				.Include(o => o.Location)
+				.Include(o => o.OrderProducts)
+				.ThenInclude(op => op.Product)
+				.ToList();
+		}
+		/// <summary>
 		/// Finds Orders containing a particular Product
 		/// </summary>
 		/// <param name="product">The Product</param>
 		/// <returns>
 		/// List of Orders
 		/// </returns>
+
 		public List<Order> FindFromProduct(Product product) {
 			return Db.Set<OrderProduct>()
 				.Where(op => op.ProductID == product.ID)
@@ -178,8 +195,10 @@ namespace TylerMart.Storage.Repositories {
 			List<OrderProduct> range = new List<OrderProduct>();
 			foreach (var p in products) {
 				OrderProduct op = Db.Set<OrderProduct>()
-					.FirstOrDefault(op => op.OrderID == order.ID && op.ProductID == p.ID);
-				range.Add(op);
+					.FirstOrDefault(op => op.OrderID == order.ID && op.ProductID == p.ID && !range.Contains(op));
+				if (op != null) {
+					range.Add(op);
+				}
 			}
 			if (range.Count > 0) {
 				Db.Set<OrderProduct>().RemoveRange(range);
