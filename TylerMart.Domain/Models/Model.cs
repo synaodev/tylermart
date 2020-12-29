@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TylerMart.Domain.Models {
 	/// <summary>
-	/// Generic model interface
+	/// Generic abstract model class
 	/// </summary>
 	public abstract class Model {
 		/// <summary>
