@@ -68,7 +68,7 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public bool RemoveProduct(Location location, Product product) {
 			LocationProduct q = Db.Set<LocationProduct>()
-				.SingleOrDefault(lp => lp.LocationID == location.ID && lp.ProductID == product.ID);
+				.FirstOrDefault(lp => lp.LocationID == location.ID && lp.ProductID == product.ID);
 			if (q != null) {
 				Db.Set<LocationProduct>().Remove(q);
 				return base.TryMakingChanges();
@@ -104,9 +104,9 @@ namespace TylerMart.Storage.Repositories {
 		public bool RemoveProducts(Location location, List<Product> products) {
 			List<LocationProduct> range = new List<LocationProduct>();
 			foreach (var p in products) {
-				var lps = Db.Set<LocationProduct>()
-					.Where(lp => lp.LocationID == location.ID && lp.ProductID == p.ID);
-				range.AddRange(lps);
+				LocationProduct lp = Db.Set<LocationProduct>()
+					.FirstOrDefault(lp => lp.LocationID == location.ID && lp.ProductID == p.ID);
+				range.Add(lp);
 			}
 			if (range.Count > 0) {
 				Db.Set<LocationProduct>().RemoveRange(range);

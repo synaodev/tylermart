@@ -141,7 +141,7 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public bool RemoveProduct(Order order, Product product) {
 			OrderProduct q = Db.Set<OrderProduct>()
-				.SingleOrDefault(op => op.OrderID == order.ID && op.ProductID == product.ID);
+				.FirstOrDefault(op => op.OrderID == order.ID && op.ProductID == product.ID);
 			if (q != null) {
 				Db.Set<OrderProduct>().Remove(q);
 				return base.TryMakingChanges();
@@ -177,9 +177,9 @@ namespace TylerMart.Storage.Repositories {
 		public bool RemoveProducts(Order order, List<Product> products) {
 			List<OrderProduct> range = new List<OrderProduct>();
 			foreach (var p in products) {
-				var ops = Db.Set<OrderProduct>()
-					.Where(op => op.OrderID == order.ID && op.ProductID == p.ID);
-				range.AddRange(ops);
+				OrderProduct op = Db.Set<OrderProduct>()
+					.FirstOrDefault(op => op.OrderID == order.ID && op.ProductID == p.ID);
+				range.Add(op);
 			}
 			if (range.Count > 0) {
 				Db.Set<OrderProduct>().RemoveRange(range);

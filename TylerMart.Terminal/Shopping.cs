@@ -55,11 +55,11 @@ namespace TylerMart.Terminal {
 				if (possible == null && String.Compare(input, "rm", true) != 0) {
 					Console.WriteLine("That product doesn't exist!");
 					Console.WriteLine("I'm sorry.");
-				} else if (inventory[possible] > 0) {
+				} else if (possible != null && inventory[possible] > 0) {
 					--inventory[possible];
 					shoppingCart.Add(possible);
 					Console.WriteLine("Adding {0} to your shopping list", possible.Name);
-				} else {
+				} else if (possible != null) {
 					Console.WriteLine("You can't take more than {0} of {1}!", inventoryClone[possible], possible.Name);
 				}
 				if (shoppingCart.Count > 0) {
@@ -87,7 +87,7 @@ namespace TylerMart.Terminal {
 					}
 				} else {
 					Console.WriteLine("Do you actually want to buy anything? (Y/N)");
-					if (Console.ReadKey(true).Key == ConsoleKey.Y) {
+					if (Console.ReadKey(true).Key == ConsoleKey.N) {
 						Console.WriteLine("Okay.");
 						return;
 					}
