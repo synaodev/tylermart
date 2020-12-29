@@ -23,7 +23,7 @@ namespace TylerMart.Terminal {
 				}
 				Console.WriteLine("3 - Fill Order");
 				Console.WriteLine("4 - My History");
-				Console.WriteLine("4 - Quit");
+				Console.WriteLine("5 - Quit");
 				switch (Console.ReadKey(true).Key) {
 				case ConsoleKey.D1:
 					Accounts.RegisterCustomer(db);
