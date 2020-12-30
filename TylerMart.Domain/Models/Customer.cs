@@ -54,5 +54,20 @@ namespace TylerMart.Domain.Models {
 			};
 			return customers;
 		}
+		/// <summary>
+		/// Order prettifier
+		/// </summary>
+		/// <returns>
+		/// Order as a string
+		/// </returns>
+		public override string ToString() {
+			string result = "";
+			result += $"\tCustomer ID: {ID}\n";
+			result += $"\tFirst Name: {FirstName}\n";
+			result += $"\tLast Name: {LastName}\n";
+			result += $"\tEmail: {Email}\n";
+			result += $"\tAddress: {Address}";
+			return result;
+		}
 	}
 }

@@ -22,9 +22,10 @@ namespace TylerMart.Terminal {
 					Console.WriteLine("2 - Logout");
 				}
 				Console.WriteLine("3 - Fill Order");
-				Console.WriteLine("4 - Customer History");
-				Console.WriteLine("5 - Location History");
-				Console.WriteLine("6 - Quit");
+				Console.WriteLine("4 - Search for Customers");
+				Console.WriteLine("5 - Customer History");
+				Console.WriteLine("6 - Location History");
+				Console.WriteLine("7 - Quit");
 				switch (Console.ReadKey(true).Key) {
 				case ConsoleKey.D1:
 					Accounts.RegisterCustomer(db);
@@ -47,6 +48,26 @@ namespace TylerMart.Terminal {
 					if (customer == null) {
 						Console.WriteLine("\nYou must log in first!");
 					} else {
+						Console.WriteLine("By first or last name? (F/L)");
+						if (Console.ReadKey(true).Key == ConsoleKey.L) {
+							Console.WriteLine("Enter last name: ");
+							string name = Console.ReadLine();
+							db.Customers.FindByLastName(name).ForEach(c => {
+								Console.WriteLine(c);
+							});
+						} else {
+							Console.WriteLine("Enter first name: ");
+							string name = Console.ReadLine();
+							db.Customers.FindByFirstName(name).ForEach(c => {
+								Console.WriteLine(c);
+							});
+						}
+					}
+					break;
+				case ConsoleKey.D5:
+					if (customer == null) {
+						Console.WriteLine("\nYou must log in first!");
+					} else {
 						Console.WriteLine("{0} {1}'s orders:", customer.FirstName, customer.LastName);
 						List<Order> orders = db.Orders.FindFromCustomerWithDetails(customer);
 						orders.ForEach(o => {
@@ -54,7 +75,7 @@ namespace TylerMart.Terminal {
 						});
 					}
 					break;
-				case ConsoleKey.D5:
+				case ConsoleKey.D6:
 					if (customer == null) {
 						Console.WriteLine("\nYou must log in first!");
 					} else {
@@ -80,7 +101,7 @@ namespace TylerMart.Terminal {
 						});
 					}
 					break;
-				case ConsoleKey.D6:
+				case ConsoleKey.D7:
 					Console.WriteLine("\nGoodbye!");
 					done = true;
 					break;
