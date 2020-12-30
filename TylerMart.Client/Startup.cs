@@ -23,7 +23,7 @@ namespace TylerMart.Client {
 		public void ConfigureServices(IServiceCollection services) {
 			services.AddRazorPages();
 			services.AddDbContext<DatabaseContext>(builder => {
-				builder.UseSqlServer(@"");
+				builder.UseSqlServer(@"server=localhost,1433;database=TylerMart;user id=sa;password=Password12345;");
 			});
 			services.AddScoped<DatabaseService>();
 		}
