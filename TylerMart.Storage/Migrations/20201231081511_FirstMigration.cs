@@ -47,7 +47,7 @@ namespace TylerMart.Storage.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Price = table.Column<decimal>(type: "decimal(38,2)", precision: 38, scale: 2, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -204,7 +204,7 @@ namespace TylerMart.Storage.Migrations
             migrationBuilder.InsertData(
                 table: "Orders",
                 columns: new[] { "ID", "Complete", "CreatedAt", "CustomerID", "LocationID" },
-                values: new object[] { 1, true, new DateTime(2020, 12, 29, 13, 49, 2, 975, DateTimeKind.Local).AddTicks(6245), 1, 1 });
+                values: new object[] { 1, true, new DateTime(2020, 12, 31, 0, 15, 10, 979, DateTimeKind.Local).AddTicks(171), 1, 1 });
 
             migrationBuilder.InsertData(
                 table: "OrderProducts",

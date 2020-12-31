@@ -341,7 +341,7 @@ namespace TylerMart.Storage.Migrations
                         {
                             ID = 1,
                             Complete = true,
-                            CreatedAt = new DateTime(2020, 12, 29, 13, 49, 2, 975, DateTimeKind.Local).AddTicks(6245),
+                            CreatedAt = new DateTime(2020, 12, 31, 0, 15, 10, 979, DateTimeKind.Local).AddTicks(171),
                             CustomerID = 1,
                             LocationID = 1
                         });
@@ -393,7 +393,8 @@ namespace TylerMart.Storage.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(38, 2)
+                        .HasColumnType("decimal(38,2)");
 
                     b.HasKey("ID");
 
