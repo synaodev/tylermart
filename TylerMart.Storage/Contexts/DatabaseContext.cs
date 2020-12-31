@@ -46,6 +46,8 @@ namespace TylerMart.Storage.Contexts {
 				.IsUnique();
 			builder.Entity<Product>().HasIndex(p => p.Name)
 				.IsUnique();
+			builder.Entity<Product>().Property(p => p.Price)
+				.HasPrecision(38, 2);
 			builder.Entity<Location>().HasIndex(l => l.Name)
 				.IsUnique();
 			// Clarify Relationships
