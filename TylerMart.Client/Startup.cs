@@ -21,7 +21,9 @@ namespace TylerMart.Client {
 		public IConfiguration Configuration { get; }
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services) {
-			services.AddRazorPages();
+			services.AddControllersWithViews();
+			services.AddSession();
+			services.AddHttpContextAccessor();
 			services.AddDbContext<DatabaseContext>(builder => {
 				builder.UseSqlServer(@"server=localhost,1433;database=TylerMart;user id=sa;password=Password12345;");
 			});
@@ -29,23 +31,24 @@ namespace TylerMart.Client {
 		}
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DatabaseContext context) {
-			context.Database.Migrate();
-
 			if (env.IsDevelopment()) {
 				app.UseDeveloperExceptionPage();
 			} else {
-				app.UseExceptionHandler("/Error");
-				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+				app.UseExceptionHandler("/Home/Error");
 				app.UseHsts();
 			}
-
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
+			app.UseSession();
 			app.UseRouting();
 			app.UseAuthorization();
 			app.UseEndpoints(endpoints => {
-				endpoints.MapRazorPages();
+				endpoints.MapControllerRoute(
+					name: "default",
+					pattern: "{controller=Home}/{action=Index}/{id?}"
+				);
 			});
+			context.Database.Migrate();
 		}
 	}
 }
