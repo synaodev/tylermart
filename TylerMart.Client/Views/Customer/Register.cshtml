@@ -1,0 +1,27 @@
+@{
+	ViewData["Title"] = "Register";
+}
+
+@model TylerMart.Client.Models.RegisterViewModel
+
+<form action="/Customer/Register" method="POST">
+	@Html.AntiForgeryToken()
+
+	<label asp-for="@Model.FirstName">First Name</label>
+	<input asp-for="@Model.FirstName">
+	@Html.ValidationMessageFor(lvm => lvm.FirstName)
+
+	<label asp-for="@Model.LastName">Last Name</label>
+	<input asp-for="@Model.LastName">
+	@Html.ValidationMessageFor(lvm => lvm.LastName)
+
+	<label asp-for="@Model.Email">Email</label>
+	<input asp-for="@Model.Email">
+	@Html.ValidationMessageFor(lvm => lvm.Email)
+
+	<label asp-for="@Model.Password">Password</label>
+	<input asp-for="@Model.Password">
+	@Html.ValidationMessageFor(lvm => lvm.Password)
+
+	<button type="submit">Register</button>
+</form>

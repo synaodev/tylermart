@@ -1,18 +1,28 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
+using TylerMart.Domain.Models;
 using TylerMart.Client.Models;
 
 namespace TylerMart.Client.Controllers {
 	public class HomeController : Controller {
-		private readonly ILogger<HomeController> _logger;
+		private readonly ILogger<HomeController> Logger;
 		public HomeController(ILogger<HomeController> logger) {
-			_logger = logger;
+			Logger = logger;
 		}
+		[HttpGet]
 		public IActionResult Index() {
-			return View();
+			int ID = HttpContext.Session
+				.GetInt32(nameof(Customer.ID))
+				.GetValueOrDefault();
+			if (ID == 0) {
+				return View();
+			}
+			return Redirect("/Customer/Index");
 		}
+		[HttpGet]
 		public IActionResult Privacy() {
 			return View();
 		}

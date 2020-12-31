@@ -26,6 +26,17 @@ namespace TylerMart.Storage.Repositories {
 				.SingleOrDefault(c => c.Email == email);
 		}
 		/// <summary>
+		/// Check for Customer with an email
+		/// </summary>
+		/// <param name="email">Email</param>
+		/// <returns>
+		/// 'true' if email is already in use
+		/// </returns>
+		public bool ExistsWithEmail(string email) {
+			return Db.Customers
+				.Any(c => c.Email == email);
+		}
+		/// <summary>
 		/// Finds Customers with first name
 		/// </summary>
 		/// <param name="name">First name</param>
