@@ -3,24 +3,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-using TylerMart.Domain.Models;
 using TylerMart.Client.Models;
+using TylerMart.Client.Services;
+using TylerMart.Client.Utility;
 
 namespace TylerMart.Client.Controllers {
 	public class HomeController : Controller {
 		private readonly ILogger<HomeController> Logger;
-		public HomeController(ILogger<HomeController> logger) {
+		private readonly DatabaseService Db;
+		public HomeController(ILogger<HomeController> logger, DatabaseService db) {
 			Logger = logger;
+			Db = db;
 		}
 		[HttpGet]
 		public IActionResult Index() {
-			int ID = HttpContext.Session
-				.GetInt32(nameof(Customer.ID))
-				.GetValueOrDefault();
-			if (ID == 0) {
-				return View();
+			if (this.IsCustomerLoggedIn(Db)) {
+				return Redirect("/Customer/Index");
 			}
-			return Redirect("/Customer/Index");
+			return View();
 		}
 		[HttpGet]
 		public IActionResult Privacy() {
@@ -28,7 +28,10 @@ namespace TylerMart.Client.Controllers {
 		}
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error() {
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+			return View(new ErrorViewModel {
+				RequestId = Activity.Current?.Id ??
+					HttpContext.TraceIdentifier
+			});
 		}
 	}
 }

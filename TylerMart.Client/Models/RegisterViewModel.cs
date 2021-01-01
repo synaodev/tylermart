@@ -28,6 +28,15 @@ namespace TylerMart.Client.Models {
 		[MinLength(5, ErrorMessage = "Address must be at least five characters long!")]
 		[DataType(DataType.Text)]
 		public string Address { get; set; }
+		public Customer Create() {
+			return new Customer() {
+				FirstName = this.FirstName,
+				LastName = this.LastName,
+				Email = this.Email,
+				Password = this.Password,
+				Address = this.Address
+			};
+		}
 		public IEnumerable<ValidationResult> Validate(ValidationContext context) {
 			if (Password != PasswordConfirmation) {
 				yield return new ValidationResult(
@@ -40,14 +49,28 @@ namespace TylerMart.Client.Models {
 				);
 			}
 		}
-		public Customer Create() {
-			return new Customer() {
-				FirstName = this.FirstName,
-				LastName = this.LastName,
-				Email = this.Email,
-				Password = this.Password,
-				Address = this.Address
-			};
+		public override string ToString() {
+			string result = "Register = {";
+			if (!string.IsNullOrEmpty(FirstName)) {
+				result += $"\n\tFirstName = {FirstName}";
+			}
+			if (!string.IsNullOrEmpty(LastName)) {
+				result += $"\n\tLastName = {LastName}";
+			}
+			if (!string.IsNullOrEmpty(Email)) {
+				result += $"\n\tEmail = {Email}";
+			}
+			if (!string.IsNullOrEmpty(Password)) {
+				result += $"\n\tPassword = {Password}";
+			}
+			if (!string.IsNullOrEmpty(PasswordConfirmation)) {
+				result += $"\n\tPasswordConfirmation = {PasswordConfirmation}";
+			}
+			if (!string.IsNullOrEmpty(Address)) {
+				result += $"\n\tAddress = {Address}";
+			}
+			result += "}";
+			return result;
 		}
 	}
 }
