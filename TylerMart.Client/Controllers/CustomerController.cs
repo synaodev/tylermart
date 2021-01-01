@@ -20,7 +20,7 @@ namespace TylerMart.Client.Controllers {
 		}
 		[HttpGet]
 		public IActionResult Index() {
-			if (!this.IsCustomerLoggedIn(Db)) {
+			if (!this.IsCustomerLoggedIn()) {
 				return Redirect("/Customer/Logout");
 			}
 			Customer c = this.GetCurrentCustomer(Db);

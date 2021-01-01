@@ -6,7 +6,7 @@ using TylerMart.Client.Services;
 
 namespace TylerMart.Client.Utility {
 	public static class ControllerExtensions {
-		public static bool IsCustomerLoggedIn(this Controller controller, DatabaseService db) {
+		public static bool IsCustomerLoggedIn(this Controller controller) {
 			int ID = controller.HttpContext.Session
 				.GetInt32(nameof(Customer.ID))
 				.GetValueOrDefault();
