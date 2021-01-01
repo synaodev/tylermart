@@ -16,6 +16,18 @@ namespace TylerMart.Storage.Repositories {
 		/// <param name="db">Instance of DatabaseContext</param>
 		public ProductRepository(DatabaseContext db) : base(db) {}
 		/// <summary>
+		/// Gets list of Products from a list of primary keys
+		/// </summary>
+		/// <param name="ids">List of primary keys</param>
+		/// <returns>
+		/// List of Products
+		/// </returns>
+		public List<Product> GetFromKeys(List<int> ids){
+			return Db.Products
+				.Where(p => ids.Contains(p.ID))
+				.ToList();
+		}
+		/// <summary>
 		/// Gets Products from name
 		/// </summary>
 		/// <param name="name">Product name</param>
