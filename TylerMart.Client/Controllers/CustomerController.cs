@@ -32,6 +32,7 @@ namespace TylerMart.Client.Controllers {
 			return View();
 		}
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public IActionResult Register(RegisterViewModel model) {
 			if (!ModelState.IsValid) {
 				Logger.LogDebug("Invalid model state!");
@@ -47,13 +48,14 @@ namespace TylerMart.Client.Controllers {
 				ViewBag.Error = MSG_REGISTER_UNKNOWN_FAILURE;
 				return View(model);
 			}
-			return Redirect("/Customer/Login");
+			return Redirect(nameof(Login));
 		}
 		[HttpGet]
 		public IActionResult Login() {
 			return View();
 		}
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public IActionResult Login(LoginViewModel model) {
 			if (!ModelState.IsValid) {
 				Logger.LogDebug("Invalid model state!");
@@ -70,12 +72,12 @@ namespace TylerMart.Client.Controllers {
 				return View(model);
 			}
 			HttpContext.Session.SetInt32(nameof(Customer.ID), customer.ID);
-			return Redirect("/Customer/Index");
+			return Redirect(nameof(Index));
 		}
 		[HttpGet]
 		public IActionResult Logout() {
 			HttpContext.Session.Remove(nameof(Customer.ID));
-			return Redirect("/Home/Index");
+			return Redirect(nameof(HomeController.Index));
 		}
 	}
 }
