@@ -18,29 +18,32 @@ namespace TylerMart.Client.Controllers {
 			Db = db;
 		}
 		[HttpGet]
-		public IActionResult Index([FromRoute] int LocationID) {
+		public IActionResult Index(OrderViewModel model) {
 			if (!this.IsCustomerLoggedIn()) {
 				return Redirect("/Customer/Logout");
 			}
 			Customer customer = this.GetCurrentCustomer(Db);
-			if (!Db.Locations.Exists(LocationID)) {
+			if (!this.IsLocationAssigned()) {
 				return Redirect("/Customer/Index");
 			}
-			Location location = Db.Locations.Get(LocationID);
-			return View();
+			Location location = this.GetCurrentLocation(Db);
+			if (model == null) {
+				model = new OrderViewModel(Db, customer, location);
+			}
+			return View("Index", model);
 		}
 		[HttpGet]
-		public IActionResult AddToCart(OrderViewModel model) {
+		public IActionResult Add(OrderViewModel model) {
 			if (model.Inventory.Any(kv => kv.Value == model.Selection)) {
 				Product p = model.Inventory.Keys.Single(p => p.ID == model.Selection);
 				model.Inventory[p]--;
 				model.ShoppingCart.Add(p);
 				model.Selection = 0;
 			}
-			return View("Order", model);
+			return View("Index", model);
 		}
 		[HttpGet]
-		public IActionResult RemoveFromCart(OrderViewModel model) {
+		public IActionResult Remove(OrderViewModel model) {
 			if (model.Inventory.Any(kv => kv.Value == model.Selection)) {
 				Product p1 = model.Inventory.Keys.Single(p => p.ID == model.Selection);
 				model.Inventory[p1]++;
@@ -48,16 +51,17 @@ namespace TylerMart.Client.Controllers {
 				model.ShoppingCart.Remove(p2);
 				model.Selection = 0;
 			}
-			return View("Order", model);
+			return View("Index", model);
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult SendOrder(OrderViewModel model) {
+		public IActionResult Order(OrderViewModel model) {
 			if (!ModelState.IsValid) {
 				Logger.LogDebug("Invalid model state!");
 				Logger.LogDebug(model.ToString());
-				return View("Order", model);
+				return View("Index", model);
 			}
+			HttpContext.Session.Remove("LocationID");
 			return Redirect("/Customer/Index");
 		}
 	}

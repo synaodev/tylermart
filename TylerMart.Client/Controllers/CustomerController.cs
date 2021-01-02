@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -26,6 +27,25 @@ namespace TylerMart.Client.Controllers {
 			Customer c = this.GetCurrentCustomer(Db);
 			ViewBag.CustomerName = $"{c.FirstName} {c.LastName}";
 			return View();
+		}
+		[HttpGet]
+		public IActionResult Menu() {
+			if (!this.IsCustomerLoggedIn()) {
+				return Redirect("/Customer/Logout");
+			}
+			List<Location> locations = Db.Locations.All();
+			return View(locations);
+		}
+		[HttpGet]
+		public IActionResult Menu([FromRoute] int ID) {
+			if (!this.IsCustomerLoggedIn()) {
+				return Redirect("/Customer/Logout");
+			}
+			if (!Db.Locations.Exists(ID)) {
+				return Redirect("/Customer/Menu");
+			}
+			this.HttpContext.Session.SetInt32("LocationID", ID);
+			return Redirect("/Shopping/Index");
 		}
 		[HttpGet]
 		public IActionResult Register() {
@@ -71,12 +91,13 @@ namespace TylerMart.Client.Controllers {
 				ViewBag.Error = MSG_LOGIN_OBFUSCATED_FAILURE;
 				return View(model);
 			}
-			HttpContext.Session.SetInt32(nameof(Customer.ID), customer.ID);
+			HttpContext.Session.SetInt32("CustomerID", customer.ID);
 			return Redirect("/Customer/Index");
 		}
 		[HttpGet]
 		public IActionResult Logout() {
-			HttpContext.Session.Remove(nameof(Customer.ID));
+			HttpContext.Session.Remove("CustomerID");
+			HttpContext.Session.Remove("LocationID");
 			return Redirect("/Home/Index");
 		}
 	}

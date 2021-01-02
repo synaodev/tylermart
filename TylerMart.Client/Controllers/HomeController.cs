@@ -18,7 +18,7 @@ namespace TylerMart.Client.Controllers {
 		[HttpGet]
 		public IActionResult Index() {
 			if (this.IsCustomerLoggedIn()) {
-				return Redirect(nameof(CustomerController.Index));
+				return Redirect("/Customer/Index");
 			}
 			return View();
 		}

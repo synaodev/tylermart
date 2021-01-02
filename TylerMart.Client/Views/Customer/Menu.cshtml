@@ -1,0 +1,7 @@
+@using System.Collections.Generic;
+@using TylerMart.Domain.Models;
+@model List<Location>;
+
+@foreach (var location in @Model) {
+	<a href="/Customer/Location/@location.ID">@location.Name</a>
+}
