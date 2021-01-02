@@ -6,6 +6,7 @@ using TylerMart.Client.Services;
 
 namespace TylerMart.Client.Utility {
 	public static class ControllerExtensions {
+		private static readonly string KEY_CART = "Cart";
 		public static bool IsCustomerLoggedIn(this Controller controller) {
 			int ID = controller.HttpContext.Session
 				.GetInt32(nameof(Customer.ID))

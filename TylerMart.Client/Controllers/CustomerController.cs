@@ -48,7 +48,7 @@ namespace TylerMart.Client.Controllers {
 				ViewBag.Error = MSG_REGISTER_UNKNOWN_FAILURE;
 				return View(model);
 			}
-			return Redirect(nameof(Login));
+			return Redirect("/Customer/Login");
 		}
 		[HttpGet]
 		public IActionResult Login() {
@@ -72,12 +72,12 @@ namespace TylerMart.Client.Controllers {
 				return View(model);
 			}
 			HttpContext.Session.SetInt32(nameof(Customer.ID), customer.ID);
-			return Redirect(nameof(Index));
+			return Redirect("/Customer/Index");
 		}
 		[HttpGet]
 		public IActionResult Logout() {
 			HttpContext.Session.Remove(nameof(Customer.ID));
-			return Redirect(nameof(HomeController.Index));
+			return Redirect("/Home/Index");
 		}
 	}
 }
