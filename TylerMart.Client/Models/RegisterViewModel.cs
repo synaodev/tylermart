@@ -7,10 +7,12 @@ namespace TylerMart.Client.Models {
 	public class RegisterViewModel : IValidatableObject {
 		[Required(ErrorMessage = "First name is required!")]
 		[MinLength(2, ErrorMessage = "First name must be at least two characters long!")]
+		[RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "First name must use only letters!")]
 		[DataType(DataType.Text)]
 		public string FirstName { get; set; }
 		[Required(ErrorMessage = "Last name is required!")]
 		[MinLength(2, ErrorMessage = "Last name must be at least two characters long!")]
+		[RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Last name must use only letters!")]
 		[DataType(DataType.Text)]
 		public string LastName { get; set; }
 		[Required(ErrorMessage = "Email is required!")]
@@ -69,7 +71,7 @@ namespace TylerMart.Client.Models {
 			if (!string.IsNullOrEmpty(Address)) {
 				result += $"\n\tAddress = {Address}";
 			}
-			result += "}";
+			result += "\n}";
 			return result;
 		}
 	}

@@ -17,7 +17,7 @@ namespace TylerMart.Client.Models {
 			if (!string.IsNullOrEmpty(Password)) {
 				result += $"\n\tPassword = {Password}";
 			}
-			result += "}";
+			result += "\n}";
 			return result;
 		}
 	}

@@ -3,14 +3,16 @@
 <form action="/Shopping/Add" method="GET">
 	<select asp-for="@Model.Selection">
 		@foreach (var product in @Model.Inventory) {
-			@if (@Model.Inventory.First().Key.ID == product.Key.ID) {
-				<option value="@product.Key.ID" selected>
-					@product.Key.Name: @product.Value ($@product.Key.Price)
-				</option>
-			} else {
-				<option value="@product.Key.ID">
-					@product.Key.Name: @product.Value ($@product.Key.Price)
-				</option>
+			@if (@product.Value > 0) {
+				@if (@Model.Inventory.First().Key.ID == product.Key.ID) {
+					<option value="@product.Key.ID" selected>
+						@product.Key.Name: @product.Value ($@product.Key.Price)
+					</option>
+				} else {
+					<option value="@product.Key.ID">
+						@product.Key.Name: @product.Value ($@product.Key.Price)
+					</option>
+				}
 			}
 		}
 	</select>
