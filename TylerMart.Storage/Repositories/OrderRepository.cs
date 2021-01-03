@@ -134,10 +134,13 @@ namespace TylerMart.Storage.Repositories {
 		/// 'true' if successfully removed from database
 		/// </returns>
 		public bool RemoveProduct(Order order, Product product) {
-			OrderProduct q = Db.Set<OrderProduct>()
-				.FirstOrDefault(op => op.OrderID == order.ID && op.ProductID == product.ID);
-			if (q != null) {
-				Db.Set<OrderProduct>().Remove(q);
+			OrderProduct result = Db.Set<OrderProduct>()
+				.FirstOrDefault(op =>
+					op.OrderID == order.ID &&
+					op.ProductID == product.ID
+				);
+			if (result != null) {
+				Db.Set<OrderProduct>().Remove(result);
 				return base.Commit();
 			}
 			return false;
@@ -151,10 +154,10 @@ namespace TylerMart.Storage.Repositories {
 		/// 'true' if successfully inserted into database
 		/// </returns>
 		public bool AddProducts(Order order, List<Product> products) {
-			List<OrderProduct> range = products.ConvertAll<OrderProduct>(p =>
+			List<OrderProduct> range = products.ConvertAll(product =>
 				new OrderProduct() {
 					OrderID = order.ID,
-					ProductID = p.ID
+					ProductID = product.ID
 				}
 			);
 			Db.Set<OrderProduct>().AddRange(range);
@@ -170,13 +173,17 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public bool RemoveProducts(Order order, List<Product> products) {
 			List<OrderProduct> range = new List<OrderProduct>();
-			foreach (var p in products) {
-				OrderProduct op = Db.Set<OrderProduct>()
-					.FirstOrDefault(op => op.OrderID == order.ID && op.ProductID == p.ID && !range.Contains(op));
-				if (op != null) {
-					range.Add(op);
+			products.ForEach(product => {
+				OrderProduct result = Db.Set<OrderProduct>()
+					.FirstOrDefault(op =>
+						op.OrderID == order.ID &&
+						op.ProductID == product.ID &&
+						!range.Contains(op)
+					);
+				if (result != null) {
+					range.Add(result);
 				}
-			}
+			});
 			if (range.Count > 0) {
 				Db.Set<OrderProduct>().RemoveRange(range);
 				return base.Commit();

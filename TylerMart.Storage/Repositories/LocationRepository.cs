@@ -67,10 +67,13 @@ namespace TylerMart.Storage.Repositories {
 		/// 'true' if successfully removed from database
 		/// </returns>
 		public bool RemoveProduct(Location location, Product product) {
-			LocationProduct q = Db.Set<LocationProduct>()
-				.FirstOrDefault(lp => lp.LocationID == location.ID && lp.ProductID == product.ID);
-			if (q != null) {
-				Db.Set<LocationProduct>().Remove(q);
+			LocationProduct result = Db.Set<LocationProduct>()
+				.FirstOrDefault(lp =>
+					lp.LocationID == location.ID &&
+					lp.ProductID == product.ID
+				);
+			if (result != null) {
+				Db.Set<LocationProduct>().Remove(result);
 				return base.Commit();
 			}
 			return false;
@@ -84,13 +87,13 @@ namespace TylerMart.Storage.Repositories {
 		/// 'true' if successfully inserted into database
 		/// </returns>
 		public bool AddProducts(Location location, List<Product> products) {
-			List<LocationProduct> lps = products.ConvertAll<LocationProduct>(p =>
+			List<LocationProduct> range = products.ConvertAll(product =>
 				new LocationProduct() {
 					LocationID = location.ID,
-					ProductID = p.ID
+					ProductID = product.ID
 				}
 			);
-			Db.Set<LocationProduct>().AddRange(lps);
+			Db.Set<LocationProduct>().AddRange(range);
 			return base.Commit();
 		}
 		/// <summary>
@@ -103,13 +106,17 @@ namespace TylerMart.Storage.Repositories {
 		/// </returns>
 		public bool RemoveProducts(Location location, List<Product> products) {
 			List<LocationProduct> range = new List<LocationProduct>();
-			foreach (var p in products) {
-				LocationProduct lp = Db.Set<LocationProduct>()
-					.FirstOrDefault(lp => lp.LocationID == location.ID && lp.ProductID == p.ID && !range.Contains(lp));
-				if (lp != null) {
-					range.Add(lp);
+			products.ForEach(product => {
+				LocationProduct result = Db.Set<LocationProduct>()
+					.FirstOrDefault(lp =>
+						lp.LocationID == location.ID &&
+						lp.ProductID == product.ID &&
+						!range.Contains(lp)
+					);
+				if (result != null) {
+					range.Add(result);
 				}
-			}
+			});
 			if (range.Count > 0) {
 				Db.Set<LocationProduct>().RemoveRange(range);
 				return base.Commit();
