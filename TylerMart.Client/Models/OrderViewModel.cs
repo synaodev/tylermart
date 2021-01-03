@@ -27,6 +27,19 @@ namespace TylerMart.Client.Models {
 			Inventory = db.Products.CountAtLocation(location);
 			ShoppingCart = new List<Product>();
 		}
+		public OrderViewModel() {
+			Customer = null;
+			Location = null;
+			Inventory = null;
+			ShoppingCart = null;
+			Selection = 0;
+		}
+		public bool LackingData() {
+			return Customer == null ||
+				Location == null ||
+				Inventory == null ||
+				ShoppingCart == null;
+		}
 		public override string ToString() {
 			string result = "Order = {";
 			if (Customer != null) {

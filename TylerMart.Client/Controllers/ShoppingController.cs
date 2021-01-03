@@ -31,7 +31,7 @@ namespace TylerMart.Client.Controllers {
 				return Redirect("/Customer/Index");
 			}
 			Location location = this.GetCurrentLocation(Db);
-			if (model == null) {
+			if (model.LackingData()) {
 				model = new OrderViewModel(Db, customer, location);
 			}
 			return View("Index", model);

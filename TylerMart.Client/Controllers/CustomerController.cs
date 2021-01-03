@@ -37,7 +37,7 @@ namespace TylerMart.Client.Controllers {
 			return View(locations);
 		}
 		[HttpGet]
-		public IActionResult Menu([FromRoute] int ID) {
+		public IActionResult Location([FromRoute] int ID) {
 			if (!this.IsCustomerLoggedIn()) {
 				return Redirect("/Customer/Logout");
 			}
