@@ -48,6 +48,16 @@ namespace TylerMart.Client.Controllers {
 			model.ShoppingCart = this.GetProductList(model.Inventory);
 			return View(model);
 		}
+		[HttpGet]
+		public IActionResult History() {
+			if (!this.IsCustomerLoggedIn()) {
+				return Redirect("/Customer/Logout");
+			}
+			Customer customer = this.GetCurrentCustomer(Db);
+			ViewBag.CustomerName = $"{customer.FirstName} {customer.LastName}";
+			List<Order> orders = Db.Orders.FindFromCustomerWithDetails(customer);
+			return View(orders);
+		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult Add(OrderViewModel model) {
