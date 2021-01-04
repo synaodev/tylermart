@@ -45,7 +45,7 @@ namespace TylerMart.Client.Controllers {
 				return Redirect("/Customer/Menu");
 			}
 			this.HttpContext.Session.SetInt32("LocationID", ID);
-			return Redirect("/Shopping/Index");
+			return Redirect("/Order/Index");
 		}
 		[HttpGet]
 		public IActionResult Register() {
@@ -98,6 +98,7 @@ namespace TylerMart.Client.Controllers {
 		public IActionResult Logout() {
 			HttpContext.Session.Remove("CustomerID");
 			HttpContext.Session.Remove("LocationID");
+			HttpContext.Session.Remove("Cart");
 			return Redirect("/Home/Index");
 		}
 	}

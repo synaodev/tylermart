@@ -4,7 +4,8 @@
 
 @model TylerMart.Client.Models.OrderViewModel
 
-<form action="/Shopping/Add" method="GET">
+<form action="/Order/Add" method="POST">
+	@Html.AntiForgeryToken()
 	<select asp-for="@Model.Selection">
 		@foreach (var product in @Model.Inventory) {
 			@if (@product.Value > 0) {
@@ -28,7 +29,8 @@
 		<p>Name: @product.Name</p>
 		<p>Description: @product.Description</p>
 		<p>
-			<form action="/Shopping/Remove" method="GET">
+			<form action="/Order/Remove" method="POST">
+				@Html.AntiForgeryToken()
 				<input type="hidden" asp-for="@Model.Selection" value="@product.ID">
 				<input type="submit" value="Remove">
 			</form>
@@ -37,9 +39,9 @@
 }
 
 @if (@Model.ShoppingCart.Count > 0) {
-	<p>Price: @Model.ShoppingCart.Select(p => p.Price)</p>
+	<p>Price: @Model.ShoppingCart.Sum(p => p.Price)</p>
 	<p>
-		<form action="/Shopping/Order" method="POST">
+		<form action="/Order/Send" method="POST">
 			@Html.AntiForgeryToken()
 			<input type="submit" value="Submit">
 		</form>

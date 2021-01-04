@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.Logging;
 
 using TylerMart.Client.Services;
 using TylerMart.Domain.Models;
@@ -9,36 +10,33 @@ namespace TylerMart.Client.Models {
 		/*
 		 * Fields required to submit order
 		 */
-		[Required(ErrorMessage = "Customer is required!")]
 		public Customer Customer { get; set; }
-		[Required(ErrorMessage = "Location is required!")]
 		public Location Location { get; set; }
-		[Required(ErrorMessage = "Shopping Cart is required!")]
-		[MinLength(1, ErrorMessage = "Must submit at least one product for Order!")]
 		public List<Product> ShoppingCart { get; set; }
 		/*
 		 * Fields used for view & controller
 		 */
 		public Dictionary<Product, int> Inventory { get; set; }
 		public int Selection { get; set; }
-		public OrderViewModel(DatabaseService db, Customer customer, Location location) {
-			Customer = customer;
-			Location = location;
-			Inventory = db.Products.CountAtLocation(location);
-			ShoppingCart = new List<Product>();
-		}
-		public OrderViewModel() {
-			Customer = null;
-			Location = null;
-			Inventory = null;
-			ShoppingCart = null;
-			Selection = 0;
-		}
-		public bool LackingData() {
-			return Customer == null ||
-				Location == null ||
-				Inventory == null ||
-				ShoppingCart == null;
+		public OrderViewModel() {}
+		public bool ManuallyValidate<T>(ILogger<T> logger) {
+			bool result = true;
+			if (Customer == null) {
+				result = false;
+				logger.LogWarning("Customer is required!");
+			}
+			if (Location == null) {
+				result = false;
+				logger.LogWarning("Location is required!");
+			}
+			if (ShoppingCart == null) {
+				result = false;
+				logger.LogWarning("Shopping Cart is required!");
+			} else if (ShoppingCart.Count == 0) {
+				result = false;
+				logger.LogWarning("Must submit at least one product for Order!");
+			}
+			return result;
 		}
 		public override string ToString() {
 			string result = "Order = {";
