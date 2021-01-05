@@ -2,14 +2,10 @@
 	ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+<div class="container">
 	<h1 class="display-4">Welcome</h1>
-	<main>
-		<h2>
-			<a asp-controller="Customer" asp-action="Register">Register</a>
-		</h2>
-		<h2>
-			<a asp-controller="Customer" asp-action="Login">Login</a>
-		</h2>
+	<div class="container">
+		<h2><a href="/Customer/Register">Register</a></h2>
+		<h2><a href="/Customer/Login">Login</a></h2>
 	</main>
 </div>

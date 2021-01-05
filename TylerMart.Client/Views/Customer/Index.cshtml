@@ -2,15 +2,13 @@
 	ViewData["Title"] = "Customer";
 }
 
-<div class="text-center">
-	<h1 class="display-4">Welcome, @ViewBag.CustomerName!</h1>
-	<h2>
-		<a asp-controller="Customer" asp-action="Logout">Logout</a>
-	</h2>
-	<h2>
-		<a asp-controller="Customer" asp-action="Menu">Menu</a>
-	</h2>
-	<h2>
-		<a asp-controller="Order" asp-action="History">History</a>
-	</h2>
+<div class="container">
+	<div class="text-center">
+		<h1 class="display-4">Welcome, @ViewBag.CustomerName!</h1>
+		<small><a href="/Customer/Logout">Logout</a></small>
+	</div>
+	<div class="container">
+		<p><a href="/Customer/Menu">Menu</a></p>
+		<p><a href="/Order/History">History</a></p>
+	</div>
 </div>

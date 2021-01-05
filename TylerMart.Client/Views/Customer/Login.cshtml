@@ -4,22 +4,24 @@
 
 @model TylerMart.Client.Models.LoginViewModel
 
-<form action="/Customer/Login" method="POST">
-	@Html.AntiForgeryToken()
-	@if (ViewBag.Error != null) {
-		<p>@ViewBag.Error</p>
-	}
-	<p>
-		<label asp-for="@Model.Email">Email</label>
-		<input asp-for="@Model.Email">
-		@Html.ValidationMessageFor(lvm => lvm.Email)
-	</p>
-	<p>
-		<label asp-for="@Model.Password">Password</label>
-		<input asp-for="@Model.Password">
-		@Html.ValidationMessageFor(lvm => lvm.Password)
-	</p>
-	<p>
-		<button type="submit">Login</button>
-	</p>
-</form>
+<div class="container">
+	<form action="/Customer/Login" method="POST">
+		@Html.AntiForgeryToken()
+		@if (ViewBag.Error != null) {
+			<div class="form-group">
+				<small class="form-text text-muted">@ViewBag.Error</small>
+			</div>
+		}
+		<div class="form-group">
+			<label asp-for="@Model.Email">Email</label>
+			<input asp-for="@Model.Email" class="form-control">
+			@Html.ValidationMessageFor(lvm => lvm.Email)
+		</div>
+		<div class="form-group">
+			<label asp-for="@Model.Password">Password</label>
+			<input asp-for="@Model.Password" class="form-control">
+			@Html.ValidationMessageFor(lvm => lvm.Password)
+		</div>
+		<button type="submit" class="btn btn-primary">Login</button>
+	</form>
+</div>

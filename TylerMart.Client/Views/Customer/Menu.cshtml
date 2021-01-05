@@ -6,6 +6,8 @@
 @using TylerMart.Domain.Models;
 @model List<Location>;
 
-@foreach (var location in @Model) {
-	<p><a href="/Customer/Location/@location.ID">@location.Name</a></p>
-}
+<div class="container text-center">
+	@foreach (var location in @Model) {
+		<p><a href="/Customer/Location/@location.ID">@location.Name</a></p>
+	}
+</div>
