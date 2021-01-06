@@ -35,35 +35,7 @@ namespace TylerMart.Client.Controllers {
 			Db = db;
 		}
 		[HttpGet]
-		public IActionResult History([FromRoute] int ID) {
-			if (!this.IsCustomerLoggedIn()) {
-				return Redirect("/Customer/Logout");
-			}
-			if (!Db.Locations.Exists(ID)) {
-				Logger.LogDebug($"Couldn't find Location with ID = {ID}!");
-				return Redirect("/Order/Menu");
-			}
-			Location location = Db.Locations.Get(ID);
-			ViewBag.LocationName = location.Name;
-			List<Order> orders = Db.Orders.FindFromLocationWithDetails(location);
-			return View(orders);
-		}
-		[HttpGet]
-		public IActionResult Index(OrderViewModel model) {
-			if (!this.IsCustomerLoggedIn()) {
-				return Redirect("/Customer/Logout");
-			}
-			model.Customer = this.GetCurrentCustomer(Db);
-			if (!this.IsLocationAssigned()) {
-				return Redirect("/Order/Menu");
-			}
-			model.Location = this.GetCurrentLocation(Db);
-			model.Inventory = Db.Products.CountAtLocation(model.Location);
-			model.ShoppingCart = this.GetProductList(model.Inventory);
-			return View(model);
-		}
-		[HttpGet]
-		public IActionResult Menu() {
+		public IActionResult Index() {
 			if (!this.IsCustomerLoggedIn()) {
 				return Redirect("/Customer/Logout");
 			}
@@ -76,54 +48,49 @@ namespace TylerMart.Client.Controllers {
 				return Redirect("/Customer/Logout");
 			}
 			if (!Db.Locations.Exists(ID)) {
-				return Redirect("/Order/Menu");
+				return Redirect("/Order/Index");
 			}
 			this.HttpContext.Session.SetInt32("LocationID", ID);
-			return Redirect("/Order/Index");
+			return Redirect("/Order/Create");
 		}
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public IActionResult Add(OrderViewModel model) {
+		[HttpGet]
+		public IActionResult History([FromRoute] int ID) {
 			if (!this.IsCustomerLoggedIn()) {
 				return Redirect("/Customer/Logout");
 			}
-			if (!this.IsLocationAssigned()) {
-				return Redirect("/Order/Menu");
+			if (!Db.Locations.Exists(ID)) {
+				Logger.LogDebug($"Couldn't find Location with ID = {ID}!");
+				return Redirect("/Order/Index");
 			}
-			List<int> list = HttpContext.Session.GetFromJson<List<int>>("Cart");
-			if (list == null) {
-				list = new List<int>();
-			}
-			list.Add(model.Selection);
-			HttpContext.Session.SetAsJson<List<int>>("Cart", list);
-			return Redirect("/Order/Index");
+			Location location = Db.Locations.Get(ID);
+			ViewBag.LocationName = location.Name;
+			List<Order> orders = Db.Orders.FindFromLocationWithDetails(location);
+			return View(orders);
 		}
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public IActionResult Remove(OrderViewModel model) {
+		[HttpGet]
+		public IActionResult Create() {
 			if (!this.IsCustomerLoggedIn()) {
 				return Redirect("/Customer/Logout");
 			}
+			OrderViewModel model = new OrderViewModel();
+			model.Customer = this.GetCurrentCustomer(Db);
 			if (!this.IsLocationAssigned()) {
-				return Redirect("/Order/Menu");
+				return Redirect("/Order/Index");
 			}
-			List<int> list = HttpContext.Session.GetFromJson<List<int>>("Cart");
-			if (list == null) {
-				list = new List<int>();
-			}
-			list.Remove(model.Selection);
-			HttpContext.Session.SetAsJson<List<int>>("Cart", list);
-			return Redirect("/Order/Index");
+			model.Location = this.GetCurrentLocation(Db);
+			model.Inventory = Db.Products.CountAtLocation(model.Location);
+			model.ShoppingCart = this.GetProductList(model.Inventory);
+			return View(model);
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult Send(OrderViewModel model) {
+		public IActionResult Create(OrderViewModel model) {
 			if (!this.IsCustomerLoggedIn()) {
 				return Redirect("/Customer/Logout");
 			}
 			model.Customer = this.GetCurrentCustomer(Db);
 			if (!this.IsLocationAssigned()) {
-				return Redirect("/Customer/Index");
+				return Redirect("/Order/Index");
 			}
 			model.Location = this.GetCurrentLocation(Db);
 			model.Inventory = Db.Products.CountAtLocation(model.Location);
@@ -131,7 +98,7 @@ namespace TylerMart.Client.Controllers {
 			if (!model.ManuallyValidate(Logger)) {
 				Logger.LogDebug("Invalid model state!");
 				Logger.LogDebug(model.ToString());
-				return Redirect("/Order/Index");
+				return Redirect("/Order/Create");
 			}
 			DateTime now = DateTime.Now;
 			bool createdOrder = Db.Orders.Create(new Order() {
@@ -144,14 +111,14 @@ namespace TylerMart.Client.Controllers {
 				Logger.LogDebug(MSG_CREATE_ORDER_FAILURE);
 				Logger.LogDebug(model.ToString());
 				ViewBag.Error = MSG_CREATE_ORDER_FAILURE;
-				return Redirect("/Order/Index");
+				return Redirect("/Order/Create");
 			}
 			Order order = Db.Orders.GetByTimestamp(now);
 			if (order == null) {
 				Logger.LogDebug(MSG_RETRIEVE_ORDER_FAILURE);
 				Logger.LogDebug($"Timestamp: {now}");
 				ViewBag.Error = MSG_RETRIEVE_ORDER_FAILURE;
-				return Redirect("/Order/Index");
+				return Redirect("/Order/Create");
 			}
 			bool operationSuccess = Db.Products.ForwardOperation(
 				model.ShoppingCart,
@@ -166,11 +133,45 @@ namespace TylerMart.Client.Controllers {
 					Logger.LogCritical($"Order ID: {order.ID}");
 					Logger.LogCritical($"Order Timestamp: {now}");
 				}
-				return Redirect("/Order/Index");
+				return Redirect("/Order/Create");
 			}
 			HttpContext.Session.Remove("Cart");
 			HttpContext.Session.Remove("LocationID");
 			return Redirect("/Customer/Index");
+		}
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult Add(OrderViewModel model) {
+			if (!this.IsCustomerLoggedIn()) {
+				return Redirect("/Customer/Logout");
+			}
+			if (!this.IsLocationAssigned()) {
+				return Redirect("/Order/Index");
+			}
+			List<int> list = HttpContext.Session.GetFromJson<List<int>>("Cart");
+			if (list == null) {
+				list = new List<int>();
+			}
+			list.Add(model.Selection);
+			HttpContext.Session.SetAsJson<List<int>>("Cart", list);
+			return Redirect("/Order/Create");
+		}
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult Remove(OrderViewModel model) {
+			if (!this.IsCustomerLoggedIn()) {
+				return Redirect("/Customer/Logout");
+			}
+			if (!this.IsLocationAssigned()) {
+				return Redirect("/Order/Index");
+			}
+			List<int> list = HttpContext.Session.GetFromJson<List<int>>("Cart");
+			if (list == null) {
+				list = new List<int>();
+			}
+			list.Remove(model.Selection);
+			HttpContext.Session.SetAsJson<List<int>>("Cart", list);
+			return Redirect("/Order/Create");
 		}
 	}
 }

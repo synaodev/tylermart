@@ -1,0 +1,49 @@
+@{
+	ViewData["Title"] = "New Order";
+}
+
+@model TylerMart.Client.Models.OrderViewModel
+
+<form action="/Order/Add" method="POST">
+	@Html.AntiForgeryToken()
+	<select asp-for="@Model.Selection">
+		@foreach (var product in @Model.Inventory) {
+			@if (@product.Value > 0) {
+				@if (@Model.Inventory.First().Key.ID == product.Key.ID) {
+					<option value="@product.Key.ID" selected>
+						@product.Key.Name: @product.Value ($@product.Key.Price)
+					</option>
+				} else {
+					<option value="@product.Key.ID">
+						@product.Key.Name: @product.Value ($@product.Key.Price)
+					</option>
+				}
+			}
+		}
+	</select>
+	<input type="submit" value="Add">
+</form>
+
+@foreach (var product in @Model.ShoppingCart) {
+	<div>
+		<p>Name: @product.Name</p>
+		<p>Description: @product.Description</p>
+		<p>
+			<form action="/Order/Remove" method="POST">
+				@Html.AntiForgeryToken()
+				<input type="hidden" asp-for="@Model.Selection" value="@product.ID">
+				<input type="submit" value="Remove">
+			</form>
+		</p>
+	</div>
+}
+
+@if (@Model.ShoppingCart.Count > 0) {
+	<p>Price: @Model.ShoppingCart.Sum(p => p.Price)</p>
+	<p>
+		<form action="/Order/Send" method="POST">
+			@Html.AntiForgeryToken()
+			<input type="submit" value="Submit">
+		</form>
+	</p>
+}

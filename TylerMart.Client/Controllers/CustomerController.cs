@@ -39,6 +39,34 @@ namespace TylerMart.Client.Controllers {
 			return View();
 		}
 		[HttpGet]
+		public IActionResult Search() {
+			if (!this.IsCustomerLoggedIn()) {
+				return Redirect("/Customer/Logout");
+			}
+			return View(new SearchViewModel());
+		}
+		[HttpGet]
+		[ValidateAntiForgeryToken]
+		public IActionResult Search(SearchViewModel model) {
+			if (!this.IsCustomerLoggedIn()) {
+				return Redirect("/Customer/Logout");
+			}
+			bool firstEmpty = string.IsNullOrEmpty(model.FirstName);
+			bool lastEmpty = string.IsNullOrEmpty(model.LastName);
+			if (firstEmpty && lastEmpty) {
+				ViewBag.Error = "Error! Neither field should be empty!";
+				return View(model);
+			} else if (!firstEmpty) {
+				model.Results = Db.Customers.FindByFirstName(model.FirstName);
+				return View(model);
+			} else if (!lastEmpty) {
+				model.Results = Db.Customers.FindByLastName(model.LastName);
+				return View(model);
+			}
+			model.Results = Db.Customers.FindByWholeName(model.FirstName, model.LastName);
+			return View(model);
+		}
+		[HttpGet]
 		public IActionResult Register() {
 			return View();
 		}

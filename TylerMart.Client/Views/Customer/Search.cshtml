@@ -1,0 +1,36 @@
+@model TylerMart.Client.Models.SearchViewModel
+
+@if (@Model.Results != null) {
+	<div class="container">
+		@foreach (var result in @Model.Results) {
+			<p>@result.FirstName @result.LastName</p>
+		}
+	</div>
+} else {
+	@if (ViewBag.Error != null) {
+		<div class="form-group">
+			<small class="form-text text-muted">@ViewBag.Error</small>
+		</div>
+	}
+	<div class="container">
+		<form action="/Customer/Search" method="GET">
+			@Html.AntiForgeryToken()
+			@if (ViewBag.Error != null) {
+				<div class="form-group">
+					<small class="form-text text-muted">@ViewBag.Error</small>
+				</div>
+			}
+			<div class="form-group">
+				<label asp-for="@Model.FirstName">First Name</label>
+				<input asp-for="@Model.FirstName" class="form-control">
+				@Html.ValidationMessageFor(lvm => lvm.FirstName)
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.LastName">Last Name</label>
+				<input asp-for="@Model.LastName" class="form-control">
+				@Html.ValidationMessageFor(lvm => lvm.LastName)
+			</div>
+			<button type="submit" class="btn btn-primary">Search</button>
+		</form>
+	</div>
+}
