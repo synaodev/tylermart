@@ -20,6 +20,16 @@ namespace TylerMart.Client.Controllers {
 			Db = db;
 		}
 		[HttpGet]
+		public IActionResult History() {
+			if (!this.IsCustomerLoggedIn()) {
+				return Redirect("/Customer/Logout");
+			}
+			Customer customer = this.GetCurrentCustomer(Db);
+			ViewBag.CustomerName = $"{customer.FirstName} {customer.LastName}";
+			List<Order> orders = Db.Orders.FindFromCustomerWithDetails(customer);
+			return View(orders);
+		}
+		[HttpGet]
 		public IActionResult Index() {
 			if (!this.IsCustomerLoggedIn()) {
 				return Redirect("/Customer/Logout");
@@ -27,25 +37,6 @@ namespace TylerMart.Client.Controllers {
 			Customer c = this.GetCurrentCustomer(Db);
 			ViewBag.CustomerName = $"{c.FirstName} {c.LastName}";
 			return View();
-		}
-		[HttpGet]
-		public IActionResult Menu() {
-			if (!this.IsCustomerLoggedIn()) {
-				return Redirect("/Customer/Logout");
-			}
-			List<Location> locations = Db.Locations.All();
-			return View(locations);
-		}
-		[HttpGet]
-		public IActionResult Location([FromRoute] int ID) {
-			if (!this.IsCustomerLoggedIn()) {
-				return Redirect("/Customer/Logout");
-			}
-			if (!Db.Locations.Exists(ID)) {
-				return Redirect("/Customer/Menu");
-			}
-			this.HttpContext.Session.SetInt32("LocationID", ID);
-			return Redirect("/Order/Index");
 		}
 		[HttpGet]
 		public IActionResult Register() {

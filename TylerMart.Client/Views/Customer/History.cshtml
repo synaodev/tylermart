@@ -1,12 +1,12 @@
 @{
-	ViewData["Title"] = "Location History";
+	ViewData["Title"] = "Customer History";
 }
 
 @using System.Collections.Generic
 @using TylerMart.Domain.Models
 @model List<Order>
 
-<h1>Orders made from @ViewBag.LocationName:</h1>
+<h1>@ViewBag.CustomerName's Order History:</h1>
 <p>
 	<ul>
 		@foreach (var order in @Model) {

@@ -35,13 +35,27 @@ namespace TylerMart.Client.Controllers {
 			Db = db;
 		}
 		[HttpGet]
+		public IActionResult History([FromRoute] int ID) {
+			if (!this.IsCustomerLoggedIn()) {
+				return Redirect("/Customer/Logout");
+			}
+			if (!Db.Locations.Exists(ID)) {
+				Logger.LogDebug($"Couldn't find Location with ID = {ID}!");
+				return Redirect("/Order/Menu");
+			}
+			Location location = Db.Locations.Get(ID);
+			ViewBag.LocationName = location.Name;
+			List<Order> orders = Db.Orders.FindFromLocationWithDetails(location);
+			return View(orders);
+		}
+		[HttpGet]
 		public IActionResult Index(OrderViewModel model) {
 			if (!this.IsCustomerLoggedIn()) {
 				return Redirect("/Customer/Logout");
 			}
 			model.Customer = this.GetCurrentCustomer(Db);
 			if (!this.IsLocationAssigned()) {
-				return Redirect("/Customer/Menu");
+				return Redirect("/Order/Menu");
 			}
 			model.Location = this.GetCurrentLocation(Db);
 			model.Inventory = Db.Products.CountAtLocation(model.Location);
@@ -49,14 +63,23 @@ namespace TylerMart.Client.Controllers {
 			return View(model);
 		}
 		[HttpGet]
-		public IActionResult History() {
+		public IActionResult Menu() {
 			if (!this.IsCustomerLoggedIn()) {
 				return Redirect("/Customer/Logout");
 			}
-			Customer customer = this.GetCurrentCustomer(Db);
-			ViewBag.CustomerName = $"{customer.FirstName} {customer.LastName}";
-			List<Order> orders = Db.Orders.FindFromCustomerWithDetails(customer);
-			return View(orders);
+			List<Location> locations = Db.Locations.All();
+			return View(locations);
+		}
+		[HttpGet]
+		public IActionResult Location([FromRoute] int ID) {
+			if (!this.IsCustomerLoggedIn()) {
+				return Redirect("/Customer/Logout");
+			}
+			if (!Db.Locations.Exists(ID)) {
+				return Redirect("/Order/Menu");
+			}
+			this.HttpContext.Session.SetInt32("LocationID", ID);
+			return Redirect("/Order/Index");
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
@@ -65,7 +88,7 @@ namespace TylerMart.Client.Controllers {
 				return Redirect("/Customer/Logout");
 			}
 			if (!this.IsLocationAssigned()) {
-				return Redirect("/Customer/Menu");
+				return Redirect("/Order/Menu");
 			}
 			List<int> list = HttpContext.Session.GetFromJson<List<int>>("Cart");
 			if (list == null) {
@@ -82,7 +105,7 @@ namespace TylerMart.Client.Controllers {
 				return Redirect("/Customer/Logout");
 			}
 			if (!this.IsLocationAssigned()) {
-				return Redirect("/Customer/Menu");
+				return Redirect("/Order/Menu");
 			}
 			List<int> list = HttpContext.Session.GetFromJson<List<int>>("Cart");
 			if (list == null) {
