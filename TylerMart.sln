@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TylerMart.UnitTest", "Tyler
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TylerMart.Client", "TylerMart.Client\TylerMart.Client.csproj", "{3D29ED44-9CC3-4627-9EFB-D696F5B46F6C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TylerMart.IntnTest", "TylerMart.IntnTest\TylerMart.IntnTest.csproj", "{260AA77C-9071-4F14-BA37-DD560BBCDC24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,5 +74,17 @@ Global
 		{3D29ED44-9CC3-4627-9EFB-D696F5B46F6C}.Release|x64.Build.0 = Release|Any CPU
 		{3D29ED44-9CC3-4627-9EFB-D696F5B46F6C}.Release|x86.ActiveCfg = Release|Any CPU
 		{3D29ED44-9CC3-4627-9EFB-D696F5B46F6C}.Release|x86.Build.0 = Release|Any CPU
+		{260AA77C-9071-4F14-BA37-DD560BBCDC24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{260AA77C-9071-4F14-BA37-DD560BBCDC24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{260AA77C-9071-4F14-BA37-DD560BBCDC24}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{260AA77C-9071-4F14-BA37-DD560BBCDC24}.Debug|x64.Build.0 = Debug|Any CPU
+		{260AA77C-9071-4F14-BA37-DD560BBCDC24}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{260AA77C-9071-4F14-BA37-DD560BBCDC24}.Debug|x86.Build.0 = Debug|Any CPU
+		{260AA77C-9071-4F14-BA37-DD560BBCDC24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{260AA77C-9071-4F14-BA37-DD560BBCDC24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{260AA77C-9071-4F14-BA37-DD560BBCDC24}.Release|x64.ActiveCfg = Release|Any CPU
+		{260AA77C-9071-4F14-BA37-DD560BBCDC24}.Release|x64.Build.0 = Release|Any CPU
+		{260AA77C-9071-4F14-BA37-DD560BBCDC24}.Release|x86.ActiveCfg = Release|Any CPU
+		{260AA77C-9071-4F14-BA37-DD560BBCDC24}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
