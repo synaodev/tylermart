@@ -12,7 +12,7 @@ namespace TylerMart.Domain.Models {
 		/// <summary>
 		/// Creation date
 		/// </summary>
-		public DateTime CreatedAt { get; set; }
+		public DateTime CreatedAt { get; set; } = DateTime.UnixEpoch;
 		/// <summary>
 		/// Order has been completed
 		/// </summary>

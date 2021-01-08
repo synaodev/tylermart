@@ -206,7 +206,9 @@ namespace TylerMart.Storage.Repositories {
 				.Where(e => e.Entity is Order && e.State == EntityState.Added))
 			{
 				Order order = (Order)e.Entity;
-				order.CreatedAt = DateTime.Now;
+				if (order.CreatedAt == DateTime.UnixEpoch) {
+					order.CreatedAt = DateTime.Now;
+				}
 			}
 			return base.Commit();
 		}
