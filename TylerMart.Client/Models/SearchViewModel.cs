@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-using TylerMart.Domain.Models;
-
 namespace TylerMart.Client.Models {
 	public class SearchViewModel : IValidatableObject {
 		[DataType(DataType.Text)]
@@ -11,7 +9,6 @@ namespace TylerMart.Client.Models {
 		[DataType(DataType.Text)]
 		[Display(Name = "Last name")]
 		public string LastName { get; set; }
-		public List<Customer> Results { get; set; }
 		public IEnumerable<ValidationResult> Validate(ValidationContext context) {
 			if (string.IsNullOrEmpty(FirstName) && string.IsNullOrEmpty(LastName)) {
 				yield return new ValidationResult(

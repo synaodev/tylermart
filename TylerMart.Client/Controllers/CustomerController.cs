@@ -45,7 +45,7 @@ namespace TylerMart.Client.Controllers {
 			}
 			return View(new SearchViewModel());
 		}
-		[HttpGet]
+		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult Search(SearchViewModel model) {
 			if (!this.IsCustomerLoggedIn()) {
@@ -57,14 +57,14 @@ namespace TylerMart.Client.Controllers {
 				ViewBag.Error = "Error! Neither field should be empty!";
 				return View(model);
 			} else if (!firstEmpty) {
-				model.Results = Db.Customers.FindByFirstName(model.FirstName);
-				return View(model);
+				List<Customer> firstNameList = Db.Customers.FindByFirstName(model.FirstName);
+				return View("Results", firstNameList);
 			} else if (!lastEmpty) {
-				model.Results = Db.Customers.FindByLastName(model.LastName);
-				return View(model);
+				List<Customer> lastNameList = Db.Customers.FindByLastName(model.LastName);
+				return View("Results", lastNameList);
 			}
-			model.Results = Db.Customers.FindByWholeName(model.FirstName, model.LastName);
-			return View(model);
+			List<Customer> wholeNameList = Db.Customers.FindByWholeName(model.FirstName, model.LastName);
+			return View("Results", wholeNameList);
 		}
 		[HttpGet]
 		public IActionResult Register() {

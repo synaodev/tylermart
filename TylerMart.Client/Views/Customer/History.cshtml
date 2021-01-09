@@ -6,8 +6,16 @@
 
 <div class="text-center">
 	@if (ViewBag.Name != null) {
-		<h1 class="display-4">Welcome, @ViewBag.Name!</h1><hr>
+		<h1 class="display-4">@ViewBag.Name's Order History</h1><hr>
+	} else {
+		<h1 class="display-4">Your Order History</h1><hr>
 	}
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+		<a asp-controller="Customer" asp-action="Index" class="btn btn-primary">Back</a><br><br>
+	</div>
 </div>
 
 <div class="row">
@@ -16,7 +24,6 @@
 			<tr>
 				<th>Created At:</th>
 				<th>Completed:</th>
-				<th>Customer:</th>
 				<th>Location:</th>
 				<th>Products:</th>
 				<th>Price:</th>
@@ -27,7 +34,6 @@
 				<tr>
 					<td>@o.CreatedAt</td>
 					<td>@o.Complete</td>
-					<td>@o.Customer.FirstName @o.Customer.LastName</td>
 					<td>@o.Location.Name</td>
 					<td>
 						<ul>
@@ -41,8 +47,4 @@
 			}
 		</tbody>
 	</table>
-</div>
-
-<div>
-	<a asp-controller="Customer" asp-action="Index" class="btn btn-primary">Back</a>
 </div>

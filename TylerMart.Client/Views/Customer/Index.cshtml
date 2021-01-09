@@ -2,21 +2,22 @@
 	ViewData["Title"] = "Main Menu";
 }
 
-@if (ViewBag.Name != null) {
-	<div class="text-center">
+<div class="text-center">
+	@if (ViewBag.Name != null) {
 		<h1 class="display-4">Welcome, @ViewBag.Name!</h1><hr>
-	</div>
-	<h4><a asp-controller="Customer" asp-action="Logout"></a></h4><hr>
-}
+	} else {
+		<h1 class="display-4">Welcome!</h1><hr>
+	}
+</div>
 
 <div class="row">
 	<div class="col-lg-12">
-		<a asp-controller="Order" asp-action="Index" class="btn btn-primary">Make Order</a>
-	</div>
-	<div class="col-lg-12">
-		<a asp-controller="Customer" asp-action="Search" class="btn btn-primary">Order History</a><br>
-	</div>
-	<div class="col-lg-12">
-		<a asp-controller="Customer" asp-action="Search" class="btn btn-primary">Find Customers</a><br>
+		<a asp-controller="Customer" asp-action="Logout" class="btn btn-primary">Log Out</a><br><br>
+		<form asp-controller="Customer" asp-action="Search" method="GET">
+			@Html.AntiForgeryToken()
+			<input type="submit" value="Find Customers" class="btn btn-primary"><br><br>
+		</form>
+		<a asp-controller="Order" asp-action="Index" class="btn btn-primary">Make Order</a><br><br>
+		<a asp-controller="Customer" asp-action="History" class="btn btn-primary">Your History</a>
 	</div>
 </div>

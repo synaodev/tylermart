@@ -1,0 +1,34 @@
+@{
+	ViewData["Title"] = "Search Results";
+}
+
+@model System.Collections.Generic.List<TylerMart.Domain.Models.Customer>
+
+<h3>Search Results</h3><hr>
+
+<div class="row">
+	<div class="col-lg-12">
+		<a asp-controller="Customer" asp-action="Search" class="btn btn-primary">Back</a><br><br>
+	</div>
+</div>
+
+@if (@Model.Count > 0) {
+	<div class="row">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var r in @Model) {
+					<tr>
+						<td>@r.FirstName</td>
+						<td>@r.LastName</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+}

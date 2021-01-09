@@ -2,15 +2,49 @@
 	ViewData["Title"] = "Location History";
 }
 
-@using System.Collections.Generic
-@using TylerMart.Domain.Models
-@model List<Order>
+@model System.Collections.Generic.List<TylerMart.Domain.Models.Order>
 
-<h1>Orders made from @ViewBag.LocationName:</h1>
-<p>
-	<ul>
-		@foreach (var order in @Model) {
-			<li>@order.ToString()</li>
-		}
-	</ul>
-</p>
+<div class="text-center">
+	@if (ViewBag.Name != null) {
+		<h1 class="display-4">@ViewBag.Name's Order History</h1><hr>
+	} else {
+		<h1 class="display-4">Location Order History</h1><hr>
+	}
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+		<a asp-controller="Order" asp-action="Index" class="btn btn-primary">Back</a><br><br>
+	</div>
+</div>
+
+<div class="row">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Created At:</th>
+				<th>Completed:</th>
+				<th>Customer:</th>
+				<th>Products:</th>
+				<th>Price:</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var o in @Model) {
+				<tr>
+					<td>@o.CreatedAt</td>
+					<td>@o.Complete</td>
+					<td>@o.Customer.FirstName @o.Customer.LastName</td>
+					<td>
+						<ul>
+							@foreach (var op in @o.OrderProducts) {
+								<li>@op.Product.Name</li>
+							}
+						</ul>
+					</td>
+					<td>@o.OrderProducts.Sum(op => op.Product.Price)</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

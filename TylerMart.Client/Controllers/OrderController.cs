@@ -39,6 +39,7 @@ namespace TylerMart.Client.Controllers {
 			if (!this.IsCustomerLoggedIn()) {
 				return Redirect("/Customer/Logout");
 			}
+			HttpContext.Session.Remove("Cart");
 			List<Location> locations = Db.Locations.All();
 			return View(locations);
 		}
@@ -50,6 +51,7 @@ namespace TylerMart.Client.Controllers {
 			if (!Db.Locations.Exists(ID)) {
 				return Redirect("/Order/Index");
 			}
+			HttpContext.Session.Remove("Cart");
 			this.HttpContext.Session.SetInt32("LocationID", ID);
 			return Redirect("/Order/Create");
 		}
@@ -62,8 +64,9 @@ namespace TylerMart.Client.Controllers {
 				Logger.LogDebug($"Couldn't find Location with ID = {ID}!");
 				return Redirect("/Order/Index");
 			}
+			HttpContext.Session.Remove("Cart");
 			Location location = Db.Locations.Get(ID);
-			ViewBag.LocationName = location.Name;
+			ViewBag.Name = location.Name;
 			List<Order> orders = Db.Orders.FindFromLocationWithDetails(location);
 			return View(orders);
 		}
