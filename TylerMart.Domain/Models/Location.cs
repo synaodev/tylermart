@@ -12,6 +12,7 @@ namespace TylerMart.Domain.Models {
 		/// Name
 		/// </summary>
 		[Required(ErrorMessage = "Name is required!")]
+		[StringLength(100, MinimumLength = 2, ErrorMessage = "Name must be between two and one-hundred characters in length!")]
 		public string Name { get; set; }
 		/// <summary>
 		/// Navigation list of <see cref="TylerMart.Domain.Models.LocationProduct"/> Pairs

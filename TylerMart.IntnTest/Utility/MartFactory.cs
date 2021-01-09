@@ -29,16 +29,8 @@ namespace TylerMart.IntnTest.Utility {
 					var scopedServices = scope.ServiceProvider;
 					var db = scopedServices.GetRequiredService<DatabaseContext>();
 					var logger = scopedServices.GetRequiredService<ILogger<MartFactory<TStartup>>>();
+					db.Database.EnsureDeleted();
 					db.Database.EnsureCreated();
-					try {
-						// initialize database
-					} catch (Exception exception) {
-						logger.LogError(
-							exception,
-							"An error occurred while trying to seed the database! Error: {0}",
-							exception.Message
-						);
-					}
 				}
 			});
 		}

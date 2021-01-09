@@ -58,7 +58,7 @@ namespace TylerMart.UnitTest.Services {
 			Factory = new DatabaseFactory();
 			base.Initialize(
 				db: Factory.CreateDbContext(),
-				transient: true
+				unitTesting: true
 			);
 		}
 	}

@@ -11,26 +11,31 @@ namespace TylerMart.Domain.Models {
 		/// First Name
 		/// </summary>
 		[Required(ErrorMessage = "First name is required!")]
+		[StringLength(30, MinimumLength = 2, ErrorMessage = "First name must be between two and thirty characters in length!")]
 		public string FirstName { get; set; }
 		/// <summary>
 		/// Last Name
 		/// </summary>
 		[Required(ErrorMessage = "Last name is required!")]
+		[StringLength(30, MinimumLength = 2, ErrorMessage = "Last name must be between two and thirty characters in length!")]
 		public string LastName { get; set; }
 		/// <summary>
 		/// Email Address
 		/// </summary>
 		[Required(ErrorMessage = "Email is required!")]
+		[StringLength(100, MinimumLength = 5, ErrorMessage = "Email must be between five and one-hundred characters in length!")]
 		public string Email { get; set; }
 		/// <summary>
 		/// Password
 		/// </summary>
 		[Required(ErrorMessage = "Password is required!")]
+		[StringLength(50, MinimumLength = 8, ErrorMessage = "Password must be between eight and fifty characters in length!")]
 		public string Password { get; set; }
 		/// <summary>
 		/// Real Address
 		/// </summary>
 		[Required(ErrorMessage = "Address is required!")]
+		[StringLength(100, MinimumLength = 5, ErrorMessage = "Address must be between five and one-hundred characters in length!")]
 		public string Address { get; set; }
 		/// <summary>
 		/// Generates Customer array for seeding database

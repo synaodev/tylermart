@@ -1,6 +1,4 @@
-﻿#pragma warning disable 1591
-
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TylerMart.Storage.Migrations
@@ -15,11 +13,11 @@ namespace TylerMart.Storage.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -32,7 +30,7 @@ namespace TylerMart.Storage.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,8 +43,8 @@ namespace TylerMart.Storage.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(38,2)", precision: 38, scale: 2, nullable: false)
                 },
                 constraints: table =>
@@ -204,7 +202,7 @@ namespace TylerMart.Storage.Migrations
             migrationBuilder.InsertData(
                 table: "Orders",
                 columns: new[] { "ID", "Complete", "CreatedAt", "CustomerID", "LocationID" },
-                values: new object[] { 1, true, new DateTime(2020, 12, 31, 0, 15, 10, 979, DateTimeKind.Local).AddTicks(171), 1, 1 });
+                values: new object[] { 1, true, new DateTime(2021, 1, 9, 0, 5, 49, 880, DateTimeKind.Local).AddTicks(971), 1, 1 });
 
             migrationBuilder.InsertData(
                 table: "OrderProducts",
@@ -282,5 +280,3 @@ namespace TylerMart.Storage.Migrations
         }
     }
 }
-
-#pragma warning restore 1591

@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Logging;
 
-using TylerMart.Client.Services;
 using TylerMart.Domain.Models;
 
 namespace TylerMart.Client.Models {

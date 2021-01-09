@@ -59,10 +59,10 @@ namespace TylerMart.Storage.Repositories {
 		/// This should be called in the derived class constructor
 		/// </remarks>
 		/// <param name="db">Instance of DbContext</param>
-		/// <param name="transient">Database provider is transient (set to 'true' when testing)</param>
-		public void Initialize(DatabaseContext db, bool transient = false) {
+		/// <param name="unitTesting">Database is being used in a unit testing environment</param>
+		public void Initialize(DatabaseContext db, bool unitTesting = false) {
 			Db = db;
-			if (transient) {
+			if (unitTesting) {
 				Db.Database.EnsureDeleted();
 				Db.Database.EnsureCreated();
 			}
