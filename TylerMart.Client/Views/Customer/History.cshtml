@@ -2,10 +2,7 @@
 	ViewData["Title"] = "Customer History";
 }
 
-@using System.Collections.Generic
-@using TylerMart.Domain.Models
-@model List<Order>
-
+@model System.Collections.Generic.List<TylerMart.Domain.Models.Order>
 
 <div class="text-center">
 	@if (ViewBag.Name != null) {
@@ -13,10 +10,39 @@
 	}
 </div>
 
-<p>
-	<ul>
-		@foreach (var order in @Model) {
-			<li>@order.ToString()</li>
-		}
-	</ul>
-</p>
+<div class="row">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Created At:</th>
+				<th>Completed:</th>
+				<th>Customer:</th>
+				<th>Location:</th>
+				<th>Products:</th>
+				<th>Price:</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var o in @Model) {
+				<tr>
+					<td>@o.CreatedAt</td>
+					<td>@o.Complete</td>
+					<td>@o.Customer.FirstName @o.Customer.LastName</td>
+					<td>@o.Location.Name</td>
+					<td>
+						<ul>
+							@foreach (var op in @o.OrderProducts) {
+								<li>@op.Product.Name</li>
+							}
+						</ul>
+					</td>
+					<td>@o.OrderProducts.Sum(op => op.Product.Price)</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+<div>
+	<a asp-controller="Customer" asp-action="Index" class="btn btn-primary">Back</a>
+</div>
