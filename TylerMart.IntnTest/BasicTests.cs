@@ -30,14 +30,7 @@ namespace TylerMart.IntnTest {
 		}
 		[Fact]
 		public async void TestRegisterAndLogin() {
-			var client = Factory.CreateClient();
-			// client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-			// 	"Basic",
-			// 	Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", )))
-			// );
-
-			var registerGet = await client.GetAsync("/Customer/Register");
-
+			var client = await Factory.CreateCsrfAwareClientAsync();
 			var registerForm = new List<KeyValuePair<string, string>>() {
 				new KeyValuePair<string, string>("FirstName", "Tyler"),
 				new KeyValuePair<string, string>("LastName", "Cadena"),
@@ -64,7 +57,3 @@ namespace TylerMart.IntnTest {
 		}
 	}
 }
-
-
-
-//Assert.Equal("/Customer/Index", response3.RequestMessage.RequestUri.AbsolutePath);

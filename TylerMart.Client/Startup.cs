@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 
 using TylerMart.Storage.Contexts;
 using TylerMart.Client.Services;
+using TylerMart.Client.Utility;
 
 namespace TylerMart.Client {
 	public class Startup {
@@ -22,7 +24,13 @@ namespace TylerMart.Client {
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services) {
 			services.AddLogging();
-			services.AddControllersWithViews();
+			services.AddControllersWithViews(options => {
+				options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+			}).SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+				.AddApplicationPart(typeof(Startup).Assembly);
+			services.AddAntiforgery(options => {
+				options.HeaderName = CsrfMiddleWare.XsrfTokenHeaderName;
+			});
 			services.AddSession();
 			services.AddHttpContextAccessor();
 			services.AddDbContext<DatabaseContext>(builder => {
@@ -38,6 +46,7 @@ namespace TylerMart.Client {
 				app.UseExceptionHandler("/Home/Error");
 				app.UseHsts();
 			}
+			app.UseMiddleware<CsrfMiddleWare>();
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseSession();

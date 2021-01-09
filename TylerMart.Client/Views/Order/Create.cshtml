@@ -41,7 +41,7 @@
 @if (@Model.ShoppingCart.Count > 0) {
 	<p>Price: @Model.ShoppingCart.Sum(p => p.Price)</p>
 	<p>
-		<form action="/Order/Send" method="POST">
+		<form action="/Order/Create" method="POST">
 			@Html.AntiForgeryToken()
 			<input type="submit" value="Submit">
 		</form>
