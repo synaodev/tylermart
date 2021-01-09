@@ -1,36 +1,60 @@
+@{
+	ViewData["Title"] = "Search";
+}
+
 @model TylerMart.Client.Models.SearchViewModel
 
-@if (@Model.Results != null) {
-	<div class="container">
-		@foreach (var result in @Model.Results) {
-			<p>@result.FirstName @result.LastName</p>
-		}
-	</div>
-} else {
-	@if (ViewBag.Error != null) {
-		<div class="form-group">
-			<small class="form-text text-muted">@ViewBag.Error</small>
+<h1>Search</h1><hr>
+
+<div class="row">
+	@if (@ViewBag.Error != null) {
+		<div class="col-md-4">
+			<span class="text-danger">@ViewBag.Error</span>
 		</div>
 	}
-	<div class="container">
-		<form action="/Customer/Search" method="GET">
+	@if (@Model.Results != null) {
+		<table class="table">
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var r in @Model.Results) {
+					<tr>
+						<td>@r.FirstName</td>
+						<td>@r.LastName</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
+	<div class="col-md-4">
+		<form asp-controller="Customer" asp-action="Search" method="GET">
 			@Html.AntiForgeryToken()
-			@if (ViewBag.Error != null) {
-				<div class="form-group">
-					<small class="form-text text-muted">@ViewBag.Error</small>
-				</div>
-			}
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="form-group">
-				<label asp-for="@Model.FirstName">First Name</label>
+				<label asp-for="@Model.FirstName" class="control-label"></label>
 				<input asp-for="@Model.FirstName" class="form-control">
-				@Html.ValidationMessageFor(lvm => lvm.FirstName)
+				<span asp-validation-for="@Model.FirstName" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				<label asp-for="@Model.LastName">Last Name</label>
-				<input asp-for="@Model.LastName" class="form-control">
-				@Html.ValidationMessageFor(lvm => lvm.LastName)
+				<label asp-for="@Model.FirstName" class="control-label"></label>
+				<input asp-for="@Model.FirstName" class="form-control">
+				<span asp-validation-for="@Model.FirstName" class="text-danger"></span>
 			</div>
-			<button type="submit" class="btn btn-primary">Search</button>
+			<div class="form-group">
+				<input type="submit" value="Search" class="btn btn-primary">
+			</div>
 		</form>
 	</div>
+</div>
+
+<div>
+	<a asp-controller="Customer" asp-action="Index">Back</a>
+</div>
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

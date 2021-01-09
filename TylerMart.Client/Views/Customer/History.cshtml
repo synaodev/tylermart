@@ -6,7 +6,13 @@
 @using TylerMart.Domain.Models
 @model List<Order>
 
-<h1>@ViewBag.CustomerName's Order History:</h1>
+
+<div class="text-center">
+	@if (ViewBag.Name != null) {
+		<h1 class="display-4">Welcome, @ViewBag.Name!</h1><hr>
+	}
+</div>
+
 <p>
 	<ul>
 		@foreach (var order in @Model) {

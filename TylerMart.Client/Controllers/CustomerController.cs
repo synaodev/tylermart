@@ -25,7 +25,7 @@ namespace TylerMart.Client.Controllers {
 				return Redirect("/Customer/Logout");
 			}
 			Customer customer = this.GetCurrentCustomer(Db);
-			ViewBag.CustomerName = $"{customer.FirstName} {customer.LastName}";
+			ViewBag.Name = $"{customer.FirstName} {customer.LastName}";
 			List<Order> orders = Db.Orders.FindFromCustomerWithDetails(customer);
 			return View(orders);
 		}
@@ -35,7 +35,7 @@ namespace TylerMart.Client.Controllers {
 				return Redirect("/Customer/Logout");
 			}
 			Customer c = this.GetCurrentCustomer(Db);
-			ViewBag.CustomerName = $"{c.FirstName} {c.LastName}";
+			ViewBag.Name = $"{c.FirstName} {c.LastName}";
 			return View();
 		}
 		[HttpGet]
