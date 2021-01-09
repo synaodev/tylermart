@@ -4,44 +4,59 @@
 
 @model TylerMart.Client.Models.RegisterViewModel
 
-<div class="container">
-	<form action="/Customer/Register" method="POST">
-		@Html.AntiForgeryToken()
-		@if (ViewBag.Error != null) {
+<h1>Register</h1><hr>
+
+<div class="row">
+	@if (@ViewBag.Error != null) {
+		<div class="col-md-4">
+			<span class="text-danger">@ViewBag.Error</span>
+		</div>
+	}
+	<div class="col-md-4">
+		<form asp-controller="Customer" asp-action="Register" method="POST">
+			@Html.AntiForgeryToken()
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="form-group">
-				<small class="form-text text-muted">@ViewBag.Error</small>
+				<label asp-for="@Model.FirstName" class="control-label"></label>
+				<input asp-for="@Model.FirstName" class="form-control">
+				<span asp-validation-for="@Model.FirstName" class="text-danger"></span>
 			</div>
-		}
-		<div class="form-group">
-			<label asp-for="@Model.FirstName">First Name</label>
-			<input asp-for="@Model.FirstName" class="form-control">
-			@Html.ValidationMessageFor(lvm => lvm.FirstName)
-		</div>
-		<div class="form-group">
-			<label asp-for="@Model.LastName">Last Name</label>
-			<input asp-for="@Model.LastName" class="form-control">
-			@Html.ValidationMessageFor(lvm => lvm.LastName)
-		</div>
-		<div class="form-group">
-			<label asp-for="@Model.Email">Email</label>
-			<input asp-for="@Model.Email" class="form-control">
-			@Html.ValidationMessageFor(lvm => lvm.Email)
-		</div>
-		<div class="form-group">
-			<label asp-for="@Model.Password">Password</label>
-			<input asp-for="@Model.Password" class="form-control">
-			@Html.ValidationMessageFor(lvm => lvm.Password)
-		</div>
-		<div class="form-group">
-			<label asp-for="@Model.PasswordConfirmation">Confirm Password</label>
-			<input asp-for="@Model.PasswordConfirmation" class="form-control">
-			@Html.ValidationMessageFor(lvm => lvm.PasswordConfirmation)
-		</div>
-		<div class="form-group">
-			<label asp-for="@Model.Address">Address</label>
-			<input asp-for="@Model.Address" class="form-control">
-			@Html.ValidationMessageFor(lvm => lvm.Address)
-		</div>
-		<button type="submit" class="btn btn-primary">Register</button>
-	</form>
+			<div class="form-group">
+				<label asp-for="@Model.LastName" class="control-label"></label>
+				<input asp-for="@Model.LastName" class="form-control">
+				<span asp-validation-for="@Model.LastName" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Email" class="control-label"></label>
+				<input asp-for="@Model.Email" class="form-control">
+				<span asp-validation-for="@Model.Email" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Password" class="control-label"></label>
+				<input asp-for="@Model.Password" class="form-control">
+				<span asp-validation-for="@Model.Password" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.PasswordConfirmation" class="control-label"></label>
+				<input asp-for="@Model.PasswordConfirmation" class="form-control">
+				<span asp-validation-for="@Model.PasswordConfirmation" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Address" class="control-label"></label>
+				<input asp-for="@Model.Address" class="form-control">
+				<span asp-validation-for="@Model.Address" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Login" class="btn btn-primary">
+			</div>
+		</form>
+	</div>
 </div>
+
+<div>
+	<a asp-controller="Home" asp-action="Index">Back</a>
+</div>
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
