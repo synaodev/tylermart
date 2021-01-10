@@ -11,6 +11,9 @@ namespace TylerMart.Client.Models {
 		/// <summary>
 		/// First Name
 		/// </summary>
+		/// <remarks>
+		/// Required to submit registration
+		/// </remarks>
 		[Required(ErrorMessage = "First name is required!")]
 		[StringLength(30, MinimumLength = 2, ErrorMessage = "First name must be between two and thirty characters in length!")]
 		[RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "First name must use only letters!")]
@@ -20,6 +23,9 @@ namespace TylerMart.Client.Models {
 		/// <summary>
 		/// Last Name
 		/// </summary>
+		/// <remarks>
+		/// Required to submit registration
+		/// </remarks>
 		[Required(ErrorMessage = "Last name is required!")]
 		[StringLength(30, MinimumLength = 2, ErrorMessage = "Last name must be between two and thirty characters in length!")]
 		[RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Last name must use only letters!")]
@@ -29,6 +35,9 @@ namespace TylerMart.Client.Models {
 		/// <summary>
 		/// Email
 		/// </summary>
+		/// <remarks>
+		/// Required to submit registration
+		/// </remarks>
 		[Required(ErrorMessage = "Email is required!")]
 		[StringLength(100, MinimumLength = 5, ErrorMessage = "Email must be between five and one-hundred characters in length!")]
 		[EmailAddress(ErrorMessage = "Email must be in a proper format!")]
@@ -38,6 +47,9 @@ namespace TylerMart.Client.Models {
 		/// <summary>
 		/// Password
 		/// </summary>
+		/// <remarks>
+		/// Required to submit registration
+		/// </remarks>
 		[Required(ErrorMessage = "Password is required!")]
 		[StringLength(50, MinimumLength = 8, ErrorMessage = "Password must be between eight and fifty characters in length!")]
 		[DataType(DataType.Password)]
@@ -46,6 +58,9 @@ namespace TylerMart.Client.Models {
 		/// <summary>
 		/// Confirm Password
 		/// </summary>
+		/// <remarks>
+		/// Required to submit registration
+		/// </remarks>
 		[Required(ErrorMessage = "Please confirm your password!")]
 		[StringLength(50, MinimumLength = 8, ErrorMessage = "Password must be between eight and fifty characters in length!")]
 		[DataType(DataType.Password)]
@@ -54,11 +69,29 @@ namespace TylerMart.Client.Models {
 		/// <summary>
 		/// Address
 		/// </summary>
+		/// <remarks>
+		/// Required to submit registration
+		/// </remarks>
 		[Required(ErrorMessage = "Address is required!")]
 		[StringLength(100, MinimumLength = 5, ErrorMessage = "Address must be between five and one-hundred characters in length!")]
 		[DataType(DataType.Text)]
 		[Display(Name = "Address")]
 		public string Address { get; set; }
+		/// <summary>
+		/// Default Location primary key
+		/// </summary>
+		/// <remarks>
+		/// Optional for submitting registration
+		/// </remarks>
+		[Display(Name = "Default Location")]
+		public int DefaultLocation { get; set; }
+		/// <summary>
+		/// List of Locations
+		/// </summary>
+		/// <remarks>
+		/// Used for Razor Views
+		/// </remarks>
+		public List<Location> Locations { get; set; }
 		/// <summary>
 		/// Create <see cref="TylerMart.Domain.Models.Customer"/> from fields
 		/// </summary>
@@ -71,7 +104,8 @@ namespace TylerMart.Client.Models {
 				LastName = this.LastName,
 				Email = this.Email,
 				Password = this.Password,
-				Address = this.Address
+				Address = this.Address,
+				DefaultLocationID = this.DefaultLocation
 			};
 		}
 		/// <summary>
@@ -118,6 +152,9 @@ namespace TylerMart.Client.Models {
 			}
 			if (!string.IsNullOrEmpty(Address)) {
 				result += $"\n\tAddress = {Address}";
+			}
+			if (DefaultLocation > 0) {
+				result += $"\n\tDefault Location ID = {DefaultLocation}";
 			}
 			result += "\n}";
 			return result;

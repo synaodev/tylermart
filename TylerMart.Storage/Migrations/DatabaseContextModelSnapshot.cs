@@ -33,6 +33,9 @@ namespace TylerMart.Storage.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int>("DefaultLocationID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -65,6 +68,7 @@ namespace TylerMart.Storage.Migrations
                         {
                             ID = 1,
                             Address = "Nowhere",
+                            DefaultLocationID = 0,
                             Email = "admin.admin@revature.net",
                             FirstName = "Admin",
                             LastName = "Admin",
@@ -347,7 +351,7 @@ namespace TylerMart.Storage.Migrations
                         {
                             ID = 1,
                             Complete = true,
-                            CreatedAt = new DateTime(2021, 1, 9, 0, 5, 49, 880, DateTimeKind.Local).AddTicks(971),
+                            CreatedAt = new DateTime(2021, 1, 10, 2, 57, 20, 454, DateTimeKind.Local).AddTicks(6486),
                             CustomerID = 1,
                             LocationID = 1
                         });

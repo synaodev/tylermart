@@ -38,6 +38,10 @@ namespace TylerMart.Domain.Models {
 		[StringLength(100, MinimumLength = 5, ErrorMessage = "Address must be between five and one-hundred characters in length!")]
 		public string Address { get; set; }
 		/// <summary>
+		/// Default <see cref="TylerMart.Domain.Models.Location"/> primary key
+		/// </summary>
+		public int DefaultLocationID { get; set; }
+		/// <summary>
 		/// Generates Customer array for seeding database
 		/// </summary>
 		/// <remarks>
@@ -54,7 +58,8 @@ namespace TylerMart.Domain.Models {
 					LastName = "Admin",
 					Email = "admin.admin@revature.net",
 					Password = "administrator",
-					Address = "Nowhere"
+					Address = "Nowhere",
+					DefaultLocationID = 0
 				}
 			};
 			return customers;
@@ -72,6 +77,7 @@ namespace TylerMart.Domain.Models {
 			result += $"\tLast Name: {LastName}\n";
 			result += $"\tEmail: {Email}\n";
 			result += $"\tAddress: {Address}";
+			result += $"\tDefault Location ID: {DefaultLocationID}\n";
 			return result;
 		}
 	}

@@ -56,6 +56,13 @@ namespace TylerMart.Client.Controllers {
 			}
 			Customer c = this.GetCurrentCustomer(Db);
 			ViewBag.Name = $"{c.FirstName} {c.LastName}";
+			if (c.DefaultLocationID > 0) {
+				Location location = Db.Locations.Get(c.DefaultLocationID);
+				if (location != null) {
+					ViewBag.Place = location.Name;
+					ViewBag.Default = location.ID;
+				}
+			}
 			return View();
 		}
 		/// <summary>
@@ -103,7 +110,9 @@ namespace TylerMart.Client.Controllers {
 		/// </summary>
 		[HttpGet]
 		public IActionResult Register() {
-			return View();
+			return View(new RegisterViewModel() {
+				Locations = Db.Locations.All()
+			});
 		}
 		/// <summary>
 		/// "Register" Action (POST)

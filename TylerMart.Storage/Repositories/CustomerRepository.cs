@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 using TylerMart.Domain.Models;
 using TylerMart.Storage.Contexts;
@@ -83,6 +84,18 @@ namespace TylerMart.Storage.Repositories {
 		public List<Customer> FindByAddress(string address) {
 			return Db.Customers
 				.Where(c => c.Address == address)
+				.ToList();
+		}
+		/// <summary>
+		/// Finds Customers with a default Location
+		/// </summary>
+		/// <param name="location">The Location</param>
+		/// <returns>
+		/// List of Customers
+		/// </returns>
+		public List<Customer> FindByDefaultLocation(Location location) {
+			return Db.Customers
+				.Where(c => c.DefaultLocationID == location.ID)
 				.ToList();
 		}
 	}

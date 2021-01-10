@@ -50,7 +50,16 @@
 				<span asp-validation-for="@Model.Address" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				<input type="submit" value="Login" class="btn btn-primary">
+				<label asp-for="@Model.DefaultLocation" class="control-label"></label>
+				<select asp-for="@Model.DefaultLocation" class="form-control">
+					<option value="0" selected>None</option>
+					@foreach (var l in @Model.Locations) {
+						<option value="@l.ID">@l.Name</option>
+					}
+				</select>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Register" class="btn btn-primary">
 			</div>
 		</form>
 	</div>
