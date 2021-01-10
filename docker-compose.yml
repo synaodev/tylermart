@@ -7,6 +7,19 @@ volumes:
   tmt-data:
 
 services:
+  tylermart-client:
+    container_name: tylermart-client
+    depends_on:
+      - tylermart-database
+    image: tylermart-cr.azurecr.io/tylermart-client
+    expose:
+      - 8000
+    ports:
+      - 8000:80
+    networks:
+      - tmt-net
+    links:
+      - tylermart-database
   tylermart-database:
     container_name: tylermart-database
     image: mcr.microsoft.com/mssql/server:latest
