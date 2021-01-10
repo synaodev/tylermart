@@ -21,20 +21,22 @@
 				<label asp-for="@Model.Selection" class="control-label"></label>
 				<select asp-for="@Model.Selection" class="form-control">
 					@foreach (var p in @Model.Inventory) {
-						@if (@Model.Inventory.First().Key.ID == p.Key.ID) {
-							<option value="@p.Key.ID" selected>
-								@p.Key.Name: @p.Value ($@p.Key.Price)
-							</option>
-						} else {
-							<option value="@p.Key.ID">
-								@p.Key.Name: @p.Value ($@p.Key.Price)
-							</option>
+						@if (@p.Value > 0) {
+							@if (@Model.Inventory.First().Key.ID == p.Key.ID) {
+								<option value="@p.Key.ID" selected>
+									@p.Key.Name: @p.Value ($@p.Key.Price)
+								</option>
+							} else {
+								<option value="@p.Key.ID">
+									@p.Key.Name: @p.Value ($@p.Key.Price)
+								</option>
+							}
 						}
 					}
 				</select>
 			</div>
 			<div class="form-group">
-				<input type="submit" value="Add" class="btn btn-primary">
+				<input type="submit" value="Add" class="btn btn-sm btn-info">
 			</div>
 		</form>
 	</div>
@@ -58,7 +60,7 @@
 									@Html.AntiForgeryToken()
 									<input type="hidden" asp-for="@Model.Selection" value="@p.ID">
 									<div class="form-group">
-										<input type="submit" value="Remove" class="btn btn-primary">
+										<input type="submit" value="Remove" class="btn btn-sm btn-info">
 									</div>
 								</form>
 							</td>
@@ -67,8 +69,13 @@
 				</tbody>
 			</table>
 		</div>
+	}
+</div>
+
+@if (@Model.ShoppingCart.Count > 0) {
+	<div class="row">
 		<div class="col-md-4">
-			<p>Total Price: @Model.ShoppingCart.Sum(p => p.Price)</p>
+			<p class="font-weight-bold">Total Price: @Model.ShoppingCart.Sum(p => p.Price)</p>
 			<form asp-controller="Order" asp-action="Create" method="POST">
 				@Html.AntiForgeryToken()
 				<div class="form-group">
@@ -76,49 +83,5 @@
 				</div>
 			</form>
 		</div>
-	}
-</div>
-
-@* <form action="/Order/Add" method="POST">
-	@Html.AntiForgeryToken()
-	<select asp-for="@Model.Selection">
-		@foreach (var product in @Model.Inventory) {
-			@if (@product.Value > 0) {
-				@if (@Model.Inventory.First().Key.ID == product.Key.ID) {
-					<option value="@product.Key.ID" selected>
-						@product.Key.Name: @product.Value ($@product.Key.Price)
-					</option>
-				} else {
-					<option value="@product.Key.ID">
-						@product.Key.Name: @product.Value ($@product.Key.Price)
-					</option>
-				}
-			}
-		}
-	</select>
-	<input type="submit" value="Add">
-</form>
-
-@foreach (var product in @Model.ShoppingCart) {
-	<div>
-		<p>Name: @product.Name</p>
-		<p>Description: @product.Description</p>
-		<p>
-			<form action="/Order/Remove" method="POST">
-				@Html.AntiForgeryToken()
-				<input type="hidden" asp-for="@Model.Selection" value="@product.ID">
-				<input type="submit" value="Remove">
-			</form>
-		</p>
 	</div>
 }
-
-@if (@Model.ShoppingCart.Count > 0) {
-	<p>Price: @Model.ShoppingCart.Sum(p => p.Price)</p>
-	<p>
-		<form action="/Order/Create" method="POST">
-			@Html.AntiForgeryToken()
-			<input type="submit" value="Submit">
-		</form>
-	</p>
-} *@
