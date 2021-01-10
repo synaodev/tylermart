@@ -4,19 +4,59 @@ using Microsoft.Extensions.Logging;
 using TylerMart.Domain.Models;
 
 namespace TylerMart.Client.Models {
+	/// <summary>
+	/// Order View Model
+	/// </summary>
 	public class OrderViewModel {
-		/*
-		 * Fields required to submit order
-		 */
+		/// <summary>
+		/// Customer
+		/// </summary>
+		/// <remarks>
+		/// Required to submit Order
+		/// </remarks>
 		public Customer Customer { get; set; }
+		/// <summary>
+		/// Location
+		/// </summary>
+		/// <remarks>
+		/// Required to submit Order
+		/// </remarks>
 		public Location Location { get; set; }
+		/// <summary>
+		/// List of Products
+		/// </summary>
+		/// <remarks>
+		/// Required to submit Order
+		/// </remarks>
 		public List<Product> ShoppingCart { get; set; }
-		/*
-		 * Fields used for view & controller
-		 */
+		/// <summary>
+		/// Dictonary containing Product keys to quantity values
+		/// </summary>
+		/// <remarks>
+		/// Used for Razor Views
+		/// </remarks>
 		public Dictionary<Product, int> Inventory { get; set; }
+		/// <summary>
+		/// Selected Product ID
+		/// </summary>
+		/// <remarks>
+		/// Used for Razor Views
+		/// </remarks>
 		public int Selection { get; set; }
+		/// <summary>
+		/// Default constructor
+		/// </summary>
 		public OrderViewModel() {}
+		/// <summary>
+		/// Check to see if the model is valid
+		/// </summary>
+		/// <param name="logger">Logger for a particular controller</param>
+		/// <remarks>
+		/// Prints all errors to logger
+		/// </remarks>
+		/// <returns>
+		/// Returns 'true' if valid
+		/// </returns>
 		public bool ManuallyValidate<T>(ILogger<T> logger) {
 			bool result = true;
 			if (Customer == null) {
@@ -36,6 +76,12 @@ namespace TylerMart.Client.Models {
 			}
 			return result;
 		}
+		/// <summary>
+		/// Order View Model prettifier
+		/// </summary>
+		/// <returns>
+		/// Model as a string
+		/// </returns>
 		public override string ToString() {
 			string result = "Order = {";
 			if (Customer != null) {

@@ -12,7 +12,17 @@ using TylerMart.Storage.Contexts;
 using TylerMart.Client.Utility;
 
 namespace TylerMart.IntnTest.Utility {
+	/// <summary>
+	/// Test Client Factory
+	/// </summary>
 	public class MartFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class {
+		/// <summary>
+		/// Configure web host
+		/// </summary>
+		/// <param name="builder">Web host settings builder</param>
+		/// <remarks>
+		/// Changes database provider from SQL Server to In-Memory
+		/// </remarks>
 		protected override void ConfigureWebHost(IWebHostBuilder builder) {
 			builder.UseContentRoot(".");
 			base.ConfigureWebHost(builder);
@@ -34,7 +44,15 @@ namespace TylerMart.IntnTest.Utility {
 				}
 			});
 		}
-		// https://dasith.me/2020/02/03/integration-test-aspnetcore-api-with-csrf/
+		/// <summary>
+		/// Create CSRF-aware test client like in <see href="https://dasith.me/2020/02/03/integration-test-aspnetcore-api-with-csrf/">Dasith's example</see>
+		/// </summary>
+		/// <remarks>
+		/// Is Asynchronous
+		/// </remarks>
+		/// <returns>
+		/// Asynchronous promise containing <see cref="System.Net.Http.HttpClient"/>
+		/// </returns>
 		public async Task<HttpClient> CreateCsrfAwareClientAsync() {
 			const string CookieName = CsrfMiddleWare.XsrfCookieName;
 			const string HeaderName = CsrfMiddleWare.XsrfTokenHeaderName;

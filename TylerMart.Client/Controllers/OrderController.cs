@@ -11,6 +11,9 @@ using TylerMart.Client.Services;
 using TylerMart.Client.Utility;
 
 namespace TylerMart.Client.Controllers {
+	/// <summary>
+	/// Order Controller
+	/// </summary>
 	public class OrderController : Controller {
 		private static readonly string MSG_CREATE_ORDER_FAILURE = "Was not able to create order!";
 		private static readonly string MSG_RETRIEVE_ORDER_FAILURE = "Was not able to retrieve order from timestamp!";
@@ -30,10 +33,21 @@ namespace TylerMart.Client.Controllers {
 			}
 			return shoppingCart;
 		}
+		/// <summary>
+		/// Constructor that takes logger and instance of database context
+		/// </summary>
+		/// <param name="logger">Injected logger</param>
+		/// <param name="db">Injected database context</param>
 		public OrderController(ILogger<OrderController> logger, DatabaseService db) {
 			Logger = logger;
 			Db = db;
 		}
+		/// <summary>
+		/// "Index" Action (GET)
+		/// </summary>
+		/// <remarks>
+		/// Redirects to "/Customer/Logout" if not logged in
+		/// </remarks>
 		[HttpGet]
 		public IActionResult Index() {
 			if (!this.IsCustomerLoggedIn()) {
@@ -43,18 +57,35 @@ namespace TylerMart.Client.Controllers {
 			List<Location> locations = Db.Locations.All();
 			return View(locations);
 		}
+		/// <summary>
+		/// "Location" Action (GET)
+		/// </summary>
+		/// <param name="ID">Location ID</param>
+		/// <remarks>
+		/// Redirects to "/Customer/Logout" if not logged in,
+		/// redirects to "/Order/Index" if not logged in,
+		/// and redirects "/Order/Create" after assigning location in session
+		/// </remarks>
 		[HttpGet]
 		public IActionResult Location([FromRoute] int ID) {
 			if (!this.IsCustomerLoggedIn()) {
 				return Redirect("/Customer/Logout");
 			}
 			if (!Db.Locations.Exists(ID)) {
+				Logger.LogDebug($"Couldn't find Location with ID = {ID}!");
 				return Redirect("/Order/Index");
 			}
 			HttpContext.Session.Remove("Cart");
 			this.HttpContext.Session.SetInt32("LocationID", ID);
 			return Redirect("/Order/Create");
 		}
+		/// <summary>
+		/// "History" Action (GET)
+		/// </summary>
+		/// <param name="ID">Location ID</param>
+		/// <remarks>
+		/// Redirects to "/Customer/Logout" if not logged in
+		/// </remarks>
 		[HttpGet]
 		public IActionResult History([FromRoute] int ID) {
 			if (!this.IsCustomerLoggedIn()) {
@@ -70,6 +101,13 @@ namespace TylerMart.Client.Controllers {
 			List<Order> orders = Db.Orders.FindFromLocationWithDetails(location);
 			return View(orders);
 		}
+		/// <summary>
+		/// "Create" Action (GET)
+		/// </summary>
+		/// <remarks>
+		/// Redirects to "/Customer/Logout" if not logged in
+		/// and redirects to "/Order/Index" if location is not assigned
+		/// </remarks>
 		[HttpGet]
 		public IActionResult Create() {
 			if (!this.IsCustomerLoggedIn()) {
@@ -85,6 +123,13 @@ namespace TylerMart.Client.Controllers {
 			model.ShoppingCart = this.GetProductList(model.Inventory);
 			return View(model);
 		}
+		/// <summary>
+		/// "Create" Action (POST)
+		/// </summary>
+		/// <remarks>
+		/// Redirects to "/Customer/Logout" if not logged in
+		/// and redirects to "/Order/Index" if location is not assigned
+		/// </remarks>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult Create(OrderViewModel model) {
@@ -142,6 +187,14 @@ namespace TylerMart.Client.Controllers {
 			HttpContext.Session.Remove("LocationID");
 			return Redirect("/Customer/Index");
 		}
+		/// <summary>
+		/// "Add" Action (POST)
+		/// </summary>
+		/// <remarks>
+		/// Redirects to "/Customer/Logout" if not logged in,
+		/// redirects to "/Order/Index" if location is not assigned,
+		/// and redirects to "/Order/Create" after adding Product to shopping cart
+		/// </remarks>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult Add(OrderViewModel model) {
@@ -159,6 +212,14 @@ namespace TylerMart.Client.Controllers {
 			HttpContext.Session.SetAsJson<List<int>>("Cart", list);
 			return Redirect("/Order/Create");
 		}
+		/// <summary>
+		/// "Remove" Action (POST)
+		/// </summary>
+		/// <remarks>
+		/// Redirects to "/Customer/Logout" if not logged in,
+		/// redirects to "/Order/Index" if location is not assigned,
+		/// and redirects to "/Order/Create" after removing Product from shopping cart
+		/// </remarks>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult Remove(OrderViewModel model) {

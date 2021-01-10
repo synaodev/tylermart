@@ -9,16 +9,30 @@ using TylerMart.Client.Services;
 using TylerMart.Client.Utility;
 
 namespace TylerMart.Client.Controllers {
+	/// <summary>
+	/// Customer Controller
+	/// </summary>
 	public class CustomerController : Controller {
 		private static readonly string MSG_REGISTER_EMAIL_FAILURE = "This email is already used by another customer! Please enter a different one.";
 		private static readonly string MSG_REGISTER_UNKNOWN_FAILURE = "Customer registration failed for an unknown reason!";
 		private static readonly string MSG_LOGIN_OBFUSCATED_FAILURE = "Either your email or password were incorrect!";
 		private readonly ILogger<CustomerController> Logger;
 		private readonly DatabaseService Db;
+		/// <summary>
+		/// Constructor that takes logger and instance of database context
+		/// </summary>
+		/// <param name="logger">Injected logger</param>
+		/// <param name="db">Injected database context</param>
 		public CustomerController(ILogger<CustomerController> logger, DatabaseService db) {
 			Logger = logger;
 			Db = db;
 		}
+		/// <summary>
+		/// "History" Action (GET)
+		/// </summary>
+		/// <remarks>
+		/// Redirects to "/Customer/Logout" if not logged in
+		/// </remarks>
 		[HttpGet]
 		public IActionResult History() {
 			if (!this.IsCustomerLoggedIn()) {
@@ -29,6 +43,12 @@ namespace TylerMart.Client.Controllers {
 			List<Order> orders = Db.Orders.FindFromCustomerWithDetails(customer);
 			return View(orders);
 		}
+		/// <summary>
+		/// "Index" Action (GET)
+		/// </summary>
+		/// <remarks>
+		/// Redirects to "/Customer/Logout" if not logged in
+		/// </remarks>
 		[HttpGet]
 		public IActionResult Index() {
 			if (!this.IsCustomerLoggedIn()) {
@@ -38,6 +58,12 @@ namespace TylerMart.Client.Controllers {
 			ViewBag.Name = $"{c.FirstName} {c.LastName}";
 			return View();
 		}
+		/// <summary>
+		/// "Search" Action (GET)
+		/// </summary>
+		/// <remarks>
+		/// Redirects to "/Customer/Logout" if not logged in
+		/// </remarks>
 		[HttpGet]
 		public IActionResult Search() {
 			if (!this.IsCustomerLoggedIn()) {
@@ -45,6 +71,12 @@ namespace TylerMart.Client.Controllers {
 			}
 			return View(new SearchViewModel());
 		}
+		/// <summary>
+		/// "Search" Action (POST)
+		/// </summary>
+		/// <remarks>
+		/// Redirects to "/Customer/Logout" if not logged in
+		/// </remarks>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult Search(SearchViewModel model) {
@@ -66,10 +98,16 @@ namespace TylerMart.Client.Controllers {
 			List<Customer> wholeNameList = Db.Customers.FindByWholeName(model.FirstName, model.LastName);
 			return View("Results", wholeNameList);
 		}
+		/// <summary>
+		/// "Register" Action (GET)
+		/// </summary>
 		[HttpGet]
 		public IActionResult Register() {
 			return View();
 		}
+		/// <summary>
+		/// "Register" Action (POST)
+		/// </summary>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult Register(RegisterViewModel model) {
@@ -89,10 +127,16 @@ namespace TylerMart.Client.Controllers {
 			}
 			return Redirect("/Customer/Login");
 		}
+		/// <summary>
+		/// "Login" Action (GET)
+		/// </summary>
 		[HttpGet]
 		public IActionResult Login() {
 			return View();
 		}
+		/// <summary>
+		/// "Login" Action (POST)
+		/// </summary>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult Login(LoginViewModel model) {
@@ -113,6 +157,12 @@ namespace TylerMart.Client.Controllers {
 			HttpContext.Session.SetInt32("CustomerID", customer.ID);
 			return Redirect("/Customer/Index");
 		}
+		/// <summary>
+		/// "Logout" Action (GET)
+		/// </summary>
+		/// <remarks>
+		/// Redirects to "/Home/Index" after clearing session data
+		/// </remarks>
 		[HttpGet]
 		public IActionResult Logout() {
 			HttpContext.Session.Remove("CustomerID");

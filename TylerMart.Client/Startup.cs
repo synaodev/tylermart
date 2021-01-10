@@ -16,12 +16,28 @@ using TylerMart.Client.Services;
 using TylerMart.Client.Utility;
 
 namespace TylerMart.Client {
+	/// <summary>
+	/// Startup class
+	/// </summary>
 	public class Startup {
+		/// <summary>
+		/// Constructor that takes an instance of IConfiguration
+		/// </summary>
+		/// <param name="configuration">"appsettings.json" configuration file</param>
 		public Startup(IConfiguration configuration) {
 			Configuration = configuration;
 		}
+		/// <summary>
+		/// Configuration file
+		/// </summary>
 		public IConfiguration Configuration { get; }
-		// This method gets called by the runtime. Use this method to add services to the container.
+		/// <summary>
+		/// Configure application services
+		/// </summary>
+		/// <param name="services">Services builder</param>
+		/// <remarks>
+		/// This method gets called by the runtime. Use this method to add services to the container
+		/// </remarks>
 		public void ConfigureServices(IServiceCollection services) {
 			services.AddLogging();
 			services.AddControllersWithViews(options => {
@@ -38,7 +54,15 @@ namespace TylerMart.Client {
 			});
 			services.AddScoped<DatabaseService>();
 		}
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		/// <summary>
+		/// Configure runtime settings
+		/// </summary>
+		/// <param name="app">Application runtime builder</param>
+		/// <param name="env">Web host environment</param>
+		/// <param name="context">Injected database context</param>
+		/// <remarks>
+		/// This method gets called by the runtime. Use this method to configure the HTTP request pipeline
+		/// </remarks>
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DatabaseContext context) {
 			if (env.IsDevelopment()) {
 				app.UseDeveloperExceptionPage();

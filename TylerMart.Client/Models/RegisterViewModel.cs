@@ -4,40 +4,67 @@ using System.ComponentModel.DataAnnotations;
 using TylerMart.Domain.Models;
 
 namespace TylerMart.Client.Models {
+	/// <summary>
+	/// Register View Model
+	/// </summary>
 	public class RegisterViewModel : IValidatableObject {
+		/// <summary>
+		/// First Name
+		/// </summary>
 		[Required(ErrorMessage = "First name is required!")]
 		[StringLength(30, MinimumLength = 2, ErrorMessage = "First name must be between two and thirty characters in length!")]
 		[RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "First name must use only letters!")]
 		[DataType(DataType.Text)]
 		[Display(Name = "First name")]
 		public string FirstName { get; set; }
+		/// <summary>
+		/// Last Name
+		/// </summary>
 		[Required(ErrorMessage = "Last name is required!")]
 		[StringLength(30, MinimumLength = 2, ErrorMessage = "Last name must be between two and thirty characters in length!")]
 		[RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Last name must use only letters!")]
 		[DataType(DataType.Text)]
 		[Display(Name = "Last name")]
 		public string LastName { get; set; }
+		/// <summary>
+		/// Email
+		/// </summary>
 		[Required(ErrorMessage = "Email is required!")]
 		[StringLength(100, MinimumLength = 5, ErrorMessage = "Email must be between five and one-hundred characters in length!")]
 		[EmailAddress(ErrorMessage = "Email must be in a proper format!")]
 		[DataType(DataType.EmailAddress)]
 		[Display(Name = "Email")]
 		public string Email { get; set; }
+		/// <summary>
+		/// Password
+		/// </summary>
 		[Required(ErrorMessage = "Password is required!")]
 		[StringLength(50, MinimumLength = 8, ErrorMessage = "Password must be between eight and fifty characters in length!")]
 		[DataType(DataType.Password)]
 		[Display(Name = "Password")]
 		public string Password { get; set; }
+		/// <summary>
+		/// Confirm Password
+		/// </summary>
 		[Required(ErrorMessage = "Please confirm your password!")]
 		[StringLength(50, MinimumLength = 8, ErrorMessage = "Password must be between eight and fifty characters in length!")]
 		[DataType(DataType.Password)]
 		[Display(Name = "Confirm password")]
 		public string PasswordConfirmation { get; set; }
+		/// <summary>
+		/// Address
+		/// </summary>
 		[Required(ErrorMessage = "Address is required!")]
 		[StringLength(100, MinimumLength = 5, ErrorMessage = "Address must be between five and one-hundred characters in length!")]
 		[DataType(DataType.Text)]
 		[Display(Name = "Address")]
 		public string Address { get; set; }
+		/// <summary>
+		/// Create <see cref="TylerMart.Domain.Models.Customer"/> from fields
+		/// </summary>
+		/// <returns>
+		/// Customer instance
+		/// </returns>
 		public Customer Create() {
 			return new Customer() {
 				FirstName = this.FirstName,
@@ -47,18 +74,31 @@ namespace TylerMart.Client.Models {
 				Address = this.Address
 			};
 		}
+		/// <summary>
+		/// Validates RegisterViewModel.Password and RegisterViewModel.PasswordConfirmation
+		/// </summary>
+		/// <param name="context">Validation context</param>
+		/// <returns>
+		/// IEnumerable containing validation errors
+		/// </returns>
 		public IEnumerable<ValidationResult> Validate(ValidationContext context) {
 			if (Password != PasswordConfirmation) {
 				yield return new ValidationResult(
 					"Password has been entered inconsistently!",
 					new[] {
-						nameof(PasswordConfirmation),
 						nameof(Password),
+						nameof(PasswordConfirmation),
 						nameof(RegisterViewModel)
 					}
 				);
 			}
 		}
+		/// <summary>
+		/// Register View Model prettifier
+		/// </summary>
+		/// <returns>
+		/// Model as a string
+		/// </returns>
 		public override string ToString() {
 			string result = "Register = {";
 			if (!string.IsNullOrEmpty(FirstName)) {
