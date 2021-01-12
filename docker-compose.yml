@@ -11,7 +11,8 @@ services:
     container_name: tylermart-client
     depends_on:
       - tylermart-database
-    image: tylermart-cr.azurecr.io/tylermart-client
+    image: tylermart.azurecr.io/tylermart-client
+    restart: always
     expose:
       - 8000
     ports:
@@ -22,8 +23,7 @@ services:
       - tylermart-database
   tylermart-database:
     container_name: tylermart-database
-    image: mcr.microsoft.com/mssql/server:latest
-    restart: always
+    image: tylermart.azurecr.io/tylermart-database
     environment:
       ACCEPT_EULA: 'Y'
       SA_PASSWORD: 'Password12345'
