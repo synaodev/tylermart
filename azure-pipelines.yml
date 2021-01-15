@@ -1,10 +1,10 @@
 name: $(date:yyyyMMdd)$(rev:.rr)
 
 pr:
-  - master
+  - main
 
 trigger:
-  - master
+  - main
 
 stages:
   - stage: build
@@ -17,45 +17,39 @@ stages:
       - job: tests
         steps:
           - script: dotnet test
-  - stage: pack
+  - stage: analyze
     jobs:
-      - job: pack_client
-        steps:
-          - task: Docker@2
-            inputs:
-              command: login
-              containerRegistry: tylermart-acr
-          - script: |
-              docker image build --file TylerMart.Client/Dockerfile --tag $(AzureContainerRegistry)/tylermart-client:latest .
-              docker image push $(AzureContainerRegistry)/tylermart-client:latest
-          - task: Docker@2
-            inputs:
-              command: logout
-              containerRegistry: tylermart-acr
-      - job: pack_database
-        steps:
-          - task: Docker@2
-            inputs:
-              command: login
-              containerRegistry: tylermart-acr
-          - script: |
-              docker image build --file TylerMart.Storage/Dockerfile --tag $(AzureContainerRegistry)/tylermart-database:latest .
-              docker image push $(AzureContainerRegistry)/tylermart-database:latest
-          - task: Docker@2
-            inputs:
-              command: logout
-              containerRegistry: tylermart-acr
-  - stage: deploy
-    jobs:
-      - job: deploy
+      - job: analysis
         pool:
           vmImage: ubuntu-18.04
         steps:
-          - task: AzureWebAppContainer@1
-            displayName: Web App Container
+          - task: SonarCloudPrepare@1
+            displayName: Prepare
             inputs:
-              appName: tylermart-webapp
-              azureSubscription: azure
-              resourceGroupName: $(AzureResourceGroup)
-              multicontainerConfigFile: docker-compose.yml
-              deployToSlotOrASE: true
+              SonarCloud: sonarcloud
+              organization: tylermart
+              scannerMode: MSBuild
+              projectKey: tylercadena_tylermart
+              extraProperties: |
+                sonar.exclusions=**/obj/**,**/*.dll
+                sonar.branch.name=$(Build.SourceBranchName)
+                sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
+                sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/*.xml
+          - script: dotnet build
+          - script: echo 'Project Built'
+          - task: DotNetCoreCLI@2
+            displayName: Examine Tests
+            inputs:
+              command: test
+              arguments: '--configuration $(BuildConfiguration)
+                /p:CollectCoverage=true
+                /p:CoverletOutputFormat=opencover
+                /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage
+                --logger trx'
+              projects: '*Test/*Test.csproj'
+              nobuild: true
+          - task: SonarCloudAnalyze@1
+          - task: SonarCloudPublish@1
+            inputs:
+              pollingTimeoutSec: '300'
+          - script: dotnet publish TylerMart.sln
