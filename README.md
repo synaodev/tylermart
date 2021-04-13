@@ -1,4 +1,4 @@
-# Tyler Cadena's Revature Project 1
+# TylerMart (Revature Project 1)
 
 To setup database:
 - Either run `docker-compose up -d` or `database-init.sh`.
