@@ -100,6 +100,7 @@ namespace TylerMart.Selenium.Utility {
 			}
 			case DriverName.Edge: {
 				var options = new EdgeOptions();
+				options.AcceptInsecureCertificates = true;
 				options.UseChromium = true;
 				options.AddArguments("headless", "disable-gpu");
 				var location = string.IsNullOrEmpty(Environment.GetEnvironmentVariable("EdgeWebDriver")) ?
