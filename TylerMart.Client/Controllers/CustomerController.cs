@@ -85,7 +85,6 @@ namespace TylerMart.Client.Controllers {
 		/// Redirects to "/Customer/Logout" if not logged in
 		/// </remarks>
 		[HttpPost]
-		[ValidateAntiForgeryToken]
 		public IActionResult Search(SearchViewModel model) {
 			if (!this.IsCustomerLoggedIn()) {
 				return Redirect("/Customer/Logout");
@@ -118,7 +117,6 @@ namespace TylerMart.Client.Controllers {
 		/// "Register" Action (POST)
 		/// </summary>
 		[HttpPost]
-		[ValidateAntiForgeryToken]
 		public IActionResult Register(RegisterViewModel model) {
 			if (!ModelState.IsValid) {
 				Logger.LogDebug("Invalid model state!");
@@ -147,7 +145,6 @@ namespace TylerMart.Client.Controllers {
 		/// "Login" Action (POST)
 		/// </summary>
 		[HttpPost]
-		[ValidateAntiForgeryToken]
 		public IActionResult Login(LoginViewModel model) {
 			if (!ModelState.IsValid) {
 				Logger.LogDebug("Invalid model state!");

@@ -1,15 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Text.Encodings;
 using System.Runtime.InteropServices;
-using OpenQA.Selenium;
 using Xunit;
 
 using TylerMart.Client;
-using TylerMart.Client.Models;
 using TylerMart.Selenium.Utility;
 
 namespace TylerMart.Selenium {
@@ -27,12 +19,23 @@ namespace TylerMart.Selenium {
 				return;
 			}
 			using (var driver = Factory.CreateWebDriver(name)) {
-				Assert.NotNull(driver);
-
 				driver.Navigate().GoToUrl($"{Factory.RootUri}/Home/Index");
+
 				Assert.Equal("Home - TylerMart.Client", driver.Title);
 
-				driver.FindElementByXPath("/html/body/div/main/div[2]/div/a[1]").Click();
+				driver.FindElementByXPath("/html/body/div/main/div[2]/div/a[2]").Click();
+
+				Assert.Equal("Register - TylerMart.Client", driver.Title);
+
+				driver.FindElementByXPath("//*[@id=\"FirstName\"]").SendKeys("Tyler");
+				driver.FindElementByXPath("//*[@id=\"LastName\"]").SendKeys("Cadena");
+				driver.FindElementByXPath("//*[@id=\"Email\"]").SendKeys("tyler.cadena@mail.com");
+				driver.FindElementByXPath("//*[@id=\"Password\"]").SendKeys("tylercadena");
+				driver.FindElementByXPath("//*[@id=\"PasswordConfirmation\"]").SendKeys("tylercadena");
+				driver.FindElementByXPath("//*[@id=\"Address\"]").SendKeys("23222 Remington Way, West Hills, CA, 91307");
+				driver.FindElementByXPath("//*[@id=\"DefaultLocation\"]").SendKeys("0");
+				driver.FindElementByXPath("/html/body/div/main/div/div[2]/form/div[8]/input").Click();
+
 				Assert.Equal("Login - TylerMart.Client", driver.Title);
 			}
 		}

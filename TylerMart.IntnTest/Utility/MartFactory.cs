@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using TylerMart.Storage.Contexts;
-using TylerMart.Client.Utility;
 
 namespace TylerMart.IntnTest.Utility {
 	/// <summary>
@@ -43,27 +42,6 @@ namespace TylerMart.IntnTest.Utility {
 					db.Database.EnsureCreated();
 				}
 			});
-		}
-		/// <summary>
-		/// Create CSRF-aware test client like in <see href="https://dasith.me/2020/02/03/integration-test-aspnetcore-api-with-csrf/">Dasith's example</see>
-		/// </summary>
-		/// <remarks>
-		/// Is Asynchronous
-		/// </remarks>
-		/// <returns>
-		/// Asynchronous promise containing <see cref="System.Net.Http.HttpClient"/>
-		/// </returns>
-		public async Task<HttpClient> CreateCsrfAwareClientAsync() {
-			const string CookieName = CsrfMiddleWare.XsrfCookieName;
-			const string HeaderName = CsrfMiddleWare.XsrfTokenHeaderName;
-			var client = this.CreateClient();
-			var testResult = await client.GetAsync("/");
-			var cookies = testResult.Headers.GetValues("Set-Cookie").ToList();
-			var token = cookies.Single(x => x.StartsWith(CookieName))?.Substring($"{CookieName}=".Length).Split(";")[0];
-			client.DefaultRequestHeaders.Clear();
-			client.DefaultRequestHeaders.Add(HeaderName, new[] { token });
-			client.DefaultRequestHeaders.Add("Cookie", cookies);
-			return client;
 		}
 	}
 }

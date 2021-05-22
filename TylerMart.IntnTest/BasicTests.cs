@@ -7,7 +7,6 @@ using System.Text.Encodings;
 using Xunit;
 
 using TylerMart.Client;
-using TylerMart.Client.Models;
 using TylerMart.IntnTest.Utility;
 
 namespace TylerMart.IntnTest {
@@ -33,9 +32,10 @@ namespace TylerMart.IntnTest {
 		[InlineData("/Home/Privacy")]
 		[InlineData("/Customer/Login")]
 		[InlineData("/Customer/Register")]
-		public async void TestEndpoints(string url) {
+		public void TestEndpoints(string url) {
 			var client = Factory.CreateClient();
-			var response = await client.GetAsync(url);
+			var response = client.GetAsync(url)
+				.GetAwaiter().GetResult();
 			Assert.True(response.IsSuccessStatusCode);
 			Assert.Equal("text/html; charset=utf-8", response.Content.Headers.ContentType.ToString());
 		}
@@ -43,8 +43,8 @@ namespace TylerMart.IntnTest {
 		/// Checks if user can register and login using CSRF-protected POST requests
 		/// </summary>
 		[Fact]
-		public async void TestRegisterAndLogin() {
-			var client = await Factory.CreateCsrfAwareClientAsync();
+		public void TestRegisterAndLogin() {
+			var client = Factory.CreateClient();
 			var registerForm = new List<KeyValuePair<string, string>>() {
 				new KeyValuePair<string, string>("FirstName", "Tyler"),
 				new KeyValuePair<string, string>("LastName", "Cadena"),
@@ -53,19 +53,19 @@ namespace TylerMart.IntnTest {
 				new KeyValuePair<string, string>("PasswordConfirmation", "tylercadena"),
 				new KeyValuePair<string, string>("Address", "23222 Remington Way, West Hills, CA, 91307")
 			};
-			var registerResponse = await client.PostAsync(
+			var registerResponse = client.PostAsync(
 				"/Customer/Register",
 				new FormUrlEncodedContent(registerForm)
-			);
+			).GetAwaiter().GetResult();
 			Assert.True(registerResponse.IsSuccessStatusCode);
 			var loginForm = new List<KeyValuePair<string, string>>() {
 				new KeyValuePair<string, string>("Email", "tyler.cadena@revature.net"),
 				new KeyValuePair<string, string>("Password", "tylercadena")
 			};
-			var loginResponse = await client.PostAsync(
+			var loginResponse = client.PostAsync(
 				"/Customer/Login",
 				new FormUrlEncodedContent(loginForm)
-			);
+			).GetAwaiter().GetResult();
 			Assert.True(loginResponse.IsSuccessStatusCode);
 			Assert.Equal("/Customer/Index", loginResponse.RequestMessage.RequestUri.AbsolutePath);
 		}

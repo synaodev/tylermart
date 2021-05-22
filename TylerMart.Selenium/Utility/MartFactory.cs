@@ -15,7 +15,6 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Remote;
 
 using TylerMart.Storage.Contexts;
-using TylerMart.Client.Utility;
 
 // Example Page: https://blog-bertrand-thomas.devpro.fr/2020/01/27/fix-breaking-change-asp-net-core-3-integration-tests-selenium/
 
@@ -64,18 +63,6 @@ namespace TylerMart.Selenium.Utility {
 					db.Database.EnsureCreated();
 				}
 			});
-		}
-		public HttpClient CreateCsrfAwareClient() {
-			const string CookieName = CsrfMiddleWare.XsrfCookieName;
-			const string HeaderName = CsrfMiddleWare.XsrfTokenHeaderName;
-			var client = this.CreateClient();
-			var result = client.GetAsync("/").GetAwaiter().GetResult();
-			var cookies = result.Headers.GetValues("Set-Cookie").ToList();
-			var token = cookies.Single(x => x.StartsWith(CookieName))?.Substring($"{CookieName}=".Length).Split(";")[0];
-			client.DefaultRequestHeaders.Clear();
-			client.DefaultRequestHeaders.Add(HeaderName, new[] { token });
-			client.DefaultRequestHeaders.Add("Cookie", cookies);
-			return client;
 		}
 		public RemoteWebDriver CreateWebDriver(DriverName name) {
 			switch (name) {

@@ -13,7 +13,6 @@ using Microsoft.Extensions.Hosting;
 
 using TylerMart.Storage.Contexts;
 using TylerMart.Client.Services;
-using TylerMart.Client.Utility;
 
 namespace TylerMart.Client {
 	/// <summary>
@@ -40,13 +39,9 @@ namespace TylerMart.Client {
 		/// </remarks>
 		public void ConfigureServices(IServiceCollection services) {
 			services.AddLogging();
-			services.AddControllersWithViews(options => {
-				options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
-			}).SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-				.AddApplicationPart(typeof(Startup).Assembly);
-			services.AddAntiforgery(options => {
-				options.HeaderName = CsrfMiddleWare.XsrfTokenHeaderName;
-			});
+			services.AddControllersWithViews();
+				//.SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+				//.AddApplicationPart(typeof(Startup).Assembly);
 			services.AddSession();
 			services.AddHttpContextAccessor();
 			services.AddDbContext<DatabaseContext>(builder => {
@@ -70,7 +65,6 @@ namespace TylerMart.Client {
 				app.UseExceptionHandler("/Home/Error");
 				app.UseHsts();
 			}
-			app.UseMiddleware<CsrfMiddleWare>();
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseSession();
@@ -82,7 +76,6 @@ namespace TylerMart.Client {
 					pattern: "{controller=Home}/{action=Index}/{id?}"
 				);
 			});
-			//context.Database.Migrate();
 		}
 	}
 }

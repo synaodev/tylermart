@@ -131,7 +131,6 @@ namespace TylerMart.Client.Controllers {
 		/// and redirects to "/Order/Index" if location is not assigned
 		/// </remarks>
 		[HttpPost]
-		[ValidateAntiForgeryToken]
 		public IActionResult Create(OrderViewModel model) {
 			if (!this.IsCustomerLoggedIn()) {
 				return Redirect("/Customer/Logout");
@@ -196,7 +195,6 @@ namespace TylerMart.Client.Controllers {
 		/// and redirects to "/Order/Create" after adding Product to shopping cart
 		/// </remarks>
 		[HttpPost]
-		[ValidateAntiForgeryToken]
 		public IActionResult Add(OrderViewModel model) {
 			if (!this.IsCustomerLoggedIn()) {
 				return Redirect("/Customer/Logout");
@@ -221,7 +219,6 @@ namespace TylerMart.Client.Controllers {
 		/// and redirects to "/Order/Create" after removing Product from shopping cart
 		/// </remarks>
 		[HttpPost]
-		[ValidateAntiForgeryToken]
 		public IActionResult Remove(OrderViewModel model) {
 			if (!this.IsCustomerLoggedIn()) {
 				return Redirect("/Customer/Logout");

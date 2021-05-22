@@ -14,7 +14,6 @@
 	<div class="col-lg-12">
 		<a asp-controller="Customer" asp-action="Logout" class="btn btn-primary">Log Out</a><br><br>
 		<form asp-controller="Customer" asp-action="Search" method="GET">
-			@Html.AntiForgeryToken()
 			<input type="submit" value="Find Customers" class="btn btn-primary"><br><br>
 		</form>
 		<a asp-controller="Order" asp-action="Index" class="btn btn-primary">Make Order</a>
